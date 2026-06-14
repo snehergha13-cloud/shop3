@@ -738,3 +738,89 @@ FOOTER
         margin-top:70px;
     }
 }
+/* =========================
+   MOBILE FIXES - home.css
+========================== */
+
+@media (max-width: 768px) {
+
+    /* HERO */
+    .slide {
+        background-size: cover !important;
+        background-position: center center;
+    }
+
+    /* SMALL CARDS */
+    .small-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin: 24px auto;
+    }
+
+    .small-card {
+        height: 200px;
+    }
+
+    /* FEATURE GRID */
+    .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin: 30px auto;
+        width: 95%;
+    }
+
+    .feature-card {
+        height: 360px;
+    }
+
+    .feature-overlay h2 {
+        font-size: 2rem;
+    }
+
+    /* CATEGORY SECTION */
+    .category-section {
+        width: 95%;
+        margin: 50px auto;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .category-card img {
+        height: 160px;
+    }
+
+    .category-section h2 {
+        font-size: 1.4rem;
+        letter-spacing: 3px;
+        margin-bottom: 30px;
+    }
+
+    /* PRODUCT BUTTONS */
+    .product-buttons {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin: 50px auto;
+        width: 95%;
+    }
+
+    .product-buttons .product-card {
+        height: 220px;
+    }
+
+    /* FOOTER */
+    .footer {
+        padding: 60px 20px 30px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .footer-bottom {
+        margin-top: 50px;
+    }
+}

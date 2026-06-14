@@ -1201,3 +1201,124 @@ COLLECTION DETAIL
     display:block !important;
     color:#6b6b6b !important;
 }
+
+/* =========================
+   MOBILE FIXES - projects.css
+========================== */
+
+@media (max-width: 768px) {
+
+    /* NAVBAR */
+    nav {
+        padding: 0 16px;
+        height: 60px;
+    }
+
+    .nav-left {
+        width: auto;
+    }
+
+    .nav-icons {
+        width: auto;
+        gap: 14px;
+    }
+
+    .logo img {
+        height: 36px !important;
+    }
+
+    /* MENU BAR */
+    .menu-bar {
+        top: 60px;
+        gap: 16px;
+        height: 44px;
+    }
+
+    .menu-bar a {
+        font-size: 11px;
+        letter-spacing: 1px;
+    }
+
+    /* HERO BANNER */
+    .hero-banner {
+        margin-top: 104px;
+        height: 280px;
+    }
+
+    .hero-overlay h1 {
+        font-size: 32px;
+        letter-spacing: 3px;
+    }
+
+    .hero-overlay {
+        bottom: 30px;
+        left: 24px;
+    }
+
+    /* DESCRIPTION */
+    .description p {
+        width: 90%;
+        font-size: 15px;
+        line-height: 26px;
+    }
+
+    /* CATEGORIES */
+    .categories {
+        gap: 20px;
+        flex-wrap: wrap;
+        padding: 0 16px 40px;
+    }
+
+    .category-item img {
+        width: 70px;
+        height: 70px;
+    }
+
+    /* PRODUCTS SECTION */
+    .products-container {
+        width: 100%;
+    }
+
+    .filter-bar {
+        padding: 0 16px;
+        height: 56px;
+    }
+
+    .filter-right {
+        gap: 20px;
+    }
+
+    .products-grid {
+        padding: 24px 16px 60px;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 16px;
+        row-gap: 40px;
+    }
+
+    /* COLLECTION DETAIL */
+    .collection-breadcrumb {
+        padding: 120px 16px 12px;
+    }
+
+    .collection-page {
+        padding: 16px;
+    }
+
+    .collection-main-image img {
+        height: 280px;
+    }
+
+    /* FOOTER */
+    .footer {
+        padding: 60px 20px 30px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .footer-bottom {
+        margin-top: 50px;
+    }
+}
