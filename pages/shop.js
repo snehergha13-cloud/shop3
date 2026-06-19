@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const normalizeAssetPath = (value) => {
     if (!value) return "";
@@ -55,6 +56,17 @@ export default function Shop() {
 
                 const productsJson = await productsRes.json();
                 const categoriesJson = await categoriesRes.json();
+
+                // If a category filter is active, check it actually exists in the DB
+                if (currentCategory && categoriesJson.success) {
+                    const exists = categoriesJson.data.some(
+                        (c) => c.slug === currentCategory
+                    );
+                    if (!exists) {
+                        router.replace(`/categories/coming-soon?slug=${currentCategory}`);
+                        return;
+                    }
+                }
 
                 const loaded = productsJson.success
                     ? productsJson.data.products.map((item) => ({
@@ -283,6 +295,8 @@ export default function Shop() {
                     </div>
                 </div>
             </section>
+
+            <Footer />
         </>
     );
 }

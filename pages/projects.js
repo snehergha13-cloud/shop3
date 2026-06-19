@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const normalizeAssetPath = (value) => {
     if (!value) return "";
@@ -152,6 +153,8 @@ export default function Collections() {
                     </div>
                 </div>
             </section>
+
+            <Footer />
         </>
     );
 }

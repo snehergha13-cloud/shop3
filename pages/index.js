@@ -7,13 +7,14 @@ const categoryHref = (slug) => `/shop?category=${slug}`;
 
 export default function Home() {
     const [currentSlide, setCurrentSlide] = useState(0);
+   
 
     const slides = [
-        "/assets/home/slide-11.jpg",
-        "/assets/home/slide-11.jpg",
-        "/assets/home/slide-11.jpg",
-        "/assets/home/slide-11.jpg",
-        "/assets/home/slide-11.jpg",
+        "/assets/home/SLIDE - 0.jpg",
+        "/assets/home/SLIDE - 1.jpg",
+        "/assets/home/SLIDE - 2.jpg",
+        "/assets/home/SLIDE - 3.jpg",
+    
     ];
 
     useEffect(() => {
@@ -29,16 +30,6 @@ export default function Home() {
 
             <Head>
                 <title>Word Of Art</title>
-
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap"
-                    rel="stylesheet"
-                />
-
-                <link
-                    rel="stylesheet"
-                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-                />
             </Head>
 
             <Navbar />
@@ -47,12 +38,12 @@ export default function Home() {
             <section className="hero">
 
                 {slides.map((slide, index) => (
-                    <div
-                        key={index}
-                        className={`slide ${currentSlide === index ? "active" : ""}`}
-                        style={{ backgroundImage: `url(${slide})` }}
-                    />
-                ))}
+    <div
+        key={index}
+        className={`slide ${currentSlide === index ? "active" : ""}`}
+        style={{ backgroundImage: `url("${slide}")` }}
+    />
+))}
 
                 <div className="slide-dots">
                     {slides.map((_, index) => (
@@ -161,36 +152,37 @@ export default function Home() {
             {/* FINAL PRODUCT IMAGES */}
             <section className="product-buttons">
                 <Link className="product-card" href={categoryHref("postcards")}>
-                    <img src="https://via.placeholder.com/500x700" alt="" />
+                    <img src="/assets/card/postcard.jpg" alt="" />
                     <div className="product-overlay">
                         <button>POSTCARDS</button>
                     </div>
                 </Link>
                 <Link className="product-card" href={categoryHref("greeting-cards")}>
-                    <img src="https://via.placeholder.com/500x700" alt="" />
+                    <img src="/assets/card/greeting-card.jpg" alt="" />
                     <div className="product-overlay">
                         <button>GREETING CARDS</button>
                     </div>
                 </Link>
                 <Link className="product-card" href={categoryHref("book-marks")}>
-                    <img src="https://via.placeholder.com/500x700" alt="" />
+                    <img src="/assets/card/book-mark.jpg" alt="" />
                     <div className="product-overlay">
                         <button>BOOK MARKS</button>
                     </div>
                 </Link>
                 <Link className="product-card" href={categoryHref("art-prints")}>
-                    <img src="https://via.placeholder.com/500x700" alt="" />
+                    <img src="/assets/card/art-print.jpg" alt="" />
                     <div className="product-overlay">
                         <button>ARTPRINTS</button>
                     </div>
                 </Link>
                 <Link className="product-card" href={categoryHref("envelopes")}>
-                    <img src="https://via.placeholder.com/500x700" alt="" />
+                    <img src="/assets/card/envelope.jpg" alt="" />
                     <div className="product-overlay">
                         <button>ENVELOPES</button>
                     </div>
                 </Link>
             </section>
+
 
             {/* FOOTER */}
             <footer className="footer">
