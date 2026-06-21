@@ -42,7 +42,7 @@ export default function Footer() {
                 <div className="footer-column">
                     <h3>MAIN MENU</h3>
                     <ul>
-                        <li><a href="#">About Us</a></li>
+                        <li><Link href="/about">About Us</Link></li>
                         <li><a href="#">Collaborations</a></li>
                         <li><a href="#">Journal</a></li>
                         <li><Link href="/projects">Collections</Link></li>

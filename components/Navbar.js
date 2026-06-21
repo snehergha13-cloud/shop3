@@ -53,9 +53,9 @@ export default function Navbar() {
 
       <div className="menu-bar">
 
-        <a className="menu-text" href="#">
+        <Link className="menu-text" href="/about">
           ABOUT US
-        </a>
+        </Link>
 
         <div className="shop-wrapper">
 

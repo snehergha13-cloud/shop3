@@ -1,0 +1,732 @@
+/* =========================================================
+   ABOUT US PAGE
+   Theme tokens reused from home.css / projects.css:
+   - background cream: #F4F0EA / #edeae4 / #f7f6f3
+   - ink: #1a1a1a / #1d1d1d
+   - warm brown accent: #774f3e
+   - gold accent: #e0b88d / #c7a56e / #ddb58b
+   - body font: Georgia, serif
+   - label / heading font: 'Montserrat', sans-serif
+========================================================= */
+
+.about-page{
+    background:#F4F0EA;
+    color:#1a1a1a;
+    font-family:"Georgia", serif;
+    overflow-x:hidden;
+}
+
+/* ---------------------------------------------------------
+   HERO
+--------------------------------------------------------- */
+
+.about-hero{
+    position:relative;
+    width:100%;
+    height:560px;
+    margin-top:132px;
+    overflow:hidden;
+    background:#111;
+}
+
+.about-hero img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 35%;
+    opacity:0.92;
+}
+
+.about-hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(10,10,10,0.35) 0%, rgba(10,10,10,0.15) 45%, rgba(10,10,10,0.55) 100%);
+}
+
+.about-hero-content{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:0 24px;
+    color:#fff9e9;
+}
+
+.about-hero-eyebrow{
+    font-family:'Montserrat', sans-serif;
+    font-size:13px;
+    letter-spacing:4px;
+    font-weight:500;
+    color:#e0b88d;
+    margin-bottom:18px;
+}
+
+.about-hero-content h1{
+    font-family:"Georgia", serif;
+    font-weight:400;
+    font-size:4rem;
+    letter-spacing:3px;
+    line-height:1.15;
+    color:#fff9e9;
+}
+
+.about-hero-content p{
+    margin-top:18px;
+    max-width:560px;
+    font-family:'Montserrat', sans-serif;
+    font-weight:300;
+    font-size:15px;
+    letter-spacing:1px;
+    line-height:1.8;
+    color:rgba(255,249,233,0.85);
+}
+
+.about-hero-content .about-hero-quote{
+    font-family:"Georgia", serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:1.15rem;
+    letter-spacing:0.3px;
+    line-height:1.7;
+    color:#fff9e9;
+}
+
+/* ---------------------------------------------------------
+   INTRO / STORY
+--------------------------------------------------------- */
+
+.about-intro{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding:110px 30px 90px;
+}
+
+.about-intro-inner{
+    width:100%;
+    max-width:760px;
+    text-align:center;
+}
+
+.about-kicker{
+    font-family:'Montserrat', sans-serif;
+    font-size:12px;
+    letter-spacing:4px;
+    font-weight:600;
+    color:#774f3e;
+    margin-bottom:22px;
+}
+
+.about-intro h2{
+    font-family:"Georgia", serif;
+    font-weight:400;
+    font-size:2.3rem;
+    line-height:1.45;
+    letter-spacing:0.5px;
+    color:#1a1a1a;
+}
+
+.about-intro h2 em{
+    font-style:italic;
+    color:#774f3e;
+}
+
+.about-intro p{
+    margin-top:28px;
+    font-family:'Montserrat', sans-serif;
+    font-weight:300;
+    font-size:15.5px;
+    line-height:2;
+    color:#5a5a5a;
+    letter-spacing:0.2px;
+}
+
+/* ---------------------------------------------------------
+   PILLARS — "ideas. ink. impact"
+--------------------------------------------------------- */
+
+.about-pillars{
+    width:90%;
+    max-width:1200px;
+    margin:0 auto 110px;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:30px;
+}
+
+.about-pillar{
+    background:#ffffff;
+    border:1px solid rgba(0,0,0,0.06);
+    padding:48px 36px;
+    text-align:center;
+    transition:transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.about-pillar:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 40px rgba(0,0,0,0.08);
+}
+
+.about-pillar-index{
+    font-family:'Montserrat', sans-serif;
+    font-size:11px;
+    letter-spacing:3px;
+    color:#c7a56e;
+    margin-bottom:18px;
+}
+
+.about-pillar h3{
+    font-family:"Georgia", serif;
+    font-weight:400;
+    font-size:1.5rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-bottom:16px;
+    color:#1a1a1a;
+}
+
+.about-pillar p{
+    font-family:'Montserrat', sans-serif;
+    font-weight:300;
+    font-size:14px;
+    line-height:1.9;
+    color:#6b6b6b;
+}
+
+/* ---------------------------------------------------------
+   STORY SPLIT (image + text)
+--------------------------------------------------------- */
+
+.about-split{
+    width:90%;
+    max-width:1200px;
+    margin:0 auto 110px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
+}
+
+.about-split.reverse .about-split-media{
+    order:2;
+}
+
+.about-split.reverse .about-split-text{
+    order:1;
+}
+
+.about-split-media{
+    position:relative;
+    height:560px;
+    overflow:hidden;
+    background:#ddd;
+}
+
+.about-split-media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform 0.6s ease;
+}
+
+.about-split-media:hover img{
+    transform:scale(1.04);
+}
+
+.about-split-text .about-kicker{
+    margin-bottom:20px;
+}
+
+.about-split-text h2{
+    font-family:"Georgia", serif;
+    font-weight:400;
+    font-size:2.1rem;
+    letter-spacing:1px;
+    line-height:1.3;
+    margin-bottom:24px;
+    color:#1a1a1a;
+}
+
+.about-split-text p{
+    font-family:'Montserrat', sans-serif;
+    font-weight:300;
+    font-size:15px;
+    line-height:1.95;
+    color:#5a5a5a;
+    margin-bottom:18px;
+}
+
+.about-split-text p:last-of-type{
+    margin-bottom:0;
+}
+
+/* ---------------------------------------------------------
+   STATS STRIP
+--------------------------------------------------------- */
+
+.about-stats{
+    width:100%;
+    background:#1a1a1a;
+    padding:90px 30px;
+    margin-bottom:110px;
+}
+
+.about-stats-inner{
+    width:90%;
+    max-width:1100px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:40px;
+    text-align:center;
+}
+
+.about-stat-number{
+    font-family:"Georgia", serif;
+    font-size:2.8rem;
+    font-weight:400;
+    color:#e0b88d;
+    letter-spacing:1px;
+}
+
+.about-stat-label{
+    margin-top:12px;
+    font-family:'Montserrat', sans-serif;
+    font-size:12px;
+    letter-spacing:2.5px;
+    color:rgba(255,255,255,0.75);
+    text-transform:uppercase;
+}
+
+/* ---------------------------------------------------------
+   MANIFESTO / QUOTE BAND
+--------------------------------------------------------- */
+
+.about-manifesto{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding:0 30px 110px;
+}
+
+.about-manifesto-inner{
+    max-width:880px;
+    text-align:center;
+}
+
+.about-manifesto-inner .about-kicker{
+    margin-bottom:24px;
+}
+
+.about-manifesto blockquote{
+    font-family:"Georgia", serif;
+    font-style:italic;
+    font-size:1.85rem;
+    line-height:1.6;
+    color:#1a1a1a;
+    letter-spacing:0.3px;
+}
+
+.about-manifesto blockquote::before{
+    content:"“";
+    color:#e0b88d;
+}
+
+.about-manifesto blockquote::after{
+    content:"”";
+    color:#e0b88d;
+}
+
+.about-manifesto cite{
+    display:block;
+    margin-top:26px;
+    font-family:'Montserrat', sans-serif;
+    font-style:normal;
+    font-size:12px;
+    letter-spacing:3px;
+    color:#774f3e;
+    text-transform:uppercase;
+}
+
+/* ---------------------------------------------------------
+   VALUES GRID (craft pillars #2 — small icons row)
+--------------------------------------------------------- */
+
+.about-values{
+    width:90%;
+    max-width:1200px;
+    margin:0 auto 110px;
+    text-align:center;
+}
+
+.about-values h2{
+    font-family:"Georgia", serif;
+    font-weight:400;
+    font-size:2rem;
+    letter-spacing:2px;
+    margin-bottom:60px;
+    color:#1a1a1a;
+}
+
+.about-values-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:36px;
+}
+
+.about-value{
+    padding:10px;
+}
+
+.about-value i{
+    font-size:26px;
+    color:#774f3e;
+    margin-bottom:20px;
+    display:inline-block;
+}
+
+.about-value h4{
+    font-family:'Montserrat', sans-serif;
+    font-size:13px;
+    letter-spacing:2px;
+    font-weight:600;
+    text-transform:uppercase;
+    margin-bottom:12px;
+    color:#1a1a1a;
+}
+
+.about-value p{
+    font-family:'Montserrat', sans-serif;
+    font-weight:300;
+    font-size:13.5px;
+    line-height:1.85;
+    color:#6b6b6b;
+}
+
+/* ---------------------------------------------------------
+   CTA BANNER
+--------------------------------------------------------- */
+
+.about-cta{
+    position:relative;
+    width:100%;
+    height:380px;
+    overflow:hidden;
+    margin-bottom:0;
+    background:#111;
+}
+
+.about-cta img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0.55;
+}
+
+.about-cta-content{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:0 24px;
+    color:#fff9e9;
+}
+
+.about-cta-brand{
+    font-family:'Montserrat', sans-serif;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:5px;
+    color:#e0b88d;
+    margin-bottom:16px;
+}
+
+.about-cta-content h2{
+    font-family:"Georgia", serif;
+    font-weight:400;
+    font-size:2.4rem;
+    letter-spacing:3px;
+    margin-bottom:32px;
+}
+
+.about-cta-content p{
+    font-family:'Montserrat', sans-serif;
+    font-weight:300;
+    font-size:14px;
+    letter-spacing:1px;
+    margin-bottom:32px;
+    color:rgba(255,249,233,0.85);
+}
+
+.about-cta-button{
+    display:inline-block;
+    padding:16px 42px;
+    background:#fff9e9;
+    color:#1a1a1a;
+    font-family:'Montserrat', sans-serif;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:3px;
+    border:1px solid rgba(0,0,0,0.08);
+    transition:0.3s ease;
+}
+
+.about-cta-button:hover{
+    background:#774f3e;
+    color:#fff9e9;
+}
+
+/* =========================================================
+   RESPONSIVE — TABLET (max-width: 1100px)
+========================================================= */
+
+@media(max-width:1100px){
+
+    .about-pillars{
+        grid-template-columns:repeat(3, 1fr);
+        gap:20px;
+    }
+
+    .about-pillar{
+        padding:36px 24px;
+    }
+
+    .about-split{
+        grid-template-columns:1fr;
+        gap:36px;
+    }
+
+    .about-split.reverse .about-split-media{
+        order:1;
+    }
+
+    .about-split.reverse .about-split-text{
+        order:2;
+    }
+
+    .about-split-media{
+        height:420px;
+    }
+
+    .about-stats-inner{
+        grid-template-columns:repeat(2, 1fr);
+        gap:50px 30px;
+    }
+
+    .about-values-grid{
+        grid-template-columns:repeat(2, 1fr);
+        gap:40px 24px;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE — MOBILE (max-width: 768px)
+========================================================= */
+
+@media(max-width:768px){
+
+    /* HERO */
+    .about-hero{
+        height:auto;
+        min-height:420px;
+        margin-top:104px;
+        padding:90px 0;
+    }
+
+    .about-hero-eyebrow{
+        font-size:11px;
+        letter-spacing:3px;
+    }
+
+    .about-hero-content h1{
+        font-size:2.3rem;
+        letter-spacing:1.5px;
+    }
+
+    .about-hero-content p{
+        font-size:13.5px;
+        line-height:1.7;
+        margin-top:14px;
+    }
+
+    .about-hero-content .about-hero-quote{
+        font-size:1rem;
+        line-height:1.55;
+    }
+
+    /* INTRO */
+    .about-intro{
+        padding:64px 20px 56px;
+    }
+
+    .about-kicker{
+        font-size:11px;
+        letter-spacing:3px;
+    }
+
+    .about-intro h2{
+        font-size:1.55rem;
+        line-height:1.5;
+    }
+
+    .about-intro p{
+        margin-top:20px;
+        font-size:14px;
+        line-height:1.85;
+    }
+
+    /* PILLARS */
+    .about-pillars{
+        width:92%;
+        grid-template-columns:1fr;
+        gap:16px;
+        margin-bottom:60px;
+    }
+
+    .about-pillar{
+        padding:32px 24px;
+    }
+
+    .about-pillar h3{
+        font-size:1.25rem;
+        letter-spacing:2px;
+    }
+
+    /* SPLIT */
+    .about-split{
+        width:92%;
+        margin-bottom:60px;
+        gap:24px;
+    }
+
+    .about-split-media{
+        height:300px;
+    }
+
+    .about-split-text h2{
+        font-size:1.5rem;
+        margin-bottom:16px;
+    }
+
+    .about-split-text p{
+        font-size:13.5px;
+        line-height:1.85;
+    }
+
+    /* STATS */
+    .about-stats{
+        padding:56px 20px;
+        margin-bottom:60px;
+    }
+
+    .about-stats-inner{
+        grid-template-columns:repeat(2, 1fr);
+        gap:36px 20px;
+    }
+
+    .about-stat-number{
+        font-size:2rem;
+    }
+
+    .about-stat-label{
+        font-size:10.5px;
+        letter-spacing:1.5px;
+        margin-top:8px;
+    }
+
+    /* MANIFESTO */
+    .about-manifesto{
+        padding:0 24px 60px;
+    }
+
+    .about-manifesto blockquote{
+        font-size:1.3rem;
+        line-height:1.55;
+    }
+
+    .about-manifesto cite{
+        font-size:11px;
+        letter-spacing:2px;
+        margin-top:20px;
+    }
+
+    /* VALUES */
+    .about-values{
+        width:92%;
+        margin-bottom:60px;
+    }
+
+    .about-values h2{
+        font-size:1.4rem;
+        letter-spacing:1.5px;
+        margin-bottom:36px;
+    }
+
+    .about-values-grid{
+        grid-template-columns:1fr 1fr;
+        gap:30px 18px;
+    }
+
+    .about-value i{
+        font-size:22px;
+        margin-bottom:14px;
+    }
+
+    .about-value h4{
+        font-size:11.5px;
+        letter-spacing:1.5px;
+    }
+
+    .about-value p{
+        font-size:12.5px;
+    }
+
+    /* CTA */
+    .about-cta{
+        height:300px;
+    }
+
+    .about-cta-brand{
+        font-size:11px;
+        letter-spacing:3px;
+        margin-bottom:12px;
+    }
+
+    .about-cta-content h2{
+        font-size:1.7rem;
+        letter-spacing:2px;
+        margin-bottom:24px;
+    }
+
+    .about-cta-button{
+        padding:14px 32px;
+        font-size:11px;
+        letter-spacing:2px;
+    }
+}
+
+/* =========================================================
+   SMALL MOBILE (max-width: 420px)
+========================================================= */
+
+@media(max-width:420px){
+
+    .about-hero-content h1{
+        font-size:1.85rem;
+    }
+
+    .about-stats-inner{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .about-values-grid{
+        grid-template-columns:1fr;
+    }
+}
