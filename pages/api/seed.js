@@ -402,3 +402,35 @@ export default async function handler(req, res) {
     return serverError(res);
   }
 }
+
+console.log("SEED: connected");
+
+console.log("SEED: delete products");
+await Product.deleteMany({});
+
+console.log("SEED: delete collections");
+await Collection.deleteMany({});
+
+console.log("SEED: delete categories");
+await Category.deleteMany({});
+
+console.log("SEED: create categories");
+await Category.insertMany(categories);
+
+console.log("SEED: create collections");
+await Collection.insertMany(collections);
+
+console.log("SEED: create products");
+await Product.insertMany(products);
+
+console.log("SEED: before admin");
+
+await User.create({
+  name: "Store Admin",
+  email: adminEmail,
+  password: adminPassword,
+  role: "admin",
+  authProvider: "password",
+});
+
+console.log("SEED: admin created");
