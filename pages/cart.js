@@ -1,10 +1,24 @@
 import { useRouter } from "next/router";
+import Link from "next/link";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { useCart } from "../context/CartContext";
 
 export default function CartPage() {
-  const { cart, removeFromCart, cartTotal } = useCart();
+  const { cart, cartLoading, removeFromCart, cartTotal } = useCart();
   const router = useRouter();
+
+  if (cartLoading) {
+    return (
+        <>
+          <Navbar />
+          <main style={styles.page}>
+            <p>Loading your cart...</p>
+          </main>
+          <Footer />
+        </>
+    );
+  }
 
   if (cart.length === 0) {
     return (
@@ -12,9 +26,10 @@ export default function CartPage() {
           <Navbar />
           <main style={styles.page}>
             <p>
-              Your cart is empty. <a href="/projects">Go shop!</a>
+              Your cart is empty. <Link href="/shop">Go shop!</Link>
             </p>
           </main>
+          <Footer />
         </>
     );
   }
@@ -62,6 +77,7 @@ export default function CartPage() {
             Proceed to Checkout
           </button>
         </main>
+        <Footer />
       </>
   );
 }
@@ -71,6 +87,7 @@ const styles = {
     maxWidth: "980px",
     margin: "0 auto",
     padding: "170px 32px 60px",
+    minHeight: "50vh",
   },
   row: {
     display: "flex",

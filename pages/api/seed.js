@@ -3,6 +3,7 @@ import { ok, serverError } from "../../lib/response";
 import Category from "../../models/Category";
 import Collection from "../../models/Collection";
 import Product from "../../models/Product";
+import User from "../../models/User";
 
 // Add new categories here.
 const categoryData = [
@@ -373,8 +374,28 @@ export default async function handler(req, res) {
 
     await Product.insertMany(products);
 
+    // Seed a default admin account, but only if one doesn't already exist —
+    // re-running /api/seed should never reset an admin's password.
+    // Credentials come from env vars so they're not hardcoded in source.
+    const adminEmail = process.env.SEED_ADMIN_EMAIL || "admin@wordofart.test";
+    const adminPassword = process.env.SEED_ADMIN_PASSWORD || "ChangeMe123!";
+    let adminMessage = "";
+    const existingAdmin = await User.findOne({ email: adminEmail });
+    if (!existingAdmin) {
+      await User.create({
+        name: "Store Admin",
+        email: adminEmail,
+        password: adminPassword,
+        role: "admin",
+        authProvider: "password",
+      });
+      adminMessage = ` Admin account created: ${adminEmail} / ${adminPassword} — change this password after first login.`;
+    } else {
+      adminMessage = ` Admin account already exists (${adminEmail}).`;
+    }
+
     return ok(res, {
-      message: `Seeded ${categoryData.length} categories, ${collectionData.length} collections and ${products.length} products.`,
+      message: `Seeded ${categoryData.length} categories, ${collectionData.length} collections and ${products.length} products.${adminMessage}`,
     });
   } catch (err) {
     console.error("[seed]", err);

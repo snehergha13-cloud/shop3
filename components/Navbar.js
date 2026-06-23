@@ -1,11 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
   const { cartCount } = useCart();
+  const { user, isLoggedIn, isAdmin, logout } = useAuth();
   const [categories, setCategories] = useState([]);
   const [collections, setCollections] = useState([]);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const accountRef = useRef(null);
 
   useEffect(() => {
     fetch("/api/categories")
@@ -17,6 +21,17 @@ export default function Navbar() {
       .then((r) => r.json())
       .then((d) => { if (d.success) setCollections(d.data); })
       .catch(() => {});
+  }, []);
+
+  // Close the account dropdown when clicking anywhere outside it.
+  useEffect(() => {
+    function handleClick(e) {
+      if (accountRef.current && !accountRef.current.contains(e.target)) {
+        setAccountOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
   return (
@@ -38,7 +53,46 @@ export default function Navbar() {
         </div>
 
         <div className="nav-icons">
-          <i className="fa-regular fa-user"></i>
+
+          <div className="account-wrapper" ref={accountRef}>
+            {isLoggedIn ? (
+              <button
+                type="button"
+                className="account-trigger"
+                onClick={() => setAccountOpen((o) => !o)}
+                aria-label="Account menu"
+              >
+                <i className="fa-regular fa-user"></i>
+              </button>
+            ) : (
+              <Link href="/login" aria-label="Sign in">
+                <i className="fa-regular fa-user"></i>
+              </Link>
+            )}
+
+            {isLoggedIn && accountOpen && (
+              <div className="account-dropdown">
+                <p className="account-name">{user?.name}</p>
+                <p className="account-email">{user?.email}</p>
+                <Link href="/account/orders" onClick={() => setAccountOpen(false)}>
+                  My Orders
+                </Link>
+                {isAdmin && (
+                  <Link href="/admin" onClick={() => setAccountOpen(false)}>
+                    Admin Panel
+                  </Link>
+                )}
+                <button
+                  type="button"
+                  className="account-logout"
+                  onClick={() => { logout(); setAccountOpen(false); }}
+                >
+                  Log Out
+                </button>
+              </div>
+            )}
+          </div>
+
           <i className="fa-solid fa-magnifying-glass"></i>
           <i className="fa-regular fa-heart"></i>
           <Link href="/cart" className="cart-nav-button" aria-label="Cart">

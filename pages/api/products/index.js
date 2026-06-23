@@ -9,8 +9,15 @@ export default async function handler(req, res) {
   try {
     await connectDB();
     if (req.method === "GET") {
-      const { category, collection, search, minPrice, maxPrice, sort = "-createdAt", page = 1, limit = 20, featured } = req.query;
-      const filter = { isActive: true };
+      const { category, collection, search, minPrice, maxPrice, sort = "-createdAt", page = 1, limit = 20, featured, includeInactive } = req.query;
+      const filter = {};
+      // Only admins may request inactive (deactivated) products — e.g. the admin product list.
+      if (includeInactive === "true") {
+        const authUser = getAuthUser(req);
+        if (!authUser || authUser.role !== "admin") return forbidden(res);
+      } else {
+        filter.isActive = true;
+      }
       if (category) { const cat = await Category.findOne({ slug: category }); if (cat) filter.category = cat._id; }
       if (collection) {
         const collectionDoc = await Collection.findOne({ slug: collection, isActive: true });

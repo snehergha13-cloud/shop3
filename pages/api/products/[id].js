@@ -11,7 +11,11 @@ export default async function handler(req, res) {
       const product = await Product.findById(id)
         .populate("category", "name slug")
         .populate("collection", "name slug");
-      if (!product || !product.isActive) return notFound(res, "Product not found");
+      if (!product) return notFound(res, "Product not found");
+      if (!product.isActive) {
+        const authUser = getAuthUser(req);
+        if (!authUser || authUser.role !== "admin") return notFound(res, "Product not found");
+      }
       return ok(res, product);
     }
     if (req.method === "PATCH") {

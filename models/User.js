@@ -13,7 +13,11 @@ const UserSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
-    password: { type: String, required: true, minlength: 8, select: false },
+    // Password is not required for accounts created via Google Sign-In.
+    password: { type: String, minlength: 8, select: false },
+    googleId: { type: String, unique: true, sparse: true, select: false },
+    picture: { type: String },
+    authProvider: { type: String, enum: ["password", "google"], default: "password" },
     role: { type: String, enum: ["user", "admin"], default: "user" },
     addresses: [AddressSchema],
   },
@@ -21,12 +25,13 @@ const UserSchema = new mongoose.Schema(
 );
 
 UserSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+  if (!this.isModified("password") || !this.password) return next();
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
 
 UserSchema.methods.comparePassword = async function (candidate) {
+  if (!this.password) return false;
   return bcrypt.compare(candidate, this.password);
 };
 

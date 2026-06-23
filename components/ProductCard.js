@@ -1,7 +1,20 @@
+import { useState } from "react";
 import { useCart } from "../context/CartContext";
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
+  const [adding, setAdding] = useState(false);
+
+  async function handleAdd() {
+    setAdding(true);
+    try {
+      await addToCart(product, 1);
+    } catch (err) {
+      alert(err.message || "Could not add to cart");
+    } finally {
+      setAdding(false);
+    }
+  }
 
   return (
     <div style={styles.card}>
@@ -12,8 +25,8 @@ export default function ProductCard({ product }) {
       <p style={styles.name}>{product.name}</p>
       <p style={styles.price}>₹{product.price.toFixed(2)}</p>
       <a href={`/products/${product.id}`}>View Product</a>
-      <button style={styles.btn} onClick={() => addToCart(product)}>
-        Add to Cart
+      <button style={styles.btn} onClick={handleAdd} disabled={adding}>
+        {adding ? "Adding..." : "Add to Cart"}
       </button>
     </div>
   );

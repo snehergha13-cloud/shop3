@@ -47,18 +47,19 @@ export default function ProductPage() {
       });
   }, [id]);
 
-  function handleAddToCart() {
+  async function handleAddToCart() {
     if (!product) return;
-    for (let i = 0; i < qty; i += 1) {
-      addToCart({
-        id: product._id,
-        name: product.name,
-        price: product.price / 100,
-        image: imgs[0],
-      });
+    try {
+      await addToCart(
+        { id: product._id, name: product.name, price: product.price / 100, image: imgs[0] },
+        qty
+      );
+      setCartMsg("Added to cart!");
+    } catch (err) {
+      setCartMsg(err.message || "Could not add to cart");
+    } finally {
+      setTimeout(() => setCartMsg(""), 2500);
     }
-    setCartMsg("Added to cart!");
-    setTimeout(() => setCartMsg(""), 2500);
   }
 
   const imgs = product?.images?.length ? product.images : FALLBACK_IMGS;

@@ -57,21 +57,26 @@ export default function ProductPage() {
         ? selectedProduct.images
         : [fallbackCollectionImage];
 
-    function handleAddToCart() {
+    async function handleAddToCart() {
         if (!selectedProduct) return;
 
-        for (let i = 0; i < qty; i += 1) {
-            addToCart({
-                id: selectedProduct._id,
-                name: selectedProduct.name,
-                price: selectedProduct.price / 100,
-                image: imgs[0],
-                style: selectedStyle,
-            });
+        try {
+            await addToCart(
+                {
+                    id: selectedProduct._id,
+                    name: selectedProduct.name,
+                    price: selectedProduct.price / 100,
+                    image: imgs[0],
+                    style: selectedStyle,
+                },
+                qty
+            );
+            setCartMsg("Added to cart!");
+        } catch (err) {
+            setCartMsg(err.message || "Could not add to cart");
+        } finally {
+            setTimeout(() => setCartMsg(""), 2500);
         }
-
-        setCartMsg("Added to cart!");
-        setTimeout(() => setCartMsg(""), 2500);
     }
 
     return (

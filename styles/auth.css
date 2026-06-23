@@ -1,0 +1,625 @@
+/* =========================================================
+   AUTH + ACCOUNT + CHECKOUT STYLES
+   Reuses the site's existing theme tokens:
+   - cream background #F4F0EA, ink #1a1a1a
+   - warm brown accent #774f3e, gold accent #e0b88d
+   - body font Georgia, label font Montserrat
+========================================================= */
+
+/* ---------------------------------------------------------
+   NAVBAR ACCOUNT DROPDOWN
+--------------------------------------------------------- */
+
+.account-wrapper{
+    position:relative;
+    display:flex;
+    align-items:center;
+}
+
+.account-trigger{
+    background:none;
+    border:none;
+    color:inherit;
+    cursor:pointer;
+    padding:0;
+    display:flex;
+    align-items:center;
+}
+
+.account-dropdown{
+    position:absolute;
+    top:calc(100% + 14px);
+    right:-10px;
+    width:230px;
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.08);
+    border-radius:4px;
+    box-shadow:0 18px 40px rgba(0,0,0,0.18);
+    padding:18px;
+    z-index:1200;
+    display:flex;
+    flex-direction:column;
+    font-family:'Montserrat', sans-serif;
+}
+
+.account-name{
+    font-size:13px;
+    font-weight:600;
+    color:#1a1a1a;
+    margin:0;
+}
+
+.account-email{
+    font-size:11.5px;
+    color:#888;
+    margin:2px 0 14px;
+    word-break:break-all;
+}
+
+.account-dropdown a{
+    display:block;
+    padding:9px 0;
+    font-size:12.5px;
+    letter-spacing:0.5px;
+    color:#1a1a1a;
+    border-top:1px solid #f0eee9;
+    transition:color 0.2s ease;
+}
+
+.account-dropdown a:hover{
+    color:#774f3e;
+}
+
+.account-logout{
+    margin-top:6px;
+    padding:9px 0 0;
+    border-top:1px solid #f0eee9;
+    background:none;
+    border-left:none;
+    border-right:none;
+    border-bottom:none;
+    text-align:left;
+    font-family:'Montserrat', sans-serif;
+    font-size:12.5px;
+    letter-spacing:0.5px;
+    color:#b04545;
+    cursor:pointer;
+    transition:opacity 0.2s ease;
+}
+
+.account-logout:hover{
+    opacity:0.7;
+}
+
+/* ---------------------------------------------------------
+   AUTH PAGES (login / signup)
+--------------------------------------------------------- */
+
+.auth-page{
+    background:#F4F0EA;
+    min-height:100vh;
+    font-family:"Georgia", serif;
+}
+
+.auth-wrap{
+    max-width:420px;
+    margin:0 auto;
+    padding:170px 24px 90px;
+}
+
+.auth-card{
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.06);
+    padding:48px 40px;
+}
+
+.auth-kicker{
+    font-family:'Montserrat', sans-serif;
+    font-size:11px;
+    letter-spacing:4px;
+    font-weight:600;
+    color:#774f3e;
+    text-align:center;
+    display:block;
+    margin-bottom:14px;
+}
+
+.auth-card h1{
+    font-family:"Georgia", serif;
+    font-weight:400;
+    font-size:1.8rem;
+    text-align:center;
+    letter-spacing:0.5px;
+    margin-bottom:8px;
+    color:#1a1a1a;
+}
+
+.auth-sub{
+    text-align:center;
+    font-family:'Montserrat', sans-serif;
+    font-size:13px;
+    color:#777;
+    margin-bottom:30px;
+}
+
+.auth-field{
+    margin-bottom:18px;
+}
+
+.auth-field label{
+    display:block;
+    font-family:'Montserrat', sans-serif;
+    font-size:11px;
+    letter-spacing:1.5px;
+    font-weight:600;
+    text-transform:uppercase;
+    color:#1a1a1a;
+    margin-bottom:8px;
+}
+
+.auth-field input{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid #ddd8d0;
+    border-radius:2px;
+    font-family:'Montserrat', sans-serif;
+    font-size:14px;
+    background:#fdfcfa;
+    outline:none;
+    transition:border-color 0.2s ease;
+}
+
+.auth-field input:focus{
+    border-color:#774f3e;
+}
+
+.auth-error{
+    background:#fbeaea;
+    border:1px solid #e3b6b6;
+    color:#a33;
+    font-family:'Montserrat', sans-serif;
+    font-size:12.5px;
+    padding:11px 14px;
+    margin-bottom:18px;
+    border-radius:2px;
+    line-height:1.6;
+}
+
+.auth-submit{
+    width:100%;
+    padding:15px;
+    background:#1a1a1a;
+    color:#fff9e9;
+    border:none;
+    font-family:'Montserrat', sans-serif;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:background 0.25s ease;
+    margin-top:6px;
+}
+
+.auth-submit:hover{
+    background:#774f3e;
+}
+
+.auth-submit:disabled{
+    background:#aaa;
+    cursor:not-allowed;
+}
+
+.auth-divider{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin:28px 0;
+    font-family:'Montserrat', sans-serif;
+    font-size:11px;
+    letter-spacing:1.5px;
+    color:#999;
+    text-transform:uppercase;
+}
+
+.auth-divider::before,
+.auth-divider::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:#e6e2da;
+}
+
+.google-btn-slot{
+    display:flex;
+    justify-content:center;
+    min-height:42px;
+}
+
+.google-btn-fallback{
+    width:100%;
+    padding:13px;
+    background:#fff;
+    border:1px solid #ddd8d0;
+    border-radius:2px;
+    font-family:'Montserrat', sans-serif;
+    font-size:12.5px;
+    letter-spacing:1px;
+    color:#999;
+    text-align:center;
+}
+
+.auth-switch{
+    text-align:center;
+    margin-top:26px;
+    font-family:'Montserrat', sans-serif;
+    font-size:13px;
+    color:#666;
+}
+
+.auth-switch a{
+    color:#774f3e;
+    font-weight:600;
+}
+
+/* ---------------------------------------------------------
+   CHECKOUT PAGE
+--------------------------------------------------------- */
+
+.checkout-page{
+    background:#F4F0EA;
+    min-height:100vh;
+    font-family:"Georgia", serif;
+}
+
+.checkout-wrap{
+    max-width:1000px;
+    margin:0 auto;
+    padding:170px 24px 90px;
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:50px;
+    align-items:start;
+}
+
+.checkout-wrap h1{
+    font-weight:400;
+    font-size:1.9rem;
+    letter-spacing:1px;
+    margin-bottom:28px;
+    grid-column:1 / -1;
+}
+
+.checkout-section{
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.06);
+    padding:32px;
+    margin-bottom:24px;
+}
+
+.checkout-section h2{
+    font-family:'Montserrat', sans-serif;
+    font-size:12px;
+    letter-spacing:2.5px;
+    font-weight:600;
+    color:#774f3e;
+    text-transform:uppercase;
+    margin-bottom:22px;
+}
+
+.checkout-grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.checkout-field{
+    margin-bottom:16px;
+}
+
+.checkout-field label{
+    display:block;
+    font-family:'Montserrat', sans-serif;
+    font-size:11px;
+    letter-spacing:1px;
+    font-weight:600;
+    text-transform:uppercase;
+    color:#1a1a1a;
+    margin-bottom:7px;
+}
+
+.checkout-field input{
+    width:100%;
+    padding:12px 13px;
+    border:1px solid #ddd8d0;
+    border-radius:2px;
+    font-family:'Montserrat', sans-serif;
+    font-size:13.5px;
+    background:#fdfcfa;
+    outline:none;
+}
+
+.checkout-field input:focus{
+    border-color:#774f3e;
+}
+
+.payment-options{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.payment-option{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    border:1px solid #ddd8d0;
+    padding:14px 16px;
+    border-radius:2px;
+    cursor:pointer;
+    font-family:'Montserrat', sans-serif;
+    font-size:13.5px;
+}
+
+.payment-option.selected{
+    border-color:#774f3e;
+    background:#fcf8f3;
+}
+
+.payment-option-disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+}
+
+.payment-option small{
+    display:block;
+    color:#888;
+    font-size:11.5px;
+    margin-top:2px;
+}
+
+.order-summary-card{
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.06);
+    padding:32px;
+    position:sticky;
+    top:170px;
+}
+
+.order-summary-card h2{
+    font-family:'Montserrat', sans-serif;
+    font-size:12px;
+    letter-spacing:2.5px;
+    font-weight:600;
+    color:#774f3e;
+    text-transform:uppercase;
+    margin-bottom:20px;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    font-family:'Montserrat', sans-serif;
+    font-size:13.5px;
+    border-bottom:1px solid #f0eee9;
+}
+
+.summary-row.total{
+    border-bottom:none;
+    border-top:1px solid #1a1a1a;
+    margin-top:8px;
+    padding-top:16px;
+    font-size:16px;
+    font-weight:600;
+}
+
+.summary-item-name{
+    color:#555;
+}
+
+.place-order-btn{
+    width:100%;
+    padding:16px;
+    background:#1a1a1a;
+    color:#fff9e9;
+    border:none;
+    font-family:'Montserrat', sans-serif;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    cursor:pointer;
+    margin-top:22px;
+    transition:background 0.25s ease;
+}
+
+.place-order-btn:hover{
+    background:#774f3e;
+}
+
+.place-order-btn:disabled{
+    background:#aaa;
+    cursor:not-allowed;
+}
+
+/* ---------------------------------------------------------
+   ACCOUNT / ORDER HISTORY
+--------------------------------------------------------- */
+
+.account-page{
+    background:#F4F0EA;
+    min-height:100vh;
+    font-family:"Georgia", serif;
+}
+
+.account-wrap-page{
+    max-width:900px;
+    margin:0 auto;
+    padding:170px 24px 90px;
+}
+
+.account-wrap-page h1{
+    font-weight:400;
+    font-size:1.9rem;
+    letter-spacing:1px;
+    margin-bottom:32px;
+}
+
+.order-card{
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.06);
+    padding:26px 28px;
+    margin-bottom:18px;
+}
+
+.order-card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:18px;
+    padding-bottom:16px;
+    border-bottom:1px solid #f0eee9;
+}
+
+.order-number{
+    font-family:'Montserrat', sans-serif;
+    font-weight:600;
+    font-size:14px;
+    letter-spacing:0.5px;
+}
+
+.order-date{
+    font-family:'Montserrat', sans-serif;
+    font-size:12px;
+    color:#888;
+    margin-top:4px;
+}
+
+.order-status-badge{
+    font-family:'Montserrat', sans-serif;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:6px 14px;
+    border-radius:20px;
+    font-weight:600;
+}
+
+.status-pending{ background:#fff3da; color:#8a6310; }
+.status-confirmed{ background:#dceaf7; color:#2a5d8f; }
+.status-processing{ background:#e6e0f7; color:#5b3fa0; }
+.status-shipped{ background:#dcecf0; color:#1f7a8c; }
+.status-delivered{ background:#dff3e2; color:#23793a; }
+.status-cancelled{ background:#f7dcdc; color:#a33; }
+.status-refunded{ background:#eee; color:#666; }
+
+.order-item-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:8px 0;
+    font-family:'Montserrat', sans-serif;
+    font-size:13px;
+}
+
+.order-item-row img{
+    width:52px;
+    height:52px;
+    object-fit:cover;
+    border-radius:3px;
+    background:#f0eee9;
+}
+
+.order-item-name{
+    flex:1;
+    color:#333;
+}
+
+.order-item-qty{
+    color:#999;
+}
+
+.order-card-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:16px;
+    padding-top:16px;
+    border-top:1px solid #f0eee9;
+    font-family:'Montserrat', sans-serif;
+}
+
+.order-total{
+    font-weight:600;
+    font-size:15px;
+}
+
+.order-cancel-btn{
+    background:none;
+    border:1px solid #ddd8d0;
+    padding:8px 16px;
+    font-family:'Montserrat', sans-serif;
+    font-size:11.5px;
+    letter-spacing:1px;
+    cursor:pointer;
+    border-radius:2px;
+    transition:0.2s ease;
+}
+
+.order-cancel-btn:hover{
+    border-color:#a33;
+    color:#a33;
+}
+
+.empty-state{
+    text-align:center;
+    padding:60px 20px;
+    font-family:'Montserrat', sans-serif;
+    color:#888;
+}
+
+.empty-state a{
+    color:#774f3e;
+    font-weight:600;
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
+
+@media(max-width:900px){
+    .checkout-wrap{
+        grid-template-columns:1fr;
+    }
+    .order-summary-card{
+        position:static;
+    }
+}
+
+@media(max-width:600px){
+    .auth-wrap{
+        padding:130px 16px 60px;
+    }
+    .auth-card{
+        padding:34px 24px;
+    }
+    .checkout-wrap{
+        padding:130px 16px 60px;
+        gap:24px;
+    }
+    .checkout-section, .order-summary-card{
+        padding:22px;
+    }
+    .checkout-grid-2{
+        grid-template-columns:1fr;
+    }
+    .account-wrap-page{
+        padding:130px 16px 60px;
+    }
+    .order-card{
+        padding:20px;
+    }
+}

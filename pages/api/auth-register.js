@@ -11,8 +11,13 @@ export default async function handler(req, res) {
     if (!name || !email || !password) return error(res, "Name, email and password are required");
     if (password.length < 8) return error(res, "Password must be at least 8 characters");
     const existing = await User.findOne({ email });
-    if (existing) return error(res, "Email already registered", 409);
-    const user = await User.create({ name, email, password });
+    if (existing) {
+      if (existing.authProvider === "google") {
+        return error(res, "This email is registered with Google. Use 'Continue with Google' to sign in.", 409);
+      }
+      return error(res, "Email already registered", 409);
+    }
+    const user = await User.create({ name, email, password, authProvider: "password" });
     const token = signToken({ userId: user.id, email: user.email, role: user.role });
     return ok(res, { token, user: { id: user.id, name: user.name, email: user.email, role: user.role } });
   } catch (err) {
