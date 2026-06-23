@@ -403,34 +403,129 @@ export default async function handler(req, res) {
   }
 }
 
-console.log("SEED: connected");
+export default async function handler(req, res) {
+  if (req.method !== "POST") return res.status(405).end();
 
-console.log("SEED: delete products");
-await Product.deleteMany({});
+  try {
+    console.log("SEED: connectDB");
+    await connectDB();
 
-console.log("SEED: delete collections");
-await Collection.deleteMany({});
+    console.log("SEED: delete products");
+    await Product.deleteMany({});
 
-console.log("SEED: delete categories");
-await Category.deleteMany({});
+    console.log("SEED: delete collections");
+    await Collection.deleteMany({});
 
-console.log("SEED: create categories");
-await Category.insertMany(categories);
+    console.log("SEED: delete categories");
+    await Category.deleteMany({});
 
-console.log("SEED: create collections");
-await Collection.insertMany(collections);
+    console.log("SEED: create categories");
 
-console.log("SEED: create products");
-await Product.insertMany(products);
+    const categories = {};
+    for (const category of categoryData) {
+      const doc = await Category.create(category);
+      categories[category.slug] = doc;
+    }
 
-console.log("SEED: before admin");
+    console.log("SEED: categories created");
 
-await User.create({
-  name: "Store Admin",
-  email: adminEmail,
-  password: adminPassword,
-  role: "admin",
-  authProvider: "password",
-});
+    const collections = {};
 
-console.log("SEED: admin created");
+    console.log("SEED: create collections");
+
+    for (const collection of collectionData) {
+      const category = categories[collection.categorySlug];
+
+      const doc = await Collection.create({
+        name: collection.name,
+        slug: collection.slug,
+        description: collection.description,
+        imageUrl: collection.imageUrl,
+        category: category._id,
+        sortOrder: collection.sortOrder ?? 0,
+        isActive: collection.isActive ?? true,
+      });
+
+      collections[collection.slug] = doc;
+    }
+
+    console.log("SEED: collections created");
+
+    const products = productData.map((product) => ({
+      name: product.name,
+      slug: product.slug,
+      description: product.description,
+      price: product.price,
+      comparePrice: product.comparePrice,
+      sku: product.sku,
+      stock: product.stock,
+      category: categories[product.categorySlug]._id,
+      collection: collections[product.collectionSlug]._id,
+      collectionOrder: product.collectionOrder ?? 0,
+      tags: product.tags ?? [],
+      brand: product.brand,
+      isFeatured: product.isFeatured ?? false,
+      isActive: product.isActive ?? true,
+      attributes: product.attributes ?? {},
+      images: product.images ?? [],
+    }));
+
+    console.log("SEED: BEFORE Product.insertMany");
+    await Product.insertMany(products);
+    console.log("SEED: AFTER Product.insertMany");
+
+    const adminEmail =
+      process.env.SEED_ADMIN_EMAIL || "admin@wordofart.test";
+
+    const adminPassword =
+      process.env.SEED_ADMIN_PASSWORD || "ChangeMe123!";
+
+    console.log("SEED: BEFORE User.findOne");
+
+    const existingAdmin = await User.findOne({
+      email: adminEmail,
+    });
+
+    console.log("SEED: AFTER User.findOne");
+
+    let adminMessage = "";
+
+    if (!existingAdmin) {
+      console.log("SEED: BEFORE User.create");
+
+      await User.create({
+        name: "Store Admin",
+        email: adminEmail,
+        password: adminPassword,
+        role: "admin",
+        authProvider: "password",
+      });
+
+      console.log("SEED: AFTER User.create");
+
+      adminMessage =
+        ` Admin account created: ${adminEmail} / ${adminPassword}`;
+    } else {
+      adminMessage =
+        ` Admin account already exists (${adminEmail}).`;
+    }
+
+    console.log("SEED: COMPLETE");
+
+    return ok(res, {
+      message:
+        `Seeded ${categoryData.length} categories, ` +
+        `${collectionData.length} collections and ` +
+        `${products.length} products.${adminMessage}`,
+    });
+  } catch (err) {
+    console.error("SEED FULL ERROR:", err);
+    console.error("SEED STACK:", err?.stack);
+
+    return res.status(500).json({
+      success: false,
+      error: err?.message,
+      stack: err?.stack,
+    });
+  }
+}
