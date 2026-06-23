@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
+import * as bcrypt from "bcryptjs";
 
 const AddressSchema = new mongoose.Schema({
   street: { type: String, required: true },
