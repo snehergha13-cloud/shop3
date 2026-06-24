@@ -180,12 +180,12 @@ nav{
     justify-content:space-between;
     gap:60px;
 
-    background:rgba(245,240,232,0.16);
+    background:rgba(20,18,16,0.94);
 
     backdrop-filter:blur(22px);
     -webkit-backdrop-filter:blur(22px);
 
-    border:1px solid rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.08);
 
     border-radius:0 0 24px 24px;
 

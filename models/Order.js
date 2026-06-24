@@ -41,12 +41,11 @@ const OrderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-OrderSchema.pre("save", async function (next) {
+OrderSchema.pre("save", async function () {
   if (this.isNew) {
     const count = await mongoose.model("Order").countDocuments();
     this.orderNumber = `SS-${String(count + 1).padStart(6, "0")}`;
   }
-  next();
 });
 
 export default mongoose.models.Order || mongoose.model("Order", OrderSchema);
