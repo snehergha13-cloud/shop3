@@ -67,20 +67,29 @@ export default function AdminDashboard() {
           <>
             <div className="admin-stats-grid">
               <div className="admin-stat-card">
+                <div className="stat-icon"><i className="fa-solid fa-box"></i></div>
                 <div className="stat-label">Active Products</div>
                 <div className="stat-value">{stats.totalProducts}</div>
               </div>
               <div className={`admin-stat-card ${stats.lowStockCount + stats.outOfStockCount > 0 ? "warn" : ""}`}>
+                <div className="stat-icon"><i className="fa-solid fa-triangle-exclamation"></i></div>
                 <div className="stat-label">Low / Out of Stock</div>
                 <div className="stat-value">{stats.lowStockCount + stats.outOfStockCount}</div>
               </div>
               <div className="admin-stat-card">
+                <div className="stat-icon"><i className="fa-solid fa-receipt"></i></div>
                 <div className="stat-label">Total Orders</div>
                 <div className="stat-value">{stats.totalOrders}</div>
               </div>
               <div className={`admin-stat-card ${stats.pendingOrders > 0 ? "warn" : ""}`}>
+                <div className="stat-icon"><i className="fa-solid fa-clock"></i></div>
                 <div className="stat-label">Pending Orders</div>
                 <div className="stat-value">{stats.pendingOrders}</div>
+              </div>
+              <div className="admin-stat-card accent">
+                <div className="stat-icon"><i className="fa-solid fa-indian-rupee-sign"></i></div>
+                <div className="stat-label">Revenue (Paid + COD)</div>
+                <div className="stat-value">{fmt(stats.revenue)}</div>
               </div>
             </div>
 
@@ -102,15 +111,15 @@ export default function AdminDashboard() {
                     ) : (
                       recentOrders.map((o) => (
                         <tr key={o._id}>
-                          <td>{o.orderNumber}</td>
-                          <td className="customer-cell">
+                          <td data-label="Order">{o.orderNumber}</td>
+                          <td className="customer-cell" data-label="Customer">
                             <div className="customer-name">{o.user?.name || "—"}</div>
                             <div className="customer-email">{o.user?.email || ""}</div>
                           </td>
-                          <td>
+                          <td data-label="Status">
                             <span className={`order-status-badge status-${o.status}`}>{o.status}</span>
                           </td>
-                          <td>{fmt(o.total)}</td>
+                          <td data-label="Total">{fmt(o.total)}</td>
                         </tr>
                       ))
                     )}
@@ -139,9 +148,9 @@ export default function AdminDashboard() {
                     ) : (
                       stats.lowStock.map((p) => (
                         <tr key={p._id}>
-                          <td className="admin-table-product-name">{p.name}</td>
-                          <td>{p.sku}</td>
-                          <td>
+                          <td className="admin-table-product-name" data-label="Product">{p.name}</td>
+                          <td data-label="SKU">{p.sku}</td>
+                          <td data-label="Stock">
                             <span className={`stock-pill ${p.stock === 0 ? "stock-out" : "stock-low"}`}>
                               {p.stock === 0 ? "Out of stock" : `${p.stock} left`}
                             </span>

@@ -166,7 +166,7 @@ export default function AdminProducts() {
                     const draft = editing[p._id];
                     return (
                       <tr key={p._id} style={{ opacity: p.isActive ? 1 : 0.5 }}>
-                        <td>
+                        <td data-label="Product" className="cell-label-hidden">
                           <div className="admin-table-product-cell">
                             {p.images?.[0] && <img src={p.images[0]} alt={p.name} />}
                             <div>
@@ -175,8 +175,8 @@ export default function AdminProducts() {
                             </div>
                           </div>
                         </td>
-                        <td>{p.category?.name || "—"}</td>
-                        <td>
+                        <td data-label="Category">{p.category?.name || "—"}</td>
+                        <td data-label="Price">
                           {isEditing ? (
                             <input
                               className="inline-edit-input"
@@ -190,7 +190,7 @@ export default function AdminProducts() {
                             fmt(p.price)
                           )}
                         </td>
-                        <td>
+                        <td data-label="Stock">
                           {isEditing ? (
                             <input
                               className="inline-edit-input"
@@ -205,10 +205,10 @@ export default function AdminProducts() {
                             </span>
                           )}
                         </td>
-                        <td>{p.isActive ? "Active" : "Hidden"}</td>
-                        <td>
+                        <td data-label="Status">{p.isActive ? "Active" : "Hidden"}</td>
+                        <td data-label="Actions">
                           {isEditing ? (
-                            <div style={{ display: "flex", gap: "10px" }}>
+                            <div className="admin-table-actions">
                               <button
                                 className="table-action-link"
                                 onClick={() => saveEdit(p._id)}
@@ -221,7 +221,7 @@ export default function AdminProducts() {
                               </button>
                             </div>
                           ) : (
-                            <div style={{ display: "flex", gap: "10px" }}>
+                            <div className="admin-table-actions">
                               <button className="table-action-link" onClick={() => startEdit(p)}>
                                 Edit
                               </button>

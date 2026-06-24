@@ -118,25 +118,25 @@ export default function AdminOrders() {
                 ) : (
                   filtered.map((o) => (
                     <tr key={o._id}>
-                      <td>
+                      <td data-label="Order" className="cell-label-hidden">
                         <div className="admin-table-product-name">{o.orderNumber}</div>
                         <div className="admin-table-product-sku">
                           {new Date(o.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
                         </div>
                       </td>
-                      <td className="customer-cell">
+                      <td className="customer-cell" data-label="Customer">
                         <div className="customer-name">{o.user?.name || "—"}</div>
                         <div className="customer-email">{o.user?.email || ""}</div>
                       </td>
-                      <td>
+                      <td data-label="Items">
                         {o.items.length} item{o.items.length !== 1 ? "s" : ""}
                       </td>
-                      <td>{fmt(o.total)}</td>
-                      <td>
+                      <td data-label="Total">{fmt(o.total)}</td>
+                      <td data-label="Payment">
                         {o.paymentMethod === "cod" ? "COD" : o.paymentMethod}
                         <div className="admin-table-product-sku">{o.paymentStatus}</div>
                       </td>
-                      <td>
+                      <td data-label="Status">
                         <select
                           className="status-select"
                           value={o.status}
@@ -148,8 +148,8 @@ export default function AdminOrders() {
                           ))}
                         </select>
                       </td>
-                      <td>
-                        <div style={{ display: "flex", gap: "6px" }}>
+                      <td data-label="Tracking #">
+                        <div className="admin-table-actions">
                           <input
                             className="tracking-input"
                             placeholder="Add tracking #"
