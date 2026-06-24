@@ -1,5 +1,5 @@
 import { connectDB } from "../../lib/db";
-import { ok, serverError } from "../../lib/response";
+import { ok, error } from "../../lib/response";
 import Category from "../../models/Category";
 import Collection from "../../models/Collection";
 import Product from "../../models/Product";
@@ -387,7 +387,6 @@ export default async function handler(req, res) {
         email: adminEmail,
         password: adminPassword,
         role: "admin",
-        authProvider: "password",
       });
       adminMessage = ` Admin account created: ${adminEmail} / ${adminPassword} — change this password after first login.`;
     } else {
@@ -399,133 +398,22 @@ export default async function handler(req, res) {
     });
   } catch (err) {
     console.error("[seed]", err);
-    return serverError(res);
-  }
-}
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).end();
+    // This endpoint is a one-time setup tool, not public-facing storefront
+    // API — surfacing the real error (bad MONGODB_URI, duplicate key, a
+    // validation failure, etc.) is far more useful here than a generic
+    // "Internal server error" that hides what actually went wrong.
+    let detail = err.message;
 
-  try {
-    console.log("SEED: connectDB");
-    await connectDB();
-
-    console.log("SEED: delete products");
-    await Product.deleteMany({});
-
-    console.log("SEED: delete collections");
-    await Collection.deleteMany({});
-
-    console.log("SEED: delete categories");
-    await Category.deleteMany({});
-
-    console.log("SEED: create categories");
-
-    const categories = {};
-    for (const category of categoryData) {
-      const doc = await Category.create(category);
-      categories[category.slug] = doc;
+    if (err.name === "ValidationError") {
+      // Mongoose validation errors: pull out the specific field problems.
+      detail = Object.values(err.errors).map((e) => e.message).join("; ");
+    } else if (err.code === 11000) {
+      // Duplicate key error (e.g. a SKU or slug that already exists).
+      const field = Object.keys(err.keyPattern || {})[0] || "field";
+      detail = `Duplicate value for "${field}" — a record with this value already exists.`;
     }
 
-    console.log("SEED: categories created");
-
-    const collections = {};
-
-    console.log("SEED: create collections");
-
-    for (const collection of collectionData) {
-      const category = categories[collection.categorySlug];
-
-      const doc = await Collection.create({
-        name: collection.name,
-        slug: collection.slug,
-        description: collection.description,
-        imageUrl: collection.imageUrl,
-        category: category._id,
-        sortOrder: collection.sortOrder ?? 0,
-        isActive: collection.isActive ?? true,
-      });
-
-      collections[collection.slug] = doc;
-    }
-
-    console.log("SEED: collections created");
-
-    const products = productData.map((product) => ({
-      name: product.name,
-      slug: product.slug,
-      description: product.description,
-      price: product.price,
-      comparePrice: product.comparePrice,
-      sku: product.sku,
-      stock: product.stock,
-      category: categories[product.categorySlug]._id,
-      collection: collections[product.collectionSlug]._id,
-      collectionOrder: product.collectionOrder ?? 0,
-      tags: product.tags ?? [],
-      brand: product.brand,
-      isFeatured: product.isFeatured ?? false,
-      isActive: product.isActive ?? true,
-      attributes: product.attributes ?? {},
-      images: product.images ?? [],
-    }));
-
-    console.log("SEED: BEFORE Product.insertMany");
-    await Product.insertMany(products);
-    console.log("SEED: AFTER Product.insertMany");
-
-    const adminEmail =
-      process.env.SEED_ADMIN_EMAIL || "admin@wordofart.test";
-
-    const adminPassword =
-      process.env.SEED_ADMIN_PASSWORD || "ChangeMe123!";
-
-    console.log("SEED: BEFORE User.findOne");
-
-    const existingAdmin = await User.findOne({
-      email: adminEmail,
-    });
-
-    console.log("SEED: AFTER User.findOne");
-
-    let adminMessage = "";
-
-    if (!existingAdmin) {
-      console.log("SEED: BEFORE User.create");
-
-      await User.create({
-        name: "Store Admin",
-        email: adminEmail,
-        password: adminPassword,
-        role: "admin",
-        authProvider: "password",
-      });
-
-      console.log("SEED: AFTER User.create");
-
-      adminMessage =
-        ` Admin account created: ${adminEmail} / ${adminPassword}`;
-    } else {
-      adminMessage =
-        ` Admin account already exists (${adminEmail}).`;
-    }
-
-    console.log("SEED: COMPLETE");
-
-    return ok(res, {
-      message:
-        `Seeded ${categoryData.length} categories, ` +
-        `${collectionData.length} collections and ` +
-        `${products.length} products.${adminMessage}`,
-    });
-  } catch (err) {
-    console.error("SEED FULL ERROR:", err);
-    console.error("SEED STACK:", err?.stack);
-
-    return res.status(500).json({
-      success: false,
-      error: err?.message,
-      stack: err?.stack,
-    });
+    return error(res, `Seed failed: ${detail}`, 500);
   }
 }

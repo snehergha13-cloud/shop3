@@ -84,18 +84,6 @@ export function AuthProvider({ children }) {
     return data.data.user;
   }
 
-  async function loginWithGoogle(credential) {
-    const res = await fetch("/api/auth-google", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ credential }),
-    });
-    const data = await res.json();
-    if (!data.success) throw new Error(data.error || "Google sign-in failed");
-    persistSession(data.data.token, data.data.user);
-    return data.data.user;
-  }
-
   function logout() {
     localStorage.removeItem(TOKEN_KEY);
     setToken(null);
@@ -118,7 +106,6 @@ export function AuthProvider({ children }) {
         isLoggedIn: !!user,
         login,
         signup,
-        loginWithGoogle,
         logout,
         authHeaders,
         refreshUser: () => loadUser(token),

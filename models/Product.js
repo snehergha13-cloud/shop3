@@ -35,7 +35,14 @@ const ProductSchema = new mongoose.Schema(
     isFeatured: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    // "collection" is technically a reserved Mongoose document property,
+    // but this schema only ever uses it as a plain ObjectId ref field via
+    // .create()/.populate() — never as a setter that would collide with
+    // Mongoose's internal collection accessor — so it's safe here.
+    suppressReservedKeysWarning: true,
+  }
 );
 
 ProductSchema.index({ name: "text", description: "text", tags: "text" });

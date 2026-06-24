@@ -1,8 +1,8 @@
 # Deploying Word Of Art (shop3)
 
 This app is a Next.js storefront with a full backend: products & inventory,
-email/password + Google login, a per-user cart, an order system, and an
-admin panel. This guide gets it live on the internet.
+email/password login, a per-user cart, an order system, and an admin panel.
+This guide gets it live on the internet.
 
 ---
 
@@ -13,7 +13,6 @@ admin panel. This guide gets it live on the internet.
 | A [Vercel](https://vercel.com) account | Hosts the Next.js app | Free tier is enough |
 | A [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) account | Hosts the database (Vercel doesn't host databases) | Free tier (M0) is enough |
 | A [GitHub](https://github.com) account | Vercel deploys from a Git repo | Free |
-| (Optional) A [Google Cloud](https://console.cloud.google.com) project | Only needed for "Sign in with Google" | Free |
 
 You do **not** need Razorpay yet — checkout currently supports Cash on
 Delivery, and the Razorpay option is shown as "coming soon" in the UI.
@@ -58,7 +57,6 @@ git push -u origin main
    |---|---|
    | `MONGODB_URI` | the connection string from step 2 |
    | `JWT_SECRET` | any long random string — generate one with `openssl rand -base64 32` |
-   | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | leave blank for now, or fill in from step 6 below |
    | `SEED_ADMIN_EMAIL` | the email you want for your admin login |
    | `SEED_ADMIN_PASSWORD` | a temporary password — change it after first login |
    | `NEXT_PUBLIC_SITE_URL` | your Vercel URL, e.g. `https://your-app.vercel.app` (add after first deploy, then redeploy) |
@@ -67,24 +65,58 @@ git push -u origin main
 
 ---
 
-## 5. Load sample products & create your admin account
+## 5. Load sample products & create your admin account (seeding)
 
 The project ships with a one-time seed endpoint that populates categories,
-collections, and products, and creates your first admin account.
+collections, and products, and creates your first admin account. This is
+the **only** way an admin account gets created — there's no signup
+checkbox for "make me an admin" (intentionally, for security), so you run
+this once after every fresh deploy / fresh database.
 
-Run this once against your deployed URL:
+### Run the seed
+
+Once your app is deployed (or running locally), call the seed endpoint with
+a single POST request and no body:
 
 ```bash
 curl -X POST https://your-app.vercel.app/api/seed
 ```
 
-This will:
-- Create the sample categories/collections/products defined in `pages/api/seed.js`
-- Create an admin account using `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` (or the defaults `admin@wordofart.test` / `ChangeMe123!` if you didn't set them)
+For local development, the same thing, just against localhost:
+```bash
+curl -X POST http://localhost:3000/api/seed
+```
 
-Then go to `https://your-app.vercel.app/login`, sign in with that admin
-account, and click the account icon in the navbar → **Admin Panel**
-(or go directly to `/admin`).
+If you don't have `curl` handy, you can also just open
+`https://your-app.vercel.app/api/seed` in a tool like Postman/Insomnia and
+send a POST request, or run this in your browser's console while on the
+site:
+```js
+fetch("/api/seed", { method: "POST" }).then(r => r.json()).then(console.log);
+```
+
+### What seeding does
+
+- Wipes and recreates the sample categories, collections, and products defined in `pages/api/seed.js` (so it's safe to use on a fresh store, but see the warning below).
+- Creates one admin account, using the email/password from your `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` environment variables.
+  - If you didn't set those variables, it defaults to: `admin@wordofart.test` / `ChangeMe123!`
+  - If an admin with that email already exists, seeding leaves it untouched (it will never overwrite an existing admin's password).
+
+You'll see a JSON response confirming what was created, e.g.:
+```json
+{
+  "success": true,
+  "data": {
+    "message": "Seeded 2 categories, 4 collections and 11 products. Admin account created: admin@wordofart.test / ChangeMe123! — change this password after first login."
+  }
+}
+```
+
+### Log in as admin
+
+Go to `https://your-app.vercel.app/login` (or `/login` locally), sign in
+with the admin email/password from above, then click the account icon in
+the navbar → **Admin Panel** (or go directly to `/admin`).
 
 **Change the admin password immediately** after your first login. There's
 no settings page UI for this yet, but the API supports it — open your
@@ -103,36 +135,17 @@ fetch("/api/auth-me", {
 }).then(r => r.json()).then(console.log);
 ```
 
-> ⚠️ Don't run `/api/seed` again on a live store once you have real
-> products/orders — it deletes all existing products/categories/collections
-> first. It will NOT touch existing orders or re-create the admin account
-> if one already exists.
+> ⚠️ **Don't run `/api/seed` again on a live store once you have real
+> products or orders.** It deletes and recreates all categories,
+> collections, and products from scratch — any edits you made in the admin
+> panel (price changes, new products, stock levels) would be wiped. It will
+> NOT touch existing orders, and will NOT re-create or reset the admin
+> account if one already exists, so it's safe to accidentally re-run from
+> an auth standpoint — just not from a catalog standpoint.
 
 ---
 
-## 6. (Optional) Enable "Sign in with Google"
-
-If you skip this, the app works fine — the Google button just shows a small
-"not configured yet" notice instead of a working button.
-
-1. Go to https://console.cloud.google.com/apis/credentials
-2. Create a project (or pick an existing one).
-3. Click **Create Credentials → OAuth client ID**.
-   - Application type: **Web application**
-   - Authorized JavaScript origins: add your Vercel URL, e.g. `https://your-app.vercel.app` (and `http://localhost:3000` for local dev)
-   - You do **not** need to set a redirect URI — this app uses Google Identity Services' one-tap/button flow, not the redirect flow.
-4. Copy the **Client ID** (looks like `xxxxx.apps.googleusercontent.com`).
-5. In Vercel → Project Settings → Environment Variables, set:
-   ```
-   NEXT_PUBLIC_GOOGLE_CLIENT_ID=xxxxx.apps.googleusercontent.com
-   ```
-6. Redeploy (Vercel → Deployments → ⋯ → Redeploy) so the new env var takes effect.
-
-The "Continue with Google" button will now appear on `/login` and `/signup`.
-
----
-
-## 7. Adding Razorpay later
+## 6. Adding Razorpay later
 
 The checkout page already has a disabled "Pay Online (Razorpay)" option and
 the `Order` model already has `paymentMethod` / `paymentStatus` / `paymentId`
@@ -152,7 +165,7 @@ fields ready to go. When you're ready:
 
 ---
 
-## 8. Moving to a different host later
+## 7. Moving to a different host later
 
 Everything here is standard Next.js + MongoDB, so it isn't locked to Vercel:
 - Any Node.js host that supports Next.js (Render, Railway, Fly.io, a VPS with `next start`) works the same way — just set the same environment variables.

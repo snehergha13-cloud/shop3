@@ -4,12 +4,11 @@ import Link from "next/link";
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import GoogleSignInButton from "../components/GoogleSignInButton";
 import { useAuth } from "../context/AuthContext";
 
 export default function Signup() {
   const router = useRouter();
-  const { signup, loginWithGoogle } = useAuth();
+  const { signup } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,16 +34,6 @@ export default function Signup() {
       setError(err.message);
     } finally {
       setSubmitting(false);
-    }
-  }
-
-  async function handleGoogle(credential) {
-    setError("");
-    try {
-      await loginWithGoogle(credential);
-      router.push(redirectTo);
-    } catch (err) {
-      setError(err.message);
     }
   }
 
@@ -107,10 +96,6 @@ export default function Signup() {
                 {submitting ? "Creating Account..." : "Create Account"}
               </button>
             </form>
-
-            <div className="auth-divider">or</div>
-
-            <GoogleSignInButton onCredential={handleGoogle} text="signup_with" />
 
             <p className="auth-switch">
               Already have an account?{" "}

@@ -4,12 +4,11 @@ import Link from "next/link";
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import GoogleSignInButton from "../components/GoogleSignInButton";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
   const router = useRouter();
-  const { login, loginWithGoogle } = useAuth();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -30,16 +29,6 @@ export default function Login() {
       setError(err.message);
     } finally {
       setSubmitting(false);
-    }
-  }
-
-  async function handleGoogle(credential) {
-    setError("");
-    try {
-      await loginWithGoogle(credential);
-      router.push(redirectTo);
-    } catch (err) {
-      setError(err.message);
     }
   }
 
@@ -89,10 +78,6 @@ export default function Login() {
                 {submitting ? "Signing In..." : "Sign In"}
               </button>
             </form>
-
-            <div className="auth-divider">or</div>
-
-            <GoogleSignInButton onCredential={handleGoogle} />
 
             <p className="auth-switch">
               Don&apos;t have an account?{" "}

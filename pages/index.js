@@ -7,14 +7,14 @@ const categoryHref = (slug) => `/shop?category=${slug}`;
 
 export default function Home() {
     const [currentSlide, setCurrentSlide] = useState(0);
-   
+    const [categories, setCategories] = useState([]);
 
     const slides = [
         "/assets/home/SLIDE - 0.jpg",
         "/assets/home/SLIDE - 1.jpg",
         "/assets/home/SLIDE - 2.jpg",
         "/assets/home/SLIDE - 3.jpg",
-    
+
     ];
 
     useEffect(() => {
@@ -23,6 +23,14 @@ export default function Home() {
         }, 7000);
 
         return () => clearInterval(interval);
+    }, []);
+
+    // Used by the mobile-only "shop by category" scroller right under the hero.
+    useEffect(() => {
+        fetch("/api/categories")
+            .then((r) => r.json())
+            .then((d) => { if (d.success) setCategories(d.data); })
+            .catch(() => {});
     }, []);
 
     return (
@@ -45,6 +53,13 @@ export default function Home() {
     />
 ))}
 
+                {/* Mobile-only overlay — desktop slides already carry their own text */}
+                <div className="hero-mobile-overlay">
+                    <span className="hero-mobile-eyebrow">WORD OF ART</span>
+                    <h1>Ideas. Ink. Impact.</h1>
+                    <Link href="/shop" className="hero-mobile-cta">SHOP NOW</Link>
+                </div>
+
                 <div className="slide-dots">
                     {slides.map((_, index) => (
                         <div
@@ -56,11 +71,41 @@ export default function Home() {
 
             </section>
 
+            {/* MOBILE-ONLY: SHOP BY CATEGORY SCROLLER */}
+            <section className="mobile-category-scroller">
+                {(categories.length > 0 ? categories : [
+                    { _id: "notebooks", name: "Notebooks", slug: "notebooks", imageUrl: "/assets/A5_softbound/C_1/A5 Notebooks - 1A.png" },
+                    { _id: "journals", name: "Journals", slug: "journals", imageUrl: "/assets/Journals/c1/LUNAR JOURNAL _ A.png" },
+                ]).map((cat) => (
+                    <Link key={cat._id} href={categoryHref(cat.slug)} className="mobile-category-circle">
+                        <div className="mobile-category-circle-img">
+                            <img src={cat.imageUrl} alt={cat.name} />
+                        </div>
+                        <span>{cat.name}</span>
+                    </Link>
+                ))}
+                <Link href="/shop" className="mobile-category-circle">
+                    <div className="mobile-category-circle-img">
+                        <img src="/assets/home/SLIDE - 1.jpg" alt="All products" />
+                    </div>
+                    <span>All Products</span>
+                </Link>
+            </section>
+
+            {/* MOBILE-ONLY: NEW ARRIVALS BANNER */}
+            <section className="mobile-new-arrivals">
+                <img src="/assets/home/SLIDE - 1.jpg" alt="New Arrivals" />
+                <div className="mobile-new-arrivals-overlay">
+                    <h2>NEW ARRIVALS</h2>
+                    <Link href="/shop">VIEW COLLECTION</Link>
+                </div>
+            </section>
+
             {/* SMALL IMAGE CARDS */}
             <section className="small-cards">
                 <div className="small-card">
                     <img src="https://via.placeholder.com/500x700" alt="" />
-                    <span>FOUNDER'S NOTE</span>
+                    <span>FOUNDER&apos;S NOTE</span>
                 </div>
                 <div className="small-card">
                     <img src="https://via.placeholder.com/500x700" alt="" />
@@ -79,6 +124,7 @@ export default function Home() {
                     <span>DESK OBJECTS</span>
                 </div>
             </section>
+
 
             {/* FEATURE IMAGES */}
             <section className="feature-grid">

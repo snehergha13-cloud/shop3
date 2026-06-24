@@ -210,45 +210,6 @@
     cursor:not-allowed;
 }
 
-.auth-divider{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    margin:28px 0;
-    font-family:'Montserrat', sans-serif;
-    font-size:11px;
-    letter-spacing:1.5px;
-    color:#999;
-    text-transform:uppercase;
-}
-
-.auth-divider::before,
-.auth-divider::after{
-    content:"";
-    flex:1;
-    height:1px;
-    background:#e6e2da;
-}
-
-.google-btn-slot{
-    display:flex;
-    justify-content:center;
-    min-height:42px;
-}
-
-.google-btn-fallback{
-    width:100%;
-    padding:13px;
-    background:#fff;
-    border:1px solid #ddd8d0;
-    border-radius:2px;
-    font-family:'Montserrat', sans-serif;
-    font-size:12.5px;
-    letter-spacing:1px;
-    color:#999;
-    text-align:center;
-}
-
 .auth-switch{
     text-align:center;
     margin-top:26px;

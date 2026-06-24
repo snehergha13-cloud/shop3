@@ -11,7 +11,6 @@ export default async function handler(req, res) {
     if (!email || !password) return error(res, "Email and password are required");
     const user = await User.findOne({ email }).select("+password");
     if (!user) return error(res, "Invalid email or password", 401);
-    if (!user.password) return error(res, "This account uses Google Sign-In. Use 'Continue with Google' to sign in.", 409);
     const match = await user.comparePassword(password);
     if (!match) return error(res, "Invalid email or password", 401);
     const token = signToken({ userId: user.id, email: user.email, role: user.role });
