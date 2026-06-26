@@ -187,87 +187,11 @@ SHOP DROPDOWN
     letter-spacing:2px;
 }
 
-/* DROPDOWN */
-
-.shop-dropdown{
-    position:absolute;
-
-    top:52px;
-    left:50%;
-
-    transform:translateX(-35%);
-
-    width:980px;
-
-    padding:48px 55px;
-
-    display:flex;
-    justify-content:space-between;
-
-    gap:70px;
-
-    background:rgba(245,240,232,0.14);
-
-    backdrop-filter:blur(22px);
-
-    border:1px solid rgba(255,255,255,0.08);
-
-    border-radius:0 0 24px 24px;
-
-    box-shadow:0 20px 60px rgba(0,0,0,0.35);
-
-    opacity:0;
-    visibility:hidden;
-
-    transition:0.35s ease;
-
-    z-index:1000;
-}
-
-.shop-wrapper:hover .shop-dropdown{
-    opacity:1;
-    visibility:visible;
-}
-
-/* COLUMNS */
-
-.dropdown-column{
-    min-width:230px;
-
-    display:flex;
-    flex-direction:column;
-
-    gap:14px;
-}
-
-/* HEADINGS */
-
-.dropdown-column h3{
-    color:white;
-
-    font-size:14px;
-    letter-spacing:3px;
-
-    margin-bottom:10px;
-}
-
-/* LINKS */
-
-.dropdown-column a{
-    color:rgba(255,255,255,0.9);
-
-    text-decoration:none;
-
-    font-size:13px;
-    letter-spacing:2px;
-
-    transition:0.3s ease;
-}
-
-.dropdown-column a:hover{
-    color:#ddb58b;
-    transform:translateX(4px);
-}
+/* Shop dropdown styling (.shop-dropdown, .dropdown-column, etc.) lives
+   in styles/home.css — it was previously duplicated here with stale
+   values (a much lighter, more transparent background) which silently
+   overrode the home.css version on every page, since this stylesheet
+   loads after home.css in _app.js. Removed to avoid that conflict. */
 
 /* =========================
 HERO

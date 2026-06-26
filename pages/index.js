@@ -17,6 +17,15 @@ export default function Home() {
 
     ];
 
+    // Mobile gets its own portrait-oriented hero images instead of the
+    // desktop landscape slides — same rotation logic, different source.
+    const mobileSlides = [
+        "/assets/mobile_slideshow/mobile_slideshow-1.png",
+        "/assets/mobile_slideshow/mobile_slideshow-2.png",
+        "/assets/mobile_slideshow/mobile_slideshow-3.png",
+        "/assets/mobile_slideshow/mobile_slideshow-4.png",
+    ];
+
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -45,13 +54,23 @@ export default function Home() {
             {/* HERO */}
             <section className="hero">
 
+                {/* Desktop slides — hidden on mobile via CSS */}
                 {slides.map((slide, index) => (
-    <div
-        key={index}
-        className={`slide ${currentSlide === index ? "active" : ""}`}
-        style={{ backgroundImage: `url("${slide}")` }}
-    />
-))}
+                    <div
+                        key={`desktop-${index}`}
+                        className={`slide slide-desktop ${currentSlide === index ? "active" : ""}`}
+                        style={{ backgroundImage: `url("${slide}")` }}
+                    />
+                ))}
+
+                {/* Mobile slides — hidden on desktop via CSS, shown only under the mobile breakpoint */}
+                {mobileSlides.map((slide, index) => (
+                    <div
+                        key={`mobile-${index}`}
+                        className={`slide slide-mobile ${currentSlide === index ? "active" : ""}`}
+                        style={{ backgroundImage: `url("${slide}")` }}
+                    />
+                ))}
 
                 {/* Mobile-only overlay — desktop slides already carry their own text */}
                 <div className="hero-mobile-overlay">

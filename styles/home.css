@@ -192,7 +192,7 @@ nav{
     opacity:0;
     visibility:hidden;
 
-    transition:all 0.35s ease;
+    transition:opacity 0.15s ease, visibility 0.15s ease, top 0.25s ease;
 
     box-shadow:
             0 20px 60px rgba(0,0,0,0.35);
@@ -206,6 +206,7 @@ nav{
     opacity:1;
     visibility:visible;
     top:52px;
+    transition-delay:0s;
 }
 
 /* COLUMNS */
@@ -291,6 +292,12 @@ nav{
 
 .slide.active{
     opacity:1;
+}
+
+/* Desktop shows the landscape hero slides; mobile gets its own
+   portrait set instead (toggled in the mobile media query below). */
+.slide-mobile{
+    display:none;
 }
 
 /* 5 Placeholder Slides */
@@ -790,9 +797,14 @@ FOOTER
         margin-top:104px;
     }
 
-    .slide{
+    .slide-desktop{
+        display:none;
+    }
+
+    .slide-mobile{
+        display:block;
         background-size:cover;
-        background-position:center center;
+        background-position:center top;
         background-repeat:no-repeat;
     }
 
@@ -800,52 +812,17 @@ FOOTER
         content:"";
         position:absolute;
         inset:0;
-        background:linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.55) 100%);
+        background:linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.02) 35%, rgba(0,0,0,0.35) 100%);
         z-index:5;
         pointer-events:none;
     }
 
+    /* The mobile hero images already carry their own designed-in text
+       (product names, pricing, brand mark), so the separate text
+       overlay used on the old generic desktop-crop slides is no
+       longer needed here. */
     .hero-mobile-overlay{
-        display:flex;
-        flex-direction:column;
-        align-items:flex-start;
-        position:absolute;
-        left:0;
-        bottom:46px;
-        width:100%;
-        padding:0 20px;
-        z-index:10;
-        color:#fff9e9;
-    }
-
-    .hero-mobile-eyebrow{
-        font-family:'Montserrat', sans-serif;
-        font-size:11px;
-        letter-spacing:3px;
-        font-weight:500;
-        color:#e0b88d;
-        margin-bottom:8px;
-    }
-
-    .hero-mobile-overlay h1{
-        font-family:"Georgia", serif;
-        font-weight:400;
-        font-size:1.9rem;
-        letter-spacing:1px;
-        line-height:1.2;
-        margin-bottom:18px;
-        max-width:80%;
-    }
-
-    .hero-mobile-cta{
-        display:inline-block;
-        padding:13px 30px;
-        background:#fff9e9;
-        color:#1a1a1a;
-        font-family:'Montserrat', sans-serif;
-        font-size:11.5px;
-        font-weight:600;
-        letter-spacing:2px;
+        display:none;
     }
 
     .slide-dots{
