@@ -271,8 +271,8 @@ nav{
 .hero{
     position:relative;
     width:100%;
-    height:calc(100vh - 132px); /* 80px nav + 52px menu-bar */
-    margin-top:132px;
+    height:100vh;
+    margin-top:0;
     overflow:hidden;
     background:#111;
 }
@@ -793,8 +793,8 @@ FOOTER
 
     /* --- HERO --- */
     .hero{
-        height:78vh;
-        margin-top:104px;
+        height:100vh;
+        margin-top:0;
     }
 
     .slide-desktop{

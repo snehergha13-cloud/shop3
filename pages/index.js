@@ -123,23 +123,23 @@ export default function Home() {
             {/* SMALL IMAGE CARDS */}
             <section className="small-cards">
                 <div className="small-card">
-                    <img src="https://via.placeholder.com/500x700" alt="" />
+                    <img src="/assets/Journals/LANDING PAGE/Jounal - 1.png" alt="Founder's Note" />
                     <span>FOUNDER&apos;S NOTE</span>
                 </div>
                 <div className="small-card">
-                    <img src="https://via.placeholder.com/500x700" alt="" />
+                    <img src="/assets/A5_softbound/C_2/mock up.png" alt="Craft Stories" />
                     <span>CRAFT STORIES</span>
                 </div>
                 <div className="small-card">
-                    <img src="https://via.placeholder.com/500x700" alt="" />
+                    <img src="/assets/softbound_notebooks/Product-2/softcover-notebook-a5.jpg" alt="Notebooks" />
                     <span>NOTEBOOKS</span>
                 </div>
                 <div className="small-card">
-                    <img src="https://via.placeholder.com/500x700" alt="" />
+                    <img src="/assets/A5_softbound/C_1/Product - 1/Context 1.jpg" alt="Writing Tools" />
                     <span>WRITING TOOLS</span>
                 </div>
                 <div className="small-card">
-                    <img src="https://via.placeholder.com/500x700" alt="" />
+                    <img src="/assets/mobile_slideshow/mobile_slideshow-1.png" alt="Desk Objects" />
                     <span>DESK OBJECTS</span>
                 </div>
             </section>
@@ -149,7 +149,7 @@ export default function Home() {
             <section className="feature-grid">
 
                 <Link href={categoryHref("journals")} className="feature-card">
-                    <img src="/Jounal - 1A.png" alt="" />
+                    <img src="/assets/Journals/LANDING PAGE/Jounal - 1.png" alt="Journals" />
                     <div className="feature-overlay">
                         <h2>JOURNALS</h2>
                         <p>Crafted for every passing thought.</p>
@@ -158,7 +158,7 @@ export default function Home() {
                 </Link>
 
                 <Link href={categoryHref("notebooks")} className="feature-card">
-                    <img src="/A5 Notebooks - 1B.png" alt="" />
+                    <img src="/assets/A5_softbound/C_1/A5 Notebooks - 1B.png" alt="A5 Notebooks" />
                     <div className="feature-overlay">
                         <h2>A5 NOTEBOOKS</h2>
                         <p>Minimal tools for organized minds.</p>

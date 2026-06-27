@@ -48,9 +48,12 @@
     display:flex;
     flex-direction:column;
     padding:26px 0;
-    position:sticky;
+    position:fixed;
     top:0;
-    height:100vh;
+    left:0;
+    bottom:0;
+    overflow-y:auto;
+    z-index:30;
 }
 
 .admin-logo{
@@ -159,6 +162,7 @@
     min-width:0;
     display:flex;
     flex-direction:column;
+    margin-left:250px;
 }
 
 .admin-topbar{
@@ -638,6 +642,10 @@
 
     .admin-sidebar{
         display:none;
+    }
+
+    .admin-main{
+        margin-left:0;
     }
 
     .admin-topbar{
