@@ -7,7 +7,7 @@ export default function About() {
     return (
         <>
             <Head>
-                <title>About Us - Word Of Art</title>
+                <title>About Us - WordArt</title>
                 <meta
                     name="description"
                     content="Wa.Wordart — where ideas find form, stories find meaning, and imagination becomes reality. Premium stationery for creators."

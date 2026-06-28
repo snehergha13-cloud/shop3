@@ -40,7 +40,7 @@ export default function Signup() {
   return (
     <>
       <Head>
-        <title>Create Account - Word Of Art</title>
+        <title>Create Account - WordArt</title>
       </Head>
 
       <Navbar />

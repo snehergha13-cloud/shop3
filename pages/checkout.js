@@ -89,7 +89,7 @@ export default function CheckoutPage() {
   return (
     <>
       <Head>
-        <title>Checkout - Word Of Art</title>
+        <title>Checkout - WordArt</title>
       </Head>
 
       <Navbar />

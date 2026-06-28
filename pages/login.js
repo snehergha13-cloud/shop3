@@ -35,7 +35,7 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>Sign In - Word Of Art</title>
+        <title>Sign In - WordArt</title>
       </Head>
 
       <Navbar />

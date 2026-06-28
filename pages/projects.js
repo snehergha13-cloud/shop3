@@ -67,14 +67,14 @@ export default function Collections() {
     return (
         <>
             <Head>
-                <title>Collections - Word Of Art</title>
+                <title>Collections - WordArt</title>
             </Head>
 
             <Navbar />
 
             <section className="hero">
                 <div className="hero-banner">
-                    <img src="/assets/home/slide-11.jpg" alt="Collections" />
+                    <img src="\assets\shop\shop_bg.jpg" alt="Collections" />
                     <div className="hero-overlay">
                         <h1>COLLECTIONS</h1>
                     </div>

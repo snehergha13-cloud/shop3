@@ -46,7 +46,7 @@ export default function Home() {
         <>
 
             <Head>
-                <title>Word Of Art</title>
+                <title>WordArt</title>
             </Head>
 
             <Navbar />

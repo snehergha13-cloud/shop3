@@ -145,14 +145,14 @@ export default function Shop() {
     return (
         <>
             <Head>
-                <title>Shop - Word Of Art</title>
+                <title>Shop - WordArt</title>
             </Head>
 
             <Navbar />
 
             <section className="hero">
                 <div className="hero-banner">
-                    <img src="/assets/home/slide-11.jpg" alt="Shop" />
+                    <img src="\assets\shop\shop_bg.jpg" alt="Shop" />
                     <div className="hero-overlay">
                         <h1>SHOP</h1>
                     </div>
