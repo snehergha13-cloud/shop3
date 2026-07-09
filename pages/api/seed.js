@@ -11,7 +11,7 @@ const categoryData = [
     name: "Notebooks",
     slug: "notebooks",
     description: "Notebooks",
-    imageUrl: "public/assets/A5_softbound/C_1/A5 Notebooks - 1A.png",
+    imageUrl: "/assets/A5_softbound/C_1/A5 Notebooks - 1A.png",
   },
   {
     name: "Journals",
@@ -23,7 +23,7 @@ const categoryData = [
     name: "Desk-Objects",
     slug: "desk_obj",
     description: "Desk objects",
-    imageUrl: "\assets\desk_obj\x01.jpeg",
+    imageUrl: "/assets/desk_obj/1.jpeg",
   },
 ];
 
@@ -46,11 +46,19 @@ const collectionData = [
     categorySlug: "notebooks",
     sortOrder: 2,
   },
+    {
+    name: "Lunar Journal",
+    slug: "c1-journals",
+    description: "Premium hardbound journals.",
+    imageUrl: "/assets/Journals/c1/LUNAR JOURNAL _ A.png",
+    categorySlug: "journals",
+    sortOrder: 3,
+  },
   {
     name: "Desk Objects",
     slug: "dsk-obj",
     description: "Personal leather desk objects.",
-    imageUrl: "\assets\desk_obj\x01.jpeg",
+    imageUrl: "/assets/desk_obj/1.jpeg",
     categorySlug: "journals",
     sortOrder: 3,
   },
