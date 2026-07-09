@@ -1164,19 +1164,38 @@ COLLECTION DETAIL
     }
 
     /* HERO BANNER */
+    .hero {
+        padding: 0 !important;
+        margin: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
     .hero-banner {
-        margin-top: 104px;
-        height: 280px;
+        margin-top: 104px !important;
+        height: 150px !important;
+        min-height: 0 !important;
+        max-height: 150px !important;
+        width: 100% !important;
+        overflow: hidden !important;
+    }
+
+    .hero-banner img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center center !important;
+        display: block !important;
     }
 
     .hero-overlay h1 {
-        font-size: 32px;
-        letter-spacing: 3px;
+        font-size: 28px !important;
+        letter-spacing: 3px !important;
     }
 
     .hero-overlay {
-        bottom: 30px;
-        left: 24px;
+        bottom: 20px !important;
+        left: 22px !important;
     }
 
     /* DESCRIPTION */
@@ -1246,14 +1265,75 @@ COLLECTION DETAIL
         margin-top: 50px;
     }
 }
+
+/* =========================================================
+   FINAL MOBILE HERO OVERRIDE
+   Keep this at the very bottom of the file.
+   This forces the shop hero/banner to stay compact on mobile.
+========================================================= */
+
 @media (max-width: 768px) {
-    .hero-banner {
-        margin-top: 104px;
-        height: 260px;
+    .hero {
+        padding: 0 !important;
+        margin: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        background: #edeae4;
     }
 
-    .hero {
-        padding: 0;
-        margin: 0;
+    .hero-banner {
+        margin-top: 104px !important;
+        width: 100% !important;
+        height: 150px !important;
+        min-height: 0 !important;
+        max-height: 150px !important;
+        overflow: hidden !important;
+        position: relative !important;
+    }
+
+    .hero-banner img,
+    .hero-banner picture,
+    .hero-banner video {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        max-height: 150px !important;
+        object-fit: cover !important;
+        object-position: center center !important;
+        display: block !important;
+    }
+
+    .hero-overlay {
+        bottom: 18px !important;
+        left: 22px !important;
+    }
+
+    .hero-overlay h1 {
+        font-size: 28px !important;
+        line-height: 1.1 !important;
+        letter-spacing: 3px !important;
+    }
+
+    .description {
+        padding-top: 24px !important;
     }
 }
+
+@media (max-width: 430px) {
+    .hero-banner {
+        height: 135px !important;
+        max-height: 135px !important;
+    }
+
+    .hero-banner img,
+    .hero-banner picture,
+    .hero-banner video {
+        max-height: 135px !important;
+    }
+
+    .hero-overlay h1 {
+        font-size: 26px !important;
+    }
+}
+
