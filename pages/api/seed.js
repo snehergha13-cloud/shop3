@@ -327,45 +327,27 @@ const productData = [
     ],
   },
   {
-    name: "7",
-    slug: "Lunar-journal",
-    description: "Lunar Journal\n" +
-        "A premium hardbound notebook designed for thinkers, creators, and quiet moments of clarity\n" +
-        "Minimal in form. Timeless in presence.\n" +
-        "The Lunar Journal is a premium hardbound notebook crafted with luxurious 150 GSM paper and\n" +
-        "a refined modern aesthetic - designed to hold your ideas beautifully.\n" +
-        "Perfect for journaling, sketching, planning, note-taking, or gifting.\n" +
-        "Details\n" +
-        "● Premium Hardbound Finish\n" +
-        "● Size: 21 × 14 cm\n" +
-        "● Paper: 150 GSM thick premium sheets\n" +
-        "● Smooth writing experience with minimal bleed-through\n" +
-        "● Elegant minimalist design with luxury detailing\n" +
-        "● Ideal for pens, pencils & light markers\n" +
-        "Why You'll Love It\n" +
-        "● Clean and sophisticated design language\n" +
-        "● Premium tactile feel\n" +
-        "● Designed for creatives, professionals & modern workspaces\n" +
-        "● Minimal. Intentional. Timeless.",
-    price: 37900,
-    comparePrice: 47000,
-    sku: "JN-001",
+    name: "Desk Objects - Trio Bundle",
+    slug: "trio-bundle",
+    description: "Specifications\n\nColour: Tan\n\nMaterial: Leatherite\n\nDimensions:\nDesk Mat: 45 (H) x 85 (W) cm\nTray: 16.5 (H) x 24 (W) cm\nMouse Pad: 23 (H) x 23 (W) cm\n\nPackage Contents:\n1 x Turf Leatherite Desk Mat\n1 x Valet Leatherite Tray\n1 x Orb Leatherite Mouse Pad\n\nCare:\nLeatherite can be wiped clean using a non-abrasive dampened cloth. Thorough air drying is crucial to keep it bacteria free.\n\nCountry of Origin:\nDesigned and Made In India",
+    price: 149900,
+    comparePrice: 200000,
+    sku: "DO-001",
     stock: 80,
-    categorySlug: "journals",
-    collectionSlug: "c1-journals",
+    categorySlug: "desk_obj",
+    collectionSlug: "dsk-obj",
     collectionOrder: 1,
-    tags: ["Journal", "illustrated"],
+    tags: ["Desk Object", "illustrated"],
     attributes: {
-      pages: "192",
-      format: "A5",
+      product_color: "tan",
+      product_type: "deskmat",
     },
     images: [
-      "/assets/Journals/c1/LUNAR JOURNAL _ A.png",
-      "/assets/Journals/c1/LUNAR JOURNAL _ B.png",
-      "/assets/Journals/c1/LUNAR JOURNAL _ C.png",
-      "/assets/Journals/c1/LUNAR JOURNAL _ D.png",
-      "/assets/Journals/c1/LUNAR JOURNAL _ E.png",
-      "/assets/Journals/c1/LUNAR JOURNAL _ F.png"
+      "/assets/desk_obj/1.jpeg",
+      "/assets/desk_obj/2.jpeg",
+      "/assets/desk_obj/3.jpeg",
+      "/assets/desk_obj/4.jpeg",
+      "/assets/desk_obj/5.jpeg",
     ],
   },
 ];
