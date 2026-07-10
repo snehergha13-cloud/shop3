@@ -140,7 +140,7 @@ export default function Home() {
                     <span>WRITING TOOLS</span>
                 </div>
                 <div className="small-card">
-                    <img src="/assets/mobile_slideshow/mobile_slideshow-1.png" alt="Desk Objects" />
+                    <img src="/assets/desk_obj/5.jpeg" alt="Desk Objects" />
                     <span>DESK OBJECTS</span>
                 </div>
             </section>
