@@ -31,7 +31,7 @@ const categoryData = [
 // Use categorySlug to connect the collection to a category.
 const collectionData = [
   {
-    name: "Deskline A5 Softbound Notebooks",
+    name: "Deskline A5 Notebooks",
     slug: "c1-notebooks",
     description: "A collection of softbound notebooks in coordinated illustrated styles.",
     imageUrl: "/assets/A5_softbound/C_1/A5 Notebooks - 1A.png",
@@ -39,20 +39,12 @@ const collectionData = [
     sortOrder: 1,
   },
   {
-    name: "Noir Et Blanc A5 Softbound Notebooks",
+    name: "Noir Et Blanc A5 Notebooks",
     slug: "c2-notebooks",
     description: "A collection of softbound notebooks in coordinated illustrated styles.",
     imageUrl: "/assets/A5_softbound/C_2/mock up.png",
     categorySlug: "notebooks",
     sortOrder: 2,
-  },
-    {
-    name: "Lunar Journal",
-    slug: "c1-journals",
-    description: "Premium hardbound journals.",
-    imageUrl: "/assets/Journals/c1/LUNAR JOURNAL _ A.png",
-    categorySlug: "journals",
-    sortOrder: 3,
   },
   {
     name: "Desk Objects",
@@ -68,7 +60,7 @@ const collectionData = [
 // Use categorySlug and collectionSlug so you do not need database ids.
 const productData = [
   {
-    name: "Product1",
+    name: "Let It Change Softcover Journal",
     slug: "p1-c1-notebook",
     description: "Illustrated notebook ",
     price: 37900,
@@ -93,7 +85,7 @@ const productData = [
     ],
   },
   {
-    name: "Product2",
+    name: "Chaos to Calm notebook",
     slug: "p2-c1-notebook",
     description: "Illustrated notebook ",
     price: 37900,
@@ -118,7 +110,7 @@ const productData = [
     ],
   },
     {
-        name: "Product3",
+        name: "World Dominat Productivity Planner",
         slug: "p3-c1-notebook",
         description: "Illustrated notebook ",
         price: 37900,
@@ -143,7 +135,7 @@ const productData = [
         ],
     },
     {
-        name: "Product4",
+        name: "Lunar Notebook",
         slug: "p4-c1-notebook",
         description: "Illustrated notebook ",
         price: 37900,
@@ -168,7 +160,7 @@ const productData = [
         ],
     },
     {
-        name: "Product 1",
+        name: "Old Fashioned Notebook",
         slug: "p1-c2-notebook",
         description: "Illustrated notebook ",
         price: 37900,
@@ -193,7 +185,7 @@ const productData = [
         ],
     },
     {
-        name: "Product 2",
+        name: " Veni Vidi Vici Journal",
         slug: "p2-c2-notebook",
         description: "Illustrated notebook ",
         price: 37900,
@@ -218,7 +210,7 @@ const productData = [
         ],
     },
     {
-        name: "Product 3",
+        name: "The Chosen One Notebook",
         slug: "p3-c2-notebook",
         description: "Illustrated notebook ",
         price: 37900,
@@ -243,7 +235,7 @@ const productData = [
         ],
     },
     {
-        name: "Product 4",
+        name: "Million Dollar Dream Journal",
         slug: "p4-c2-notebook",
         description: "Illustrated notebook ",
         price: 37900,
@@ -268,7 +260,7 @@ const productData = [
         ],
     },
     {
-        name: "Product 5",
+        name: "Quiet Mind Sketchbook",
         slug: "p5-c2-notebook",
         description: "Illustrated notebook ",
         price: 37900,
@@ -293,7 +285,7 @@ const productData = [
         ],
     },
     {
-    name: "Lunar Journal",
+    name: "In My Universe Journal",
     slug: "Lunar-journal",
     description: "Lunar Journal\n" +
         "A premium hardbound notebook designed for thinkers, creators, and quiet moments of clarity\n" +
@@ -318,7 +310,7 @@ const productData = [
     sku: "JN-001",
     stock: 80,
     categorySlug: "journals",
-    collectionSlug: "c1-journals",
+    collectionSlug: "c1-notebooks",
     collectionOrder: 1,
     tags: ["Journal", "illustrated"],
     attributes: {
