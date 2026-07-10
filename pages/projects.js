@@ -72,7 +72,7 @@ export default function Collections() {
 
             <Navbar />
 
-            <section className="hero">
+            <section className="hero shop-hero">
                 <div className="hero-banner">
                     <img src="\assets\shop\shop_bg.jpg" alt="Collections" />
                     <div className="hero-overlay">

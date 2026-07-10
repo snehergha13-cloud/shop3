@@ -7,9 +7,9 @@ export default function Footer() {
             <div className="footer-container">
 
                 <div className="footer-column">
-                    <h3>ABOUT WORD OF ART</h3>
+                    <h3>ABOUT WORDART</h3>
                     <p>
-                        Word Of Art is a tribute to timeless stationery,
+                        WordArt is a tribute to timeless stationery,
                         thoughtful craftsmanship and modern minimalism.
                         Built around paper goods, journals and artistic
                         essentials, the brand blends functionality with elegance
@@ -47,7 +47,7 @@ export default function Footer() {
                         <li><a href="#">Journal</a></li>
                         <li><Link href="/projects">Collections</Link></li>
                         <li><Link href="/shop">Shop</Link></li>
-                        <li><a href="#">Cafe Dori</a></li>
+                        
                     </ul>
                 </div>
 
@@ -66,7 +66,7 @@ export default function Footer() {
             </div>
 
             <div className="footer-bottom">
-                © WORD OF ART
+                © WORDART
             </div>
 
         </footer>

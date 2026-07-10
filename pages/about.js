@@ -20,10 +20,10 @@ export default function About() {
 
                 {/* HERO */}
                 <section className="about-hero">
-                    <img src="/assets/home/SLIDE - 1.jpg" alt="Wa.Wordart desk essentials" />
+                    <img src="/assets/home/SLIDE - 0.jpg" alt="Wa.Wordart desk essentials" />
                     <div className="about-hero-content">
-                        <span className="about-hero-eyebrow">ABOUT US</span>
-                        <h1>Wa. Wordart.</h1>
+                       
+                      
                         <p className="about-hero-quote">
                             "Where ideas find form, stories find meaning, and
                             imagination becomes reality."

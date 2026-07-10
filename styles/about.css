@@ -54,6 +54,7 @@
     text-align:center;
     padding:0 24px;
     color:#fff9e9;
+    z-index:1;
 }
 
 .about-hero-eyebrow{
@@ -86,12 +87,19 @@
 }
 
 .about-hero-content .about-hero-quote{
+    position:absolute;
+    left:50%;
+    bottom:70px;
+    transform:translateX(-50%);
+    width:min(90%, 760px);
+    margin:0;
     font-family:"Georgia", serif;
     font-style:italic;
     font-weight:400;
     font-size:1.15rem;
     letter-spacing:0.3px;
     line-height:1.7;
+    text-align:center;
     color:#fff9e9;
 }
 
@@ -557,6 +565,8 @@
     }
 
     .about-hero-content .about-hero-quote{
+        bottom:32px;
+        width:88%;
         font-size:1rem;
         line-height:1.55;
     }
@@ -720,6 +730,12 @@
 
     .about-hero-content h1{
         font-size:1.85rem;
+    }
+
+    .about-hero-content .about-hero-quote{
+        bottom:24px;
+        width:90%;
+        font-size:0.95rem;
     }
 
     .about-stats-inner{
