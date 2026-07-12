@@ -176,41 +176,26 @@ export default function Home() {
 
                 <div className="category-grid">
                     <Link className="category-card" href={categoryHref("notebooks")}>
-                        <img src="https://via.placeholder.com/600x500" alt="" />
+                        <img src="/assets/A5_softbound/C_1/A5 Notebooks - 1B.png" alt="" />
                         <h3>NOTEBOOKS</h3>
                     </Link>
                     <Link className="category-card" href={categoryHref("journals")}>
-                        <img src="https://via.placeholder.com/600x500" alt="" />
+                        <img src="/assets/Journals/LANDING PAGE/Jounal - 1.png" alt="" />
                         <h3>JOURNALS</h3>
                     </Link>
                     <Link className="category-card" href={categoryHref("sketchbooks")}>
-                        <img src="https://via.placeholder.com/600x500" alt="" />
+                        <img src="/assets/tittle card/sketchbook.png" alt="" />
                         <h3>SKETCHBOOKS</h3>
                     </Link>
                     <Link className="category-card" href={categoryHref("planners")}>
-                        <img src="https://via.placeholder.com/600x500" alt="" />
+                        <img src="/assets/tittle card/planner.jpg" alt="" />
                         <h3>PLANNERS</h3>
                     </Link>
-                    <Link className="category-card" href={categoryHref("notepads")}>
-                        <img src="https://via.placeholder.com/600x500" alt="" />
-                        <h3>NOTEPADS</h3>
-                    </Link>
-                    <Link className="category-card" href={categoryHref("memo-pads")}>
-                        <img src="https://via.placeholder.com/600x500" alt="" />
-                        <h3>MEMO PADS</h3>
-                    </Link>
-                    <Link className="category-card" href={categoryHref("writing-pads")}>
-                        <img src="https://via.placeholder.com/600x500" alt="" />
-                        <h3>WRITING PADS</h3>
-                    </Link>
                     <Link className="category-card" href={categoryHref("pocket-notebooks")}>
-                        <img src="https://via.placeholder.com/600x500" alt="" />
+                        <img src="/assets/tittle card/pocket_notebooks.jpg" alt="" />
                         <h3>POCKET NOTEBOOKS</h3>
                     </Link>
-                    <Link className="category-card" href={categoryHref("paper-products")}>
-                        <img src="https://via.placeholder.com/600x500" alt="" />
-                        <h3>PAPER GOODS</h3>
-                    </Link>
+                
                 </div>
 
             </section>
