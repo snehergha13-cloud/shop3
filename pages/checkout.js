@@ -30,6 +30,24 @@ export default function CheckoutPage() {
   const [placing, setPlacing] = useState(false);
   const [error, setError] = useState("");
 
+  function loadRazorpayScript() {
+    return new Promise((resolve) => {
+      if (window.Razorpay) return resolve(true);
+      const existing = document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]');
+      if (existing) {
+        existing.addEventListener("load", () => resolve(true), { once: true });
+        existing.addEventListener("error", () => resolve(false), { once: true });
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  }
+
   // Checkout requires an account so the order can be linked to it.
   // Send people to login, then bounce them right back here.
   useEffect(() => {
@@ -62,19 +80,71 @@ export default function CheckoutPage() {
 
     setPlacing(true);
     try {
-      const res = await fetch("/api/orders", {
+      if (paymentMethod === "cod") {
+        const res = await fetch("/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", ...authHeaders() },
+          body: JSON.stringify({ shippingAddress: form, paymentMethod: "cod" }),
+        });
+        const data = await res.json();
+        if (!data.success) throw new Error(data.error || "Could not place order");
+
+        await clearCart();
+        router.push(`/account/orders?placed=${data.data.orderNumber}`);
+        return;
+      }
+
+      const scriptLoaded = await loadRazorpayScript();
+      if (!scriptLoaded) throw new Error("Could not load Razorpay Checkout. Check your connection and try again.");
+
+      const createRes = await fetch("/api/payments/razorpay/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json", ...authHeaders() },
-        body: JSON.stringify({
-          shippingAddress: form,
-          paymentMethod,
-        }),
       });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.error || "Could not place order");
+      const createData = await createRes.json();
+      if (!createData.success) throw new Error(createData.error || "Could not start payment");
 
-      await clearCart();
-      router.push(`/account/orders?placed=${data.data.orderNumber}`);
+      await new Promise((resolve, reject) => {
+        const razorpay = new window.Razorpay({
+          key: createData.data.keyId,
+          amount: createData.data.amount,
+          currency: createData.data.currency,
+          name: "Word Of Art",
+          description: "Order payment",
+          order_id: createData.data.id,
+          prefill: {
+            name: form.name,
+            email: user?.email || "",
+            contact: form.phone,
+          },
+          notes: { city: form.city, postalCode: form.postalCode },
+          theme: { color: "#111111" },
+          modal: {
+            ondismiss: () => reject(new Error("Payment was cancelled.")),
+          },
+          handler: async (response) => {
+            try {
+              const verifyRes = await fetch("/api/payments/razorpay/verify", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", ...authHeaders() },
+                body: JSON.stringify({ ...response, shippingAddress: form }),
+              });
+              const verifyData = await verifyRes.json();
+              if (!verifyData.success) throw new Error(verifyData.error || "Payment verification failed");
+
+              await clearCart();
+              router.push(`/account/orders?placed=${verifyData.data.orderNumber}`);
+              resolve();
+            } catch (verificationError) {
+              reject(verificationError);
+            }
+          },
+        });
+        razorpay.on("payment.failed", (response) => {
+          reject(new Error(response.error?.description || "Payment failed. Please try again."));
+        });
+        razorpay.open();
+      });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -160,11 +230,17 @@ export default function CheckoutPage() {
                   </span>
                 </label>
 
-                <label className="payment-option payment-option-disabled">
-                  <input type="radio" name="paymentMethod" value="razorpay" disabled />
+                <label className={`payment-option ${paymentMethod === "razorpay" ? "selected" : ""}`}>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="razorpay"
+                    checked={paymentMethod === "razorpay"}
+                    onChange={() => setPaymentMethod("razorpay")}
+                  />
                   <span>
                     Pay Online (Razorpay)
-                    <small>Coming soon — card, UPI &amp; netbanking.</small>
+                    <small>Pay securely using UPI, cards, netbanking or supported wallets.</small>
                   </span>
                 </label>
               </div>

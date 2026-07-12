@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
 import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
+import WishlistButton from "../../components/WishlistButton";
 
 const FALLBACK_IMGS = [
   "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=800&q=85",
@@ -26,6 +28,7 @@ export default function ProductPage() {
   const router = useRouter();
   const { id } = router.query;
   const { addToCart, cartCount } = useCart();
+  const { isLoggedIn } = useAuth();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -194,9 +197,13 @@ export default function ProductPage() {
           <span>A</span><span>R</span><span>T</span>
         </div>
         <div className="nav-icons">
-          <i className="fa-regular fa-user"></i>
+          <Link href={isLoggedIn ? "/account" : "/login"} aria-label={isLoggedIn ? "My account" : "Sign in"}>
+            <i className="fa-regular fa-user"></i>
+          </Link>
           <i className="fa-solid fa-magnifying-glass"></i>
-          <i className="fa-regular fa-heart"></i>
+          <Link href={isLoggedIn ? "/account#wishlist" : "/login?redirect=/account%23wishlist"} aria-label="Wishlist">
+            <i className="fa-regular fa-heart"></i>
+          </Link>
           <Link href="/cart" className="cart-nav-button" aria-label="Cart">
             <i className="fa-solid fa-cart-shopping"></i>
             {cartCount > 0 && (
@@ -295,6 +302,7 @@ export default function ProductPage() {
               </div>
 
               <button className="btn-buynow">Buy It Now</button>
+              <WishlistButton product={product} className="detail-wishlist-button" label="Add to Wishlist" />
 
               <div className="share-row">
                 <span>Share:</span>

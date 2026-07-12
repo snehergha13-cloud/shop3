@@ -15,6 +15,7 @@ export default function AdminOrders() {
   const [statusFilter, setStatusFilter] = useState("");
   const [savingId, setSavingId] = useState(null);
   const [trackingDrafts, setTrackingDrafts] = useState({});
+  const [trackingUrlDrafts, setTrackingUrlDrafts] = useState({});
   const [banner, setBanner] = useState(null);
 
   async function loadOrders() {
@@ -61,6 +62,7 @@ export default function AdminOrders() {
       const data = await res.json();
       if (!data.success) throw new Error(data.error || "Could not update order");
       setOrders((prev) => prev.map((o) => (o._id === id ? { ...data.data, user: o.user } : o)));
+      setBanner({ type: "success", text: "Order updated." });
     } catch (err) {
       setBanner({ type: "error", text: err.message });
     } finally {
@@ -70,6 +72,10 @@ export default function AdminOrders() {
 
   function handleTrackingChange(id, value) {
     setTrackingDrafts((d) => ({ ...d, [id]: value }));
+  }
+
+  function handleTrackingUrlChange(id, value) {
+    setTrackingUrlDrafts((d) => ({ ...d, [id]: value }));
   }
 
   return (
@@ -107,7 +113,7 @@ export default function AdminOrders() {
                   <th>Total</th>
                   <th>Payment</th>
                   <th>Status</th>
-                  <th>Tracking #</th>
+                  <th>Tracking</th>
                 </tr>
               </thead>
               <tbody>
@@ -148,20 +154,30 @@ export default function AdminOrders() {
                           ))}
                         </select>
                       </td>
-                      <td data-label="Tracking #">
-                        <div className="admin-table-actions">
+                      <td data-label="Tracking">
+                        <div className="admin-tracking-fields">
                           <input
                             className="tracking-input"
-                            placeholder="Add tracking #"
+                            placeholder="Tracking number"
                             value={trackingDrafts[o._id] ?? o.trackingNumber ?? ""}
                             onChange={(e) => handleTrackingChange(o._id, e.target.value)}
+                          />
+                          <input
+                            className="tracking-input tracking-url-input"
+                            type="url"
+                            placeholder="https://tracking-link.com/..."
+                            value={trackingUrlDrafts[o._id] ?? o.trackingUrl ?? ""}
+                            onChange={(e) => handleTrackingUrlChange(o._id, e.target.value)}
                           />
                           <button
                             className="table-action-link"
                             disabled={savingId === o._id}
-                            onClick={() => updateOrder(o._id, { trackingNumber: trackingDrafts[o._id] ?? o.trackingNumber ?? "" })}
+                            onClick={() => updateOrder(o._id, {
+                              trackingNumber: trackingDrafts[o._id] ?? o.trackingNumber ?? "",
+                              trackingUrl: trackingUrlDrafts[o._id] ?? o.trackingUrl ?? "",
+                            })}
                           >
-                            Save
+                            {savingId === o._id ? "Saving..." : "Save"}
                           </button>
                         </div>
                       </td>

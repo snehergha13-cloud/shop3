@@ -2,6 +2,7 @@
 
 import { AuthProvider } from "../context/AuthContext";
 import { CartProvider } from "../context/CartContext";
+import { WishlistProvider } from "../context/WishlistContext";
 
 import "../styles/home.css";
 import "../styles/projects.css";
@@ -13,7 +14,9 @@ export default function App({ Component, pageProps }) {
     return (
         <AuthProvider>
             <CartProvider>
-                <Component {...pageProps} />
+                <WishlistProvider>
+                    <Component {...pageProps} />
+                </WishlistProvider>
             </CartProvider>
         </AuthProvider>
     );

@@ -16,6 +16,7 @@ const UserSchema = new mongoose.Schema(
     password: { type: String, required: true, minlength: 8, select: false },
     role: { type: String, enum: ["user", "admin"], default: "user" },
     addresses: [AddressSchema],
+    wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
   },
   { timestamps: true }
 );

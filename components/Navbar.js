@@ -1,15 +1,15 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
+import { useWishlist } from "../context/WishlistContext";
 
 export default function Navbar() {
   const { cartCount } = useCart();
-  const { user, isLoggedIn, isAdmin, logout } = useAuth();
+  const { isLoggedIn } = useAuth();
+  const { count: wishlistCount } = useWishlist();
   const [categories, setCategories] = useState([]);
   const [collections, setCollections] = useState([]);
-  const [accountOpen, setAccountOpen] = useState(false);
-  const accountRef = useRef(null);
 
   useEffect(() => {
     fetch("/api/categories")
@@ -23,21 +23,9 @@ export default function Navbar() {
       .catch(() => {});
   }, []);
 
-  // Close the account dropdown when clicking anywhere outside it.
-  useEffect(() => {
-    function handleClick(e) {
-      if (accountRef.current && !accountRef.current.contains(e.target)) {
-        setAccountOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
-
   return (
     <>
       <nav>
-
         <div className="nav-left">
           <Link href="/">HOME</Link>
         </div>
@@ -53,48 +41,26 @@ export default function Navbar() {
         </div>
 
         <div className="nav-icons">
-
-          <div className="account-wrapper" ref={accountRef}>
-            {isLoggedIn ? (
-              <button
-                type="button"
-                className="account-trigger"
-                onClick={() => setAccountOpen((o) => !o)}
-                aria-label="Account menu"
-              >
-                <i className="fa-regular fa-user"></i>
-              </button>
-            ) : (
-              <Link href="/login" aria-label="Sign in">
-                <i className="fa-regular fa-user"></i>
-              </Link>
-            )}
-
-            {isLoggedIn && accountOpen && (
-              <div className="account-dropdown">
-                <p className="account-name">{user?.name}</p>
-                <p className="account-email">{user?.email}</p>
-                <Link href="/account/orders" onClick={() => setAccountOpen(false)}>
-                  My Orders
-                </Link>
-                {isAdmin && (
-                  <Link href="/admin" onClick={() => setAccountOpen(false)}>
-                    Admin Panel
-                  </Link>
-                )}
-                <button
-                  type="button"
-                  className="account-logout"
-                  onClick={() => { logout(); setAccountOpen(false); }}
-                >
-                  Log Out
-                </button>
-              </div>
-            )}
-          </div>
+          <Link
+            href={isLoggedIn ? "/account" : "/login"}
+            aria-label={isLoggedIn ? "My account" : "Sign in"}
+          >
+            <i className="fa-regular fa-user"></i>
+          </Link>
 
           <i className="fa-solid fa-magnifying-glass"></i>
-          <i className="fa-regular fa-heart"></i>
+
+          <Link
+            href={isLoggedIn ? "/account#wishlist" : "/login?redirect=/account%23wishlist"}
+            className="wishlist-nav-button"
+            aria-label="Wishlist"
+          >
+            <i className="fa-regular fa-heart"></i>
+            {isLoggedIn && wishlistCount > 0 && (
+              <span className="wishlist-count-bubble">{wishlistCount}</span>
+            )}
+          </Link>
+
           <Link href="/cart" className="cart-nav-button" aria-label="Cart">
             <i className="fa-solid fa-cart-shopping"></i>
             {cartCount > 0 && (
@@ -102,24 +68,19 @@ export default function Navbar() {
             )}
           </Link>
         </div>
-
       </nav>
 
       <div className="menu-bar">
-
         <Link className="menu-text" href="/about">
           ABOUT US
         </Link>
 
         <div className="shop-wrapper">
-
           <Link href="/shop" className="shop-link">
             SHOP
           </Link>
 
           <div className="shop-dropdown">
-
-            {/* SHOP BY CATEGORIES — links to /shop?category=slug */}
             <div className="dropdown-column">
               <h3>SHOP BY CATEGORIES</h3>
               {categories.length > 0
@@ -138,7 +99,6 @@ export default function Navbar() {
                 )}
             </div>
 
-            {/* SHOP COLLECTIONS — links to /collections/slug */}
             <div className="dropdown-column">
               <h3>SHOP COLLECTIONS</h3>
               {collections.length > 0
@@ -157,7 +117,6 @@ export default function Navbar() {
                 )}
             </div>
 
-            {/* SHOP PAPER GOODS — static links, these are aspirational categories */}
             <div className="dropdown-column">
               <h3>SHOP PAPER GOODS</h3>
               <Link href="/shop?category=postcards">POSTCARDS</Link>
@@ -166,15 +125,12 @@ export default function Navbar() {
               <Link href="/shop?category=art-prints">ART PRINTS</Link>
               <Link href="/shop?category=envelopes">ENVELOPES</Link>
             </div>
-
           </div>
-
         </div>
 
         <Link className="menu-text" href="/projects">
           COLLECTIONS
         </Link>
-
       </div>
     </>
   );

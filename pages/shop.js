@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import WishlistButton from "../components/WishlistButton";
 
 const normalizeAssetPath = (value) => {
     if (!value) return "";
@@ -271,26 +272,25 @@ export default function Shop() {
 
                         {!loading &&
                             filteredProducts.map((product) => (
-                                <Link
-                                    key={product._id}
-                                    href={`/collections/${product.collection?.slug}/${product.slug}`}
-                                    className="product-card"
-                                >
+                                <article key={product._id} className="product-card">
                                     <div className="product-image">
-                                        <img
-                                            src={product.imageUrl}
-                                            alt={product.name}
-                                        />
-                                        <span className="wishlist">
-                                            <i className="fa-regular fa-heart"></i>
-                                        </span>
+                                        <Link href={`/collections/${product.collection?.slug}/${product.slug}`}>
+                                            <img
+                                                src={product.imageUrl}
+                                                alt={product.name}
+                                            />
+                                        </Link>
+                                        <WishlistButton product={product} />
                                     </div>
 
-                                    <div className="product-info">
+                                    <Link
+                                        href={`/collections/${product.collection?.slug}/${product.slug}`}
+                                        className="product-info"
+                                    >
                                         <h3>{product.name}</h3>
                                         <p>{fmt(product.price)}</p>
-                                    </div>
-                                </Link>
+                                    </Link>
+                                </article>
                             ))}
                     </div>
                 </div>

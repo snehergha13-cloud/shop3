@@ -34,8 +34,10 @@ const OrderSchema = new mongoose.Schema(
     },
     paymentStatus: { type: String, enum: ["unpaid", "paid", "refunded"], default: "unpaid" },
     paymentMethod: { type: String, required: true },
-    paymentId: { type: String },
+    paymentId: { type: String, index: true, sparse: true },
+    razorpayOrderId: { type: String, index: true, sparse: true },
     trackingNumber: { type: String },
+    trackingUrl: { type: String },
     notes: { type: String },
   },
   { timestamps: true }

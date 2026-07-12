@@ -4,19 +4,8 @@ import Head from "next/head";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import OrderCard from "../../components/OrderCard";
 import { useAuth } from "../../context/AuthContext";
-
-const fmt = (paise) => `₹${(paise / 100).toLocaleString("en-IN", { minimumFractionDigits: 2 })}`;
-
-const STATUS_LABELS = {
-  pending: "Pending",
-  confirmed: "Confirmed",
-  processing: "Processing",
-  shipped: "Shipped",
-  delivered: "Delivered",
-  cancelled: "Cancelled",
-  refunded: "Refunded",
-};
 
 export default function MyOrders() {
   const router = useRouter();
@@ -35,7 +24,7 @@ export default function MyOrders() {
 
   useEffect(() => {
     if (!isLoggedIn) return;
-    fetch("/api/orders", { headers: authHeaders() })
+    fetch("/api/orders?limit=100", { headers: authHeaders() })
       .then((r) => r.json())
       .then((data) => {
         if (data.success) setOrders(data.data.orders);
@@ -74,12 +63,13 @@ export default function MyOrders() {
 
       <main className="account-page">
         <div className="account-wrap-page">
+          <div className="account-back-link"><Link href="/account">← My Account</Link></div>
           <h1>My Orders</h1>
 
           {justPlaced && (
-            <div className="checkout-section" style={{ borderColor: "#23793a", marginBottom: "28px" }}>
-              <p style={{ margin: 0, fontFamily: "Montserrat, sans-serif", fontSize: "14px" }}>
-                🎉 Order <strong>{justPlaced}</strong> placed successfully! You&apos;ll find it below.
+            <div className="checkout-section order-success-message">
+              <p>
+                Order <strong>{justPlaced}</strong> placed successfully. You can follow its status below.
               </p>
             </div>
           )}
@@ -92,51 +82,12 @@ export default function MyOrders() {
             </div>
           ) : (
             orders.map((order) => (
-              <div className="order-card" key={order._id}>
-                <div className="order-card-header">
-                  <div>
-                    <div className="order-number">{order.orderNumber}</div>
-                    <div className="order-date">
-                      {new Date(order.createdAt).toLocaleDateString("en-IN", {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                      })}
-                    </div>
-                  </div>
-                  <span className={`order-status-badge status-${order.status}`}>
-                    {STATUS_LABELS[order.status] || order.status}
-                  </span>
-                </div>
-
-                {order.items.map((item, i) => (
-                  <div className="order-item-row" key={i}>
-                    {item.image && <img src={item.image} alt={item.name} />}
-                    <span className="order-item-name">{item.name}</span>
-                    <span className="order-item-qty">× {item.quantity}</span>
-                    <span>{fmt(item.price * item.quantity)}</span>
-                  </div>
-                ))}
-
-                {order.trackingNumber && (
-                  <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "12.5px", color: "#888", marginTop: "10px" }}>
-                    Tracking number: {order.trackingNumber}
-                  </p>
-                )}
-
-                <div className="order-card-footer">
-                  <span className="order-total">Total: {fmt(order.total)}</span>
-                  {order.status === "pending" && (
-                    <button
-                      className="order-cancel-btn"
-                      onClick={() => handleCancel(order._id)}
-                      disabled={cancellingId === order._id}
-                    >
-                      {cancellingId === order._id ? "Cancelling..." : "Cancel Order"}
-                    </button>
-                  )}
-                </div>
-              </div>
+              <OrderCard
+                key={order._id}
+                order={order}
+                onCancel={handleCancel}
+                cancelling={cancellingId === order._id}
+              />
             ))
           )}
         </div>

@@ -381,7 +381,7 @@ PRODUCT SECTION
 }
 
 .products-section .product-card .wishlist{
-    pointer-events:none;
+    pointer-events:auto;
 }
 
 /* CARD */
@@ -1313,3 +1313,80 @@ COLLECTION DETAIL
     }
 }
 
+
+
+/* Wishlist controls */
+.wishlist{
+    border:0;
+    background:rgba(255,255,255,0.9);
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:3;
+    transition:transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.wishlist:hover{
+    transform:scale(1.06);
+    background:#fff;
+}
+
+.wishlist.wishlisted{
+    color:#9b3f3f;
+}
+
+.wishlist:disabled{
+    cursor:wait;
+    opacity:0.65;
+}
+
+.wishlist-nav-button,
+.cart-nav-button{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.wishlist-count-bubble{
+    position:absolute;
+    top:-9px;
+    right:-10px;
+    min-width:17px;
+    height:17px;
+    padding:0 4px;
+    border-radius:10px;
+    background:#774f3e;
+    color:#fff;
+    font-family:'Montserrat', sans-serif;
+    font-size:9px;
+    line-height:17px;
+    text-align:center;
+}
+
+.detail-wishlist-button{
+    width:100%;
+    height:48px;
+    margin-top:12px;
+    border:1px solid #d8d0c6;
+    background:#fff;
+    color:#1a1a1a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-family:'Montserrat', sans-serif;
+    font-size:12px;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+    cursor:pointer;
+}
+
+.detail-wishlist-button.wishlisted{
+    color:#9b3f3f;
+    border-color:#9b3f3f;
+}

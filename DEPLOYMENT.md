@@ -14,8 +14,7 @@ This guide gets it live on the internet.
 | A [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) account | Hosts the database (Vercel doesn't host databases) | Free tier (M0) is enough |
 | A [GitHub](https://github.com) account | Vercel deploys from a Git repo | Free |
 
-You do **not** need Razorpay yet — checkout currently supports Cash on
-Delivery, and the Razorpay option is shown as "coming soon" in the UI.
+Razorpay is supported alongside Cash on Delivery. Add the Razorpay environment variables described in `RAZORPAY_SETUP.md` before enabling online payments in production.
 
 ---
 
@@ -145,25 +144,9 @@ fetch("/api/auth-me", {
 
 ---
 
-## 6. Adding Razorpay later
+## 6. Configure Razorpay
 
-The checkout page already has a disabled "Pay Online (Razorpay)" option and
-the `Order` model already has `paymentMethod` / `paymentStatus` / `paymentId`
-fields ready to go. When you're ready:
-
-1. `npm install razorpay`
-2. Create a `pages/api/payments/create-order.js` that creates a Razorpay
-   order for the cart total, and a `pages/api/payments/verify.js` that
-   verifies the payment signature Razorpay sends back.
-3. In `pages/checkout.js`, enable the disabled radio option and, when
-   selected, call Razorpay's Checkout.js widget instead of immediately
-   POSTing to `/api/orders` — create the order with `paymentStatus: "unpaid"`
-   first, open Razorpay's payment popup, then PATCH the order to
-   `paymentStatus: "paid"` (via `/api/orders/[id]`, already supports this)
-   once Razorpay confirms.
-4. Add `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` to your environment variables.
-
----
+Follow `RAZORPAY_SETUP.md` to add Test Mode keys locally and in Vercel, test the payment flow, and switch to Live Mode safely.
 
 ## 7. Moving to a different host later
 

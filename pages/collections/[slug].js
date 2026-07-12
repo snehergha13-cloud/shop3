@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
+import WishlistButton from "../../components/WishlistButton";
 
 const normalizeAssetPath = (value) => {
   if (!value) return "";
@@ -106,22 +107,18 @@ export default function CollectionPage() {
 
               {!loading &&
                   products.map((product) => (
-                      <Link
-                          key={product._id}
-                          href={`/collections/${slug}/${product.slug}`}
-                          className="product-card"
-                      >
+                      <article key={product._id} className="product-card">
                         <div className="product-image">
-                          <img src={product.imageUrl} alt={product.name} />
-                          <span className="wishlist">
-                                            <i className="fa-regular fa-heart"></i>
-                                        </span>
+                          <Link href={`/collections/${slug}/${product.slug}`}>
+                            <img src={product.imageUrl} alt={product.name} />
+                          </Link>
+                          <WishlistButton product={product} />
                         </div>
-                        <div className="product-info">
+                        <Link href={`/collections/${slug}/${product.slug}`} className="product-info">
                           <h3>{product.name}</h3>
                           <p>{fmt(product.price)}</p>
-                        </div>
-                      </Link>
+                        </Link>
+                      </article>
                   ))}
             </div>
           </div>

@@ -4,6 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Navbar from "components/Navbar";
 import { useCart } from "context/CartContext";
+import WishlistButton from "components/WishlistButton";
 
 const FALLBACK_IMGS = [
     "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=800&q=85",
@@ -177,6 +178,7 @@ export default function ProductPage() {
                         </div>
 
                         <button className="btn-buynow">Buy It Now</button>
+                        <WishlistButton product={selectedProduct} className="detail-wishlist-button" label="Add to Wishlist" />
 
                         <div className="accordion-item">
                             <button
