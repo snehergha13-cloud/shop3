@@ -76,10 +76,10 @@ const productData = [
       format: "A5",
     },
     images: [
-      "/assets/A5_softbound/C_1/Product - 1/Context 1.jpg",
+      "/assets/A5_softbound/C_1/Product - 1/Front.jpg",
       "/assets/A5_softbound/C_1/Product - 1/Back (1).jpg",
       "/assets/A5_softbound/C_1/Product - 1/Cover.jpg",
-      "/assets/A5_softbound/C_1/Product - 1/Front.jpg",
+      "/assets/A5_softbound/C_1/Product - 1/Context 1.jpg",
       "/assets/A5_softbound/C_1/Product - 1/Inside.jpg",
       "/assets/A5_softbound/C_1/Product - 1/Open.jpg",
     ],
