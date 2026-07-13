@@ -126,12 +126,12 @@ const productData = [
             format: "A5",
         },
         images: [
-            "/assets/A5_softbound/C_1/Product - 2/Front.jpg",
-            "/assets/A5_softbound/C_1/Product - 2/Back.jpg",
-            "/assets/A5_softbound/C_1/Product - 2/Cover.jpg",
-            "/assets/A5_softbound/C_1/Product - 2/Context 1.jpg",
-            "/assets/A5_softbound/C_1/Product - 2/Inside.jpg",
-            "/assets/A5_softbound/C_1/Product - 2/Open.jpg",
+            "/assets/A5_softbound/C_1/Product - 3/Front.jpg",
+            "/assets/A5_softbound/C_1/Product - 3/Back.jpg",
+            "/assets/A5_softbound/C_1/Product - 3/Cover.jpg",
+            "/assets/A5_softbound/C_1/Product - 3/Context 1.jpg",
+            "/assets/A5_softbound/C_1/Product - 3/Inside.jpg",
+            "/assets/A5_softbound/C_1/Product - 3/Open.jpg",
         ],
     },
     {
