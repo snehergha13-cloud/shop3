@@ -4,7 +4,6 @@ import Head from "next/head";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import WishlistButton from "../../components/WishlistButton";
-import { getNotebookBundleRule } from "../../lib/bundlePricing";
 
 const normalizeAssetPath = (value) => {
   if (!value) return "";
@@ -118,11 +117,6 @@ export default function CollectionPage() {
                         <Link href={`/collections/${slug}/${product.slug}`} className="product-info">
                           <h3>{product.name}</h3>
                           <p>{fmt(product.price)}</p>
-                          {getNotebookBundleRule(product) && (
-                            <span style={{ display: "block", marginTop: "4px", color: "#774f3e", fontSize: "12px", fontWeight: 600 }}>
-                              {getNotebookBundleRule(product).label}
-                            </span>
-                          )}
                         </Link>
                       </article>
                   ))}

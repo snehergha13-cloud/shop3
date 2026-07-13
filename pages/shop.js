@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WishlistButton from "../components/WishlistButton";
-import { getNotebookBundleRule } from "../lib/bundlePricing";
 
 const normalizeAssetPath = (value) => {
     if (!value) return "";
@@ -290,11 +289,6 @@ export default function Shop() {
                                     >
                                         <h3>{product.name}</h3>
                                         <p>{fmt(product.price)}</p>
-                                        {getNotebookBundleRule(product) && (
-                                            <span style={{ display: "block", marginTop: "4px", color: "#774f3e", fontSize: "12px", fontWeight: 600 }}>
-                                                {getNotebookBundleRule(product).label}
-                                            </span>
-                                        )}
                                     </Link>
                                 </article>
                             ))}
