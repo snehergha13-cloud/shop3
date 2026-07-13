@@ -8,8 +8,9 @@ import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 
 const fmt = (rupees) =>
-  `₹${rupees.toLocaleString("en-IN", {
+  `₹${Number(rupees || 0).toLocaleString("en-IN", {
     minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   })}`;
 
 export default function CheckoutPage() {
@@ -17,7 +18,10 @@ export default function CheckoutPage() {
 
   const {
     cart,
+    cartSubtotal,
+    cartDiscount,
     cartTotal,
+    bundleOffers,
     cartLoading,
     clearCart,
   } = useCart();
@@ -108,7 +112,6 @@ export default function CheckoutPage() {
   /*
    * Shipping is disabled.
    */
-  const shippingCost = 0;
   const total = cartTotal;
 
   async function handlePlaceOrder(event) {
@@ -556,8 +559,17 @@ export default function CheckoutPage() {
                     Subtotal
                   </span>
 
-                  <span>{fmt(cartTotal)}</span>
+                  <span>{fmt(cartSubtotal)}</span>
                 </div>
+
+                {cartDiscount > 0 && bundleOffers.map((offer) => (
+                  <div className="summary-row bundle-discount-row" key={offer.code}>
+                    <span className="summary-item-name">
+                      {offer.label}{offer.pairs > 1 ? ` × ${offer.pairs}` : ""}
+                    </span>
+                    <span>−{fmt(offer.discount)}</span>
+                  </div>
+                ))}
 
                 <div className="summary-row">
                   <span className="summary-item-name">

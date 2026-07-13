@@ -5,6 +5,7 @@ import Link from "next/link";
 import Navbar from "components/Navbar";
 import { useCart } from "context/CartContext";
 import WishlistButton from "components/WishlistButton";
+import { getNotebookBundleRule } from "lib/bundlePricing";
 
 const FALLBACK_IMGS = [
     "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=800&q=85",
@@ -57,6 +58,7 @@ export default function ProductPage() {
     const imgs = selectedProduct?.images?.length
         ? selectedProduct.images
         : [fallbackCollectionImage];
+    const bundleRule = getNotebookBundleRule(selectedProduct);
 
     async function handleAddToCart() {
         if (!selectedProduct) return;
@@ -69,6 +71,8 @@ export default function ProductPage() {
                     price: selectedProduct.price / 100,
                     image: imgs[0],
                     style: selectedStyle,
+                    category: selectedProduct.category,
+                    collection: selectedProduct.collection,
                 },
                 qty
             );
@@ -158,6 +162,11 @@ export default function ProductPage() {
                         </div>
 
                         <div className="collection-price">{fmt(selectedProduct.price)}</div>
+                        {bundleRule && (
+                            <p style={{ margin: "-14px 0 20px", color: "#774f3e", fontSize: "13px", fontWeight: 600 }}>
+                                {bundleRule.label}
+                            </p>
+                        )}
 
                         {cartMsg && <div className="cart-msg">{cartMsg}</div>}
 
@@ -177,7 +186,6 @@ export default function ProductPage() {
                             </button>
                         </div>
 
-                        <button className="btn-buynow">Buy It Now</button>
                         <WishlistButton product={selectedProduct} className="detail-wishlist-button" label="Add to Wishlist" />
 
                         <div className="accordion-item">

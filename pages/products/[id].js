@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
 import WishlistButton from "../../components/WishlistButton";
+import { getNotebookBundleRule } from "../../lib/bundlePricing";
 
 const FALLBACK_IMGS = [
   "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=800&q=85",
@@ -54,7 +55,14 @@ export default function ProductPage() {
     if (!product) return;
     try {
       await addToCart(
-        { id: product._id, name: product.name, price: product.price / 100, image: imgs[0] },
+        {
+          id: product._id,
+          name: product.name,
+          price: product.price / 100,
+          image: imgs[0],
+          category: product.category,
+          collection: product.collection,
+        },
         qty
       );
       setCartMsg("Added to cart!");
@@ -66,6 +74,7 @@ export default function ProductPage() {
   }
 
   const imgs = product?.images?.length ? product.images : FALLBACK_IMGS;
+  const bundleRule = getNotebookBundleRule(product);
 
   return (
     <>
@@ -286,6 +295,11 @@ export default function ProductPage() {
               </div>
 
               <div className="product-price">{fmt(product.price)}</div>
+              {bundleRule && (
+                <p style={{ margin: "-18px 0 22px", color: "#774f3e", fontSize: "13px", fontWeight: 600 }}>
+                  {bundleRule.label}
+                </p>
+              )}
 
               {cartMsg && <div className="cart-msg">{cartMsg}</div>}
 
@@ -301,7 +315,6 @@ export default function ProductPage() {
                 </button>
               </div>
 
-              <button className="btn-buynow">Buy It Now</button>
               <WishlistButton product={product} className="detail-wishlist-button" label="Add to Wishlist" />
 
               <div className="share-row">

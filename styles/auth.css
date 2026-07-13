@@ -366,6 +366,17 @@
     border-bottom:1px solid #f0eee9;
 }
 
+
+.summary-row.bundle-discount-row{
+    color:#774f3e;
+    font-size:12.5px;
+}
+
+.summary-row.bundle-discount-row .summary-item-name{
+    color:#774f3e;
+    max-width:75%;
+}
+
 .summary-row.total{
     border-bottom:none;
     border-top:1px solid #1a1a1a;
@@ -501,6 +512,31 @@
 
 .order-item-qty{
     color:#999;
+}
+
+
+.order-discount-summary{
+    margin-top:12px;
+    padding:12px 0 4px;
+    border-top:1px solid #f0eee9;
+    font-family:'Montserrat', sans-serif;
+    font-size:12.5px;
+}
+
+.order-discount-line{
+    display:flex;
+    justify-content:space-between;
+    gap:18px;
+    padding:4px 0;
+    color:#774f3e;
+}
+
+.order-subtotal-line{
+    display:flex;
+    justify-content:space-between;
+    gap:18px;
+    padding:4px 0;
+    color:#777;
 }
 
 .order-card-footer{

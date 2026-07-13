@@ -1,7 +1,10 @@
 import OrderProgress from "./OrderProgress";
 
 const fmt = (paise) =>
-  `₹${(paise / 100).toLocaleString("en-IN", { minimumFractionDigits: 2 })}`;
+  `₹${(Number(paise || 0) / 100).toLocaleString("en-IN", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
 
 const STATUS_LABELS = {
   pending: "Pending",
@@ -42,6 +45,31 @@ export default function OrderCard({ order, onCancel, cancelling = false }) {
           <span>{fmt(item.price * item.quantity)}</span>
         </div>
       ))}
+
+      {Number(order.discount || 0) > 0 && (
+        <div className="order-discount-summary">
+          <div className="order-subtotal-line">
+            <span>Subtotal</span>
+            <span>{fmt(order.subtotal)}</span>
+          </div>
+          {Array.isArray(order.appliedOffers) && order.appliedOffers.length > 0 ? (
+            order.appliedOffers.map((offer) => (
+              <div className="order-discount-line" key={offer.code || offer.label}>
+                <span>
+                  {offer.label || "Notebook bundle offer"}
+                  {offer.pairs > 1 ? ` × ${offer.pairs}` : ""}
+                </span>
+                <span>−{fmt(offer.discount)}</span>
+              </div>
+            ))
+          ) : (
+            <div className="order-discount-line">
+              <span>Bundle discount</span>
+              <span>−{fmt(order.discount)}</span>
+            </div>
+          )}
+        </div>
+      )}
 
       {(order.trackingNumber || order.trackingUrl) && (
         <div className="order-tracking-box">
