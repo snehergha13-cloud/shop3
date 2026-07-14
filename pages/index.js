@@ -128,7 +128,7 @@ export default function Home() {
                     <span>FOUNDER&apos;S NOTE</span>
                 </div>
                 <div className="small-card">
-                    <img src="/assets/A5_softbound/C_2/mock up.png" alt="Craft Stories" />
+                    <img src="/assets/title card/craft_stories.jpg" alt="Craft Stories" />
                     <span>CRAFT STORIES</span>
                 </div>
                 <div className="small-card">
