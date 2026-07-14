@@ -19,32 +19,18 @@ export default function Footer() {
                         <a href="#" aria-label="Facebook">F</a>
                         <a href="#" aria-label="X">X</a>
                         <a href="#" aria-label="Instagram">IG</a>
-                        <a href="#" aria-label="Pinterest">P</a>
                         <a href="#" aria-label="YouTube">YT</a>
                     </div>
                 </div>
 
                 <div className="footer-column">
-                    <h3>IMPORTANT LINKS</h3>
-                    <ul>
-                        <li><a href="#">Catalogue</a></li>
-                        <li><a href="#">Stores</a></li>
-                        <li><a href="#">Gift Cards</a></li>
-                        <li><a href="#">Corporate Gifts</a></li>
-                        <li><a href="#">Press</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Terms &amp; Conditions</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Track Order</a></li>
-                    </ul>
+                    
                 </div>
 
                 <div className="footer-column">
                     <h3>MAIN MENU</h3>
                     <ul>
                         <li><Link href="/about">About Us</Link></li>
-                        <li><a href="#">Collaborations</a></li>
-                        <li><a href="#">Journal</a></li>
                         <li><Link href="/projects">Collections</Link></li>
                         <li><Link href="/shop">Shop</Link></li>
                         
@@ -52,15 +38,6 @@ export default function Footer() {
                 </div>
 
                 <div className="footer-column">
-                    <h3>NEWSLETTER</h3>
-                    <p>
-                        Subscribe to stay updated about new products,
-                        launches and promotional offers.
-                    </p>
-                    <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
-                        <input type="email" placeholder="Enter your email address" />
-                        <button type="submit">SUBSCRIBE</button>
-                    </form>
                 </div>
 
             </div>
