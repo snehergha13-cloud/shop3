@@ -132,7 +132,7 @@ export default function Home() {
                     <span>CRAFT STORIES</span>
                 </div>
                 <div className="small-card">
-                    <img src="/assets/softbound_notebooks/Product-2/softcover-notebook-a5.jpg" alt="Notebooks" />
+                    <img src="/assets/A5_softbound/C_1/A5 Notebooks - 1A.png" alt="Notebooks" />
                     <span>NOTEBOOKS</span>
                 </div>
                 <div className="small-card">
