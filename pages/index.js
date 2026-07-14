@@ -136,7 +136,7 @@ export default function Home() {
                     <span>NOTEBOOKS</span>
                 </div>
                 <div className="small-card">
-                    <img src="/assets/A5_softbound/C_1/Product - 1/Context 1.jpg" alt="Writing Tools" />
+                    <img src="/assets/tittle card/writing_instrument.jpg" alt="Writing Tools" />
                     <span>WRITING TOOLS</span>
                 </div>
                 <div className="small-card">
