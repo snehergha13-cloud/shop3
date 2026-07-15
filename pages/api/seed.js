@@ -1,5 +1,6 @@
 import { connectDB } from "../../lib/db";
-import { ok, error } from "../../lib/response";
+import { ok, error, forbidden } from "../../lib/response";
+import { applyRateLimit } from "../../lib/rateLimit";
 import Category from "../../models/Category";
 import Collection from "../../models/Collection";
 import Product from "../../models/Product";
@@ -20,7 +21,7 @@ const categoryData = [
     imageUrl: "/assets/Journals/c1/LUNAR JOURNAL _ A.png",
   },
   {
-    name: "Desk-Objects",
+    name: "Desk Objects",
     slug: "desk_obj",
     description: "Desk objects",
     imageUrl: "/assets/desk_obj/1.jpeg",
@@ -51,7 +52,7 @@ const collectionData = [
     slug: "dsk-obj",
     description: "Personal leather desk objects.",
     imageUrl: "/assets/desk_obj/1.jpeg",
-    categorySlug: "journals",
+    categorySlug: "desk_obj",
     sortOrder: 3,
   },
 ];
@@ -62,7 +63,7 @@ const productData = [
   {
     name: "Let It Change Notebook",
     slug: "p1-c1-notebook",
-    description: "Illustrated notebook ",
+    description: "A softbound A5 notebook with illustrated cover artwork, smooth writing pages, and a compact everyday format.",
     price: 49900,
     comparePrice: 57000,
     sku: "NB-A5-C1-001",
@@ -87,7 +88,7 @@ const productData = [
   {
     name: "Chaos to Calm notebook",
     slug: "p2-c1-notebook",
-    description: "Illustrated notebook ",
+    description: "A softbound A5 notebook with illustrated cover artwork, smooth writing pages, and a compact everyday format.",
     price: 49900,
     comparePrice: 57000,
     sku: "NB-A5-C1-002",
@@ -110,9 +111,9 @@ const productData = [
     ],
   },
     {
-        name: "World Dominat Productivity Planner Notebook",
+        name: "World Domination Productivity Planner Notebook",
         slug: "p3-c1-notebook",
-        description: "Illustrated notebook ",
+        description: "A softbound A5 notebook with illustrated cover artwork, smooth writing pages, and a compact everyday format.",
         price: 49900,
         comparePrice: 57000,
         sku: "NB-A5-C1-003",
@@ -137,7 +138,7 @@ const productData = [
     {
         name: "Lunar Notebook",
         slug: "p4-c1-notebook",
-        description: "Illustrated notebook ",
+        description: "A softbound A5 notebook with illustrated cover artwork, smooth writing pages, and a compact everyday format.",
         price: 49900,
         comparePrice: 57000,
         sku: "NB-A5-C1-004",
@@ -162,7 +163,7 @@ const productData = [
     {
         name: "Old Fashioned Notebook",
         slug: "p1-c2-notebook",
-        description: "Illustrated notebook ",
+        description: "A softbound A5 notebook with illustrated cover artwork, smooth writing pages, and a compact everyday format.",
         price: 59900,
         comparePrice: 69000,
         sku: "NB-A5-C2-001",
@@ -185,9 +186,9 @@ const productData = [
         ],
     },
     {
-        name: " Veni Vedi Vici Notebook",
+        name: "Veni Vedi Vici Notebook",
         slug: "p2-c2-notebook",
-        description: "Illustrated notebook ",
+        description: "A softbound A5 notebook with illustrated cover artwork, smooth writing pages, and a compact everyday format.",
         price: 59900,
         comparePrice: 69000,
         sku: "NB-A5-C2-002",
@@ -212,7 +213,7 @@ const productData = [
     {
         name: "The Chosen One Notebook",
         slug: "p3-c2-notebook",
-        description: "Illustrated notebook ",
+        description: "A softbound A5 notebook with illustrated cover artwork, smooth writing pages, and a compact everyday format.",
         price: 59900,
         comparePrice: 69000,
         sku: "NB-A5-C2-003",
@@ -237,7 +238,7 @@ const productData = [
     {
         name: "Million Dollar Dream Notebook",
         slug: "p4-c2-notebook",
-        description: "Illustrated notebook ",
+        description: "A softbound A5 notebook with illustrated cover artwork, smooth writing pages, and a compact everyday format.",
         price: 59900,
         comparePrice: 69000,
         sku: "NB-A5-C2-004",
@@ -262,7 +263,7 @@ const productData = [
     {
         name: "Quiet Mind Notebook",
         slug: "p5-c2-notebook",
-        description: "Illustrated notebook ",
+        description: "A softbound A5 notebook with illustrated cover artwork, smooth writing pages, and a compact everyday format.",
         price: 59900,
         comparePrice: 69000,
         sku: "NB-A5-C2-005",
@@ -354,6 +355,18 @@ const productData = [
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
+  if (!applyRateLimit(req, res, { scope: "seed", limit: 3, windowMs: 15 * 60_000 })) return;
+
+  const seedSecret = process.env.SEED_SECRET;
+  const providedSecret = req.headers["x-seed-secret"];
+
+  if (!seedSecret || providedSecret !== seedSecret) {
+    return forbidden(res, "Seed access denied. Set SEED_SECRET and pass it as the x-seed-secret header.");
+  }
+
+  if (!process.env.SEED_ADMIN_EMAIL || !process.env.SEED_ADMIN_PASSWORD) {
+    return error(res, "SEED_ADMIN_EMAIL and SEED_ADMIN_PASSWORD must be configured before seeding.", 500);
+  }
 
   try {
     await connectDB();
@@ -406,9 +419,8 @@ export default async function handler(req, res) {
 
     // Seed a default admin account, but only if one doesn't already exist —
     // re-running /api/seed should never reset an admin's password.
-    // Credentials come from env vars so they're not hardcoded in source.
-    const adminEmail = process.env.SEED_ADMIN_EMAIL || "admin@wordofart.test";
-    const adminPassword = process.env.SEED_ADMIN_PASSWORD || "ChangeMe123!";
+    const adminEmail = process.env.SEED_ADMIN_EMAIL;
+    const adminPassword = process.env.SEED_ADMIN_PASSWORD;
     let adminMessage = "";
     const existingAdmin = await User.findOne({ email: adminEmail });
     if (!existingAdmin) {
@@ -418,7 +430,7 @@ export default async function handler(req, res) {
         password: adminPassword,
         role: "admin",
       });
-      adminMessage = ` Admin account created: ${adminEmail} / ${adminPassword} — change this password after first login.`;
+      adminMessage = ` Admin account created: ${adminEmail}. Change this password after first login.`;
     } else {
       adminMessage = ` Admin account already exists (${adminEmail}).`;
     }

@@ -6,26 +6,25 @@ import Footer from "../components/Footer";
 
 const categoryHref = (slug) => `/shop?category=${slug}`;
 
+const slides = [
+    "/assets/home/SLIDE - 0.jpg",
+    "/assets/home/SLIDE - 1.jpg",
+    "/assets/home/SLIDE - 2.jpg",
+    "/assets/home/SLIDE - 3.jpg",
+];
+
+// Mobile gets its own portrait-oriented hero images instead of the
+// desktop landscape slides — same rotation logic, different source.
+const mobileSlides = [
+    "/assets/mobile_slideshow/mobile_slideshow-1.png",
+    "/assets/mobile_slideshow/mobile_slideshow-2.png",
+    "/assets/mobile_slideshow/mobile_slideshow-3.png",
+    "/assets/mobile_slideshow/mobile_slideshow-4.png",
+];
+
 export default function Home() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [categories, setCategories] = useState([]);
-
-    const slides = [
-        "/assets/home/SLIDE - 0.jpg",
-        "/assets/home/SLIDE - 1.jpg",
-        "/assets/home/SLIDE - 2.jpg",
-        "/assets/home/SLIDE - 3.jpg",
-
-    ];
-
-    // Mobile gets its own portrait-oriented hero images instead of the
-    // desktop landscape slides — same rotation logic, different source.
-    const mobileSlides = [
-        "/assets/mobile_slideshow/mobile_slideshow-1.png",
-        "/assets/mobile_slideshow/mobile_slideshow-2.png",
-        "/assets/mobile_slideshow/mobile_slideshow-3.png",
-        "/assets/mobile_slideshow/mobile_slideshow-4.png",
-    ];
 
     useEffect(() => {
         const interval = setInterval(() => {

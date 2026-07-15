@@ -353,7 +353,7 @@ export default function ProductPage() {
                     ? <p>No reviews yet.</p>
                     : product.reviews.map((r, i) => (
                         <p key={i} style={{ marginBottom: 10 }}>
-                          {"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)} — <em>"{r.comment}"</em>
+                          {"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)} — <em>&ldquo;{r.comment}&rdquo;</em>
                         </p>
                       ))
                   }

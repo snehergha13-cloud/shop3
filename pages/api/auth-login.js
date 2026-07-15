@@ -2,8 +2,10 @@ import { connectDB } from "../../lib/db";
 import { signToken } from "../../lib/auth";
 import { ok, error, serverError } from "../../lib/response";
 import User from "../../models/User";
+import { applyRateLimit } from "../../lib/rateLimit";
 
 export default async function handler(req, res) {
+  if (!applyRateLimit(req, res, { scope: "auth-login", limit: 10, windowMs: 15 * 60_000 })) return;
   if (req.method !== "POST") return res.status(405).end();
   try {
     await connectDB();

@@ -3,8 +3,10 @@ import { getAuthUser } from "../../../lib/auth";
 import { ok, created, error, unauthorized, serverError } from "../../../lib/response";
 import { createOrderFromCart } from "../../../lib/orderService";
 import Order from "../../../models/Order";
+import { applyRateLimit } from "../../../lib/rateLimit";
 
 export default async function handler(req, res) {
+  if (!applyRateLimit(req, res, { scope: "orders", limit: 20, windowMs: 15 * 60_000 })) return;
   const authUser = getAuthUser(req);
   if (!authUser) return unauthorized(res);
 

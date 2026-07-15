@@ -16,11 +16,12 @@ Create or update `.env.local` in the project root:
 ```env
 RAZORPAY_KEY_ID=rzp_test_your_key_id
 RAZORPAY_KEY_SECRET=your_test_key_secret
+RAZORPAY_WEBHOOK_SECRET=your_webhook_secret
 ```
 
 Keep `RAZORPAY_KEY_SECRET` server-side. Do not rename it with `NEXT_PUBLIC_` and do not commit `.env.local`.
 
-For Vercel, open **Project → Settings → Environment Variables**, add the same two names and values, select the environments you use, then redeploy.
+For Vercel, open **Project → Settings → Environment Variables**, add the same Razorpay names and values, select the environments you use, then redeploy.
 
 ## 3. Test the checkout
 
@@ -28,6 +29,7 @@ For Vercel, open **Project → Settings → Environment Variables**, add the sam
 2. Add a product to the cart and sign in.
 3. At checkout, choose **Pay Online (Razorpay)**.
 4. Complete a Test Mode payment and confirm the order appears under **My Account → Orders** with payment status `paid`.
+5. In Razorpay Dashboard, add a webhook pointing to `/api/payments/razorpay/webhook` and subscribe to payment authorized, captured, and failed events.
 
 ## 4. Go live
 
@@ -36,4 +38,4 @@ For Vercel, open **Project → Settings → Environment Variables**, add the sam
 3. Replace both environment-variable values with the live keys and redeploy.
 4. Make one small real payment and confirm the payment and local order appear correctly.
 
-The server creates the Razorpay order, verifies the returned HMAC signature, checks the Razorpay amount against the current cart, and only then creates the website order and reduces stock.
+The server creates the Razorpay order, verifies the returned HMAC signature, checks the Razorpay amount against the current cart, creates the website order through an atomic stock-update flow, and exposes a webhook endpoint for payment reconciliation.

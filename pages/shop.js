@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -24,9 +24,7 @@ const SORT_OPTIONS = [
 ];
 
 export default function Shop() {
-    const [mounted, setMounted] = useState(false);
     const [products, setProducts] = useState([]);
-    const [filteredProducts, setFilteredProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [sortOpen, setSortOpen] = useState(false);
@@ -37,10 +35,6 @@ export default function Shop() {
 
     const router = useRouter();
     const currentCategory = router.query.category || null;
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     useEffect(() => {
         const loadData = async () => {
@@ -100,10 +94,10 @@ export default function Shop() {
         };
 
         loadData();
-    }, [currentCategory]);
+    }, [currentCategory, router]);
 
-    useEffect(() => {
-        let result = [...products].filter(
+    const filteredProducts = useMemo(() => {
+        const result = [...products].filter(
             (p) => p.price >= priceRange[0] && p.price <= priceRange[1]
         );
 
@@ -126,7 +120,7 @@ export default function Shop() {
                 break;
         }
 
-        setFilteredProducts(result);
+        return result;
     }, [products, selectedSort, priceRange]);
 
     function handleSort(value) {
@@ -153,7 +147,7 @@ export default function Shop() {
 
             <section className="hero">
                 <div className="hero-banner">
-                    <img src="\assets\shop\shop_bg.jpg" alt="Shop" />
+                    <img src="/assets/shop/shop_bg.jpg" alt="Shop" />
                     <div className="hero-overlay">
                         <h1>SHOP</h1>
                     </div>
@@ -201,7 +195,7 @@ export default function Shop() {
                                 SORT
                             </span>
 
-                            {mounted && sortOpen && (
+                            {sortOpen && (
                                 <div style={dropdownStyle}>
                                     {SORT_OPTIONS.map((opt) => (
                                         <div
@@ -225,7 +219,7 @@ export default function Shop() {
                                 FILTER
                             </span>
 
-                            {mounted && filterOpen && (
+                            {filterOpen && (
                                 <div style={{ ...dropdownStyle, width: "240px", right: 0 }}>
                                     <p style={{ margin: "0 0 8px", fontWeight: "600", fontSize: "13px" }}>
                                         PRICE RANGE

@@ -25,8 +25,8 @@ export default function About() {
                        
                       
                         <p className="about-hero-quote">
-                            "Where ideas find form, stories find meaning, and
-                            imagination becomes reality."
+                            &ldquo;Where ideas find form, stories find meaning, and
+                            imagination becomes reality.&rdquo;
                         </p>
                     </div>
                 </section>
@@ -39,8 +39,8 @@ export default function About() {
                             Every masterpiece <em>starts with a blank page.</em>
                         </h2>
                         <p>
-                            At Wa.Wordart, we believe creativity isn't limited to one —
-                            it belongs to the architect sketching tomorrow's skyline, the
+                            At Wa.Wordart, we believe creativity isn&apos;t limited to one —
+                            it belongs to the architect sketching tomorrow&apos;s skyline, the
                             filmmaker building unforgettable stories, the photographer
                             framing emotion, the designer chasing perfection, the artist
                             exploring imagination, and the dreamer turning ideas into
@@ -68,7 +68,7 @@ export default function About() {
                         <p>
                             Our collection of notebooks and stationery is crafted for
                             people who think deeply, write endlessly, and create
-                            fearlessly. Whether it's your next architectural concept,
+                            fearlessly. Whether it&apos;s your next architectural concept,
                             screenplay, brand identity, travel journal, photography
                             notes, or everyday thoughts — Wa.Wordart is built to hold
                             what matters most: your ideas.
@@ -89,9 +89,9 @@ export default function About() {
 
                     <div className="about-split-text">
                         <span className="about-kicker">QUALITY PROMISE</span>
-                        <h2>A notebook isn't just paper.</h2>
+                        <h2>A notebook isn&apos;t just paper.</h2>
                         <p>
-                            It's where ideas are born. Where mistakes become
+                            It&apos;s where ideas are born. Where mistakes become
                             masterpieces. Where plans become projects. Where
                             imagination becomes reality.
                         </p>

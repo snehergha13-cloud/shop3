@@ -74,39 +74,41 @@ this once after every fresh deploy / fresh database.
 
 ### Run the seed
 
+Before running the seed, set these environment variables:
+
+```env
+SEED_SECRET=use-a-long-random-secret
+SEED_ADMIN_EMAIL=admin@example.com
+SEED_ADMIN_PASSWORD=replace-with-a-strong-password
+```
+
 Once your app is deployed (or running locally), call the seed endpoint with
-a single POST request and no body:
+a POST request and the seed secret header:
 
 ```bash
-curl -X POST https://your-app.vercel.app/api/seed
+curl -X POST https://your-app.vercel.app/api/seed \
+  -H "x-seed-secret: use-a-long-random-secret"
 ```
 
 For local development, the same thing, just against localhost:
 ```bash
-curl -X POST http://localhost:3000/api/seed
-```
-
-If you don't have `curl` handy, you can also just open
-`https://your-app.vercel.app/api/seed` in a tool like Postman/Insomnia and
-send a POST request, or run this in your browser's console while on the
-site:
-```js
-fetch("/api/seed", { method: "POST" }).then(r => r.json()).then(console.log);
+curl -X POST http://localhost:3000/api/seed \
+  -H "x-seed-secret: use-a-long-random-secret"
 ```
 
 ### What seeding does
 
 - Wipes and recreates the sample categories, collections, and products defined in `pages/api/seed.js` (so it's safe to use on a fresh store, but see the warning below).
 - Creates one admin account, using the email/password from your `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` environment variables.
-  - If you didn't set those variables, it defaults to: `admin@wordofart.test` / `ChangeMe123!`
-  - If an admin with that email already exists, seeding leaves it untouched (it will never overwrite an existing admin's password).
+  - These variables are required. The app no longer has fallback admin credentials.
+  - If an admin with that email already exists, seeding leaves it untouched and never overwrites the existing admin password.
 
 You'll see a JSON response confirming what was created, e.g.:
 ```json
 {
   "success": true,
   "data": {
-    "message": "Seeded 2 categories, 4 collections and 11 products. Admin account created: admin@wordofart.test / ChangeMe123! — change this password after first login."
+    "message": "Seeded 3 categories, 3 collections and 11 products. Admin account created: admin@example.com. Change this password after first login."
   }
 }
 ```
@@ -128,7 +130,7 @@ fetch("/api/auth-me", {
     Authorization: `Bearer ${localStorage.getItem("woa_token")}`,
   },
   body: JSON.stringify({
-    currentPassword: "ChangeMe123!", // or whatever SEED_ADMIN_PASSWORD was
+    currentPassword: "your-seed-admin-password"
     newPassword: "your-new-strong-password",
   }),
 }).then(r => r.json()).then(console.log);

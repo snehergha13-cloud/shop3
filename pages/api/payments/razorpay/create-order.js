@@ -3,8 +3,10 @@ import { getAuthUser } from "../../../../lib/auth";
 import { getCartOrderData } from "../../../../lib/orderService";
 import { getRazorpayClient } from "../../../../lib/razorpay";
 import { ok, error, unauthorized } from "../../../../lib/response";
+import { applyRateLimit } from "../../../../lib/rateLimit";
 
 export default async function handler(req, res) {
+  if (!applyRateLimit(req, res, { scope: "razorpay-create", limit: 15, windowMs: 15 * 60_000 })) return;
   if (req.method !== "POST") return res.status(405).end();
 
   const authUser = getAuthUser(req);

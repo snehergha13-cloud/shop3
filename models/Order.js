@@ -11,7 +11,7 @@ const OrderItemSchema = new mongoose.Schema({
 const OrderSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    orderNumber: { type: String, required: true, unique: true },
+    orderNumber: { type: String, required: true, unique: true, index: true },
     items: [OrderItemSchema],
     shippingAddress: {
       name: { type: String, required: true },
@@ -44,7 +44,7 @@ const OrderSchema = new mongoose.Schema(
     },
     paymentStatus: { type: String, enum: ["unpaid", "paid", "refunded"], default: "unpaid" },
     paymentMethod: { type: String, required: true },
-    paymentId: { type: String, index: true, sparse: true },
+    paymentId: { type: String, unique: true, sparse: true },
     razorpayOrderId: { type: String, index: true, sparse: true },
     trackingNumber: { type: String },
     trackingUrl: { type: String },
@@ -53,10 +53,10 @@ const OrderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-OrderSchema.pre("save", async function () {
-  if (this.isNew) {
-    const count = await mongoose.model("Order").countDocuments();
-    this.orderNumber = `SS-${String(count + 1).padStart(6, "0")}`;
+OrderSchema.pre("validate", function () {
+  if (this.isNew && !this.orderNumber) {
+    const random = Math.random().toString(36).slice(2, 8).toUpperCase();
+    this.orderNumber = `WOA-${Date.now()}-${random}`;
   }
 });
 

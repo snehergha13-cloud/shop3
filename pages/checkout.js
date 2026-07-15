@@ -93,15 +93,6 @@ export default function CheckoutPage() {
     }
   }, [authLoading, isLoggedIn, router]);
 
-  useEffect(() => {
-    if (user?.name) {
-      setForm((currentForm) => ({
-        ...currentForm,
-        name: currentForm.name || user.name,
-      }));
-    }
-  }, [user]);
-
   function updateField(key, value) {
     setForm((currentForm) => ({
       ...currentForm,
@@ -117,6 +108,11 @@ export default function CheckoutPage() {
   async function handlePlaceOrder(event) {
     event.preventDefault();
     setError("");
+
+    const shippingAddress = {
+      ...form,
+      name: form.name || user?.name || "",
+    };
 
     if (cart.length === 0) {
       setError("Your cart is empty.");
@@ -134,7 +130,7 @@ export default function CheckoutPage() {
             ...authHeaders(),
           },
           body: JSON.stringify({
-            shippingAddress: form,
+            shippingAddress,
             paymentMethod: "cod",
           }),
         });
@@ -196,7 +192,7 @@ export default function CheckoutPage() {
           order_id: createData.data.id,
 
           prefill: {
-            name: form.name,
+            name: shippingAddress.name,
             email: user?.email || "",
             contact: form.phone,
           },
@@ -231,7 +227,7 @@ export default function CheckoutPage() {
                   },
                   body: JSON.stringify({
                     ...response,
-                    shippingAddress: form,
+                    shippingAddress,
                   }),
                 }
               );
@@ -314,7 +310,7 @@ export default function CheckoutPage() {
                 <input
                   id="name"
                   required
-                  value={form.name}
+                  value={form.name || user?.name || ""}
                   onChange={(event) =>
                     updateField(
                       "name",

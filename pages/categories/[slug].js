@@ -56,7 +56,7 @@ export default function CategoryPage() {
         if (notFound && slug) {
             router.replace(`/categories/coming-soon?slug=${slug}`);
         }
-    }, [notFound, slug]);
+    }, [notFound, router, slug]);
 
     return (
         <>

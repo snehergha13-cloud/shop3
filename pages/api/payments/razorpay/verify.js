@@ -5,6 +5,7 @@ import { createOrderFromCart, getCartOrderData } from "../../../../lib/orderServ
 import { getRazorpayClient } from "../../../../lib/razorpay";
 import { created, error, unauthorized } from "../../../../lib/response";
 import Order from "../../../../models/Order";
+import { applyRateLimit } from "../../../../lib/rateLimit";
 
 function safeEqual(a, b) {
   const first = Buffer.from(String(a));
@@ -13,6 +14,7 @@ function safeEqual(a, b) {
 }
 
 export default async function handler(req, res) {
+  if (!applyRateLimit(req, res, { scope: "razorpay-verify", limit: 20, windowMs: 15 * 60_000 })) return;
   if (req.method !== "POST") return res.status(405).end();
 
   const authUser = getAuthUser(req);
