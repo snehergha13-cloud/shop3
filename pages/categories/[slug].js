@@ -10,6 +10,17 @@ const normalizeAssetPath = (value) => {
     if (value.startsWith("public/")) return `/${value.slice(7)}`;
     return value;
 };
+const collectionHref = (collection) => {
+    const slug = String(collection?.slug || "").toLowerCase();
+    const name = String(collection?.name || "").trim().toLowerCase();
+
+    if (["dsk-obj", "desk-objects", "desk_obj"].includes(slug) || name === "desk objects") {
+        return "/collections/dsk-obj";
+    }
+
+    return `/collections/${collection.slug}`;
+};
+
 
 export default function CategoryPage() {
     const router = useRouter();
@@ -113,7 +124,7 @@ export default function CategoryPage() {
                         {collections.map((collection) => (
                             <Link
                                 key={collection._id}
-                                href={`/collections/${collection.slug}`}
+                                href={collectionHref(collection)}
                                 className="product-card"
                             >
                                 <div className="product-image">

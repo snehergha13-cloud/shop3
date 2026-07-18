@@ -14,10 +14,7 @@ export default async function handler(req, res) {
     if (req.method === "GET") {
       const { category } = req.query;
 
-      // DEBUG LOG (added here)
-      console.log("CATEGORY QUERY:", category);
-
-      const filter = { isActive: true };
+      const filter = { isActive: { $ne: false } };
 
       if (category) {
         const categoryDoc = await Category.findOne({ slug: category });

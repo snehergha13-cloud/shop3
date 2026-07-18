@@ -6,6 +6,9 @@ import Collection from "../../models/Collection";
 import Product from "../../models/Product";
 import User from "../../models/User";
 
+const DESK_OBJECTS_CATEGORY_SLUG = "desk_obj";
+const DESK_OBJECTS_COLLECTION_SLUG = "dsk-obj";
+
 // Add new categories here.
 const categoryData = [
   {
@@ -22,7 +25,7 @@ const categoryData = [
   },
   {
     name: "Desk Objects",
-    slug: "desk_obj",
+    slug: DESK_OBJECTS_CATEGORY_SLUG,
     description: "Desk objects",
     imageUrl: "/assets/desk_obj/1.jpeg",
   },
@@ -49,10 +52,10 @@ const collectionData = [
   },
   {
     name: "Desk Objects",
-    slug: "dsk-obj",
+    slug: DESK_OBJECTS_COLLECTION_SLUG,
     description: "Personal leather desk objects.",
     imageUrl: "/assets/desk_obj/1.jpeg",
-    categorySlug: "desk_obj",
+    categorySlug: DESK_OBJECTS_CATEGORY_SLUG,
     sortOrder: 3,
   },
 ];
@@ -335,8 +338,8 @@ const productData = [
     comparePrice: 299900,
     sku: "DO-001",
     stock: 80,
-    categorySlug: "desk_obj",
-    collectionSlug: "dsk-obj",
+    categorySlug: DESK_OBJECTS_CATEGORY_SLUG,
+    collectionSlug: DESK_OBJECTS_COLLECTION_SLUG,
     collectionOrder: 1,
     tags: ["Desk Object", "illustrated"],
     attributes: {

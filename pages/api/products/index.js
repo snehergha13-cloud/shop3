@@ -16,11 +16,17 @@ export default async function handler(req, res) {
         const authUser = getAuthUser(req);
         if (!authUser || authUser.role !== "admin") return forbidden(res);
       } else {
-        filter.isActive = true;
+        filter.isActive = { $ne: false };
       }
       if (category) { const cat = await Category.findOne({ slug: category }); if (cat) filter.category = cat._id; }
       if (collection) {
-        const collectionDoc = await Collection.findOne({ slug: collection, isActive: true });
+        const collectionSlugs = ["dsk-obj", "desk-objects", "desk_obj"].includes(collection)
+          ? ["dsk-obj", "desk-objects", "desk_obj"]
+          : [collection];
+        const collectionDoc = await Collection.findOne({
+          slug: { $in: collectionSlugs },
+          isActive: { $ne: false },
+        });
         if (collectionDoc) filter.collection = collectionDoc._id;
         else filter.collection = null;
       }
@@ -34,7 +40,7 @@ export default async function handler(req, res) {
           const [matchingCategories, matchingCollections] = await Promise.all([
             Category.find({ name: searchRegex }).select("_id").lean(),
             Collection.find({
-              isActive: true,
+              isActive: { $ne: false },
               $or: [{ name: searchRegex }, { description: searchRegex }],
             }).select("_id").lean(),
           ]);
