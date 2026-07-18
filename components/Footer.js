@@ -201,6 +201,7 @@ export default function Footer() {
             var(--background);
           border-top: 1px solid rgba(0, 0, 0, 0.16);
           isolation: isolate;
+          font-family: Arial, Helvetica, sans-serif;
         }
 
         .footer-glow {
@@ -273,8 +274,10 @@ export default function Footer() {
           max-width: 460px;
           margin: 0 0 20px;
           color: var(--text);
-          font-family: Georgia, "Times New Roman", serif;
+          font-family: Arial, Helvetica, sans-serif;
           font-size: clamp(1.35rem, 1.8vw, 1.9rem);
+          font-weight: 500;
+          letter-spacing: -0.025em;
           line-height: 1.4;
         }
 
@@ -403,8 +406,10 @@ export default function Footer() {
           max-width: 330px;
           margin: 0;
           color: var(--cream);
-          font-family: Georgia, "Times New Roman", serif;
+          font-family: Arial, Helvetica, sans-serif;
           font-size: clamp(1.12rem, 1.45vw, 1.48rem);
+          font-weight: 500;
+          letter-spacing: -0.02em;
           line-height: 1.65;
         }
 

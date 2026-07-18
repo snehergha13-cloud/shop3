@@ -134,7 +134,7 @@ export default function Home() {
                     <img src="/assets/A5_softbound/C_1/A5 Notebooks - 1A.png" alt="Notebooks" />
                     <span>NOTEBOOKS</span>
                 </Link>
-                <Link href="/search?q=writing" className="small-card" aria-label="Search writing tools">
+                <Link href={categoryHref("writing_inst")} className="small-card" aria-label="Search writing tools">
                     <img src="/assets/tittle card/writing_instrument.jpg" alt="Writing Tools" />
                     <span>WRITING TOOLS</span>
                 </Link>
