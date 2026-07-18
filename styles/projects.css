@@ -236,6 +236,16 @@ HERO
     font-weight:500;
 }
 
+/* Desk Objects uses a light hero image, so its title needs dark ink. */
+.desk-objects-hero .hero-overlay{
+    color:#242321;
+}
+
+.desk-objects-hero .hero-overlay h1{
+    color:#242321;
+    text-shadow:0 1px 12px rgba(255,255,255,0.55);
+}
+
 /* =========================
 DESCRIPTION
 ========================= */

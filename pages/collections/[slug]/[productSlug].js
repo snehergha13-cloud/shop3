@@ -58,6 +58,17 @@ export default function ProductPage() {
         ? selectedProduct.images
         : [fallbackCollectionImage];
 
+    const categorySlug =
+        collection?.category?.slug ||
+        selectedProduct?.category?.slug ||
+        selectedProduct?.category ||
+        "";
+    const categoryName =
+        collection?.category?.name || selectedProduct?.category?.name || "";
+    const isDeskObjects =
+        categorySlug === "desk-objects" ||
+        categoryName.toLowerCase() === "desk objects";
+
     async function handleAddToCart() {
         if (!selectedProduct) return;
 
@@ -68,7 +79,7 @@ export default function ProductPage() {
                     name: selectedProduct.name,
                     price: selectedProduct.price / 100,
                     image: imgs[0],
-                    style: selectedStyle,
+                    ...(isDeskObjects ? {} : { style: selectedStyle }),
                     category: selectedProduct.category,
                     collection: selectedProduct.collection,
                 },
@@ -143,21 +154,25 @@ export default function ProductPage() {
                         <p className="collection-label">{collection.name}</p>
                         <h1>{selectedProduct.name}</h1>
 
-                        <div className="personalise-label">Style:</div>
-                        <div className="personalise-options">
-                            {STYLE_OPTIONS.map((style) => (
-                                <label key={style}>
-                                    <input
-                                        type="radio"
-                                        name="style"
-                                        value={style}
-                                        checked={selectedStyle === style}
-                                        onChange={() => setSelectedStyle(style)}
-                                    />
-                                    {style.toUpperCase()}
-                                </label>
-                            ))}
-                        </div>
+                        {!isDeskObjects && (
+                            <>
+                                <div className="personalise-label">Style:</div>
+                                <div className="personalise-options">
+                                    {STYLE_OPTIONS.map((style) => (
+                                        <label key={style}>
+                                            <input
+                                                type="radio"
+                                                name="style"
+                                                value={style}
+                                                checked={selectedStyle === style}
+                                                onChange={() => setSelectedStyle(style)}
+                                            />
+                                            {style.toUpperCase()}
+                                        </label>
+                                    ))}
+                                </div>
+                            </>
+                        )}
 
                         <div className="collection-price">{fmt(selectedProduct.price)}</div>
 

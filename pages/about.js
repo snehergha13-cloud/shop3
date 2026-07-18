@@ -22,8 +22,8 @@ export default function About() {
                 <section className="about-hero">
                     <img src="/assets/home/SLIDE - 0.jpg" alt="Wa.Wordart desk essentials" />
                     <div className="about-hero-content">
-                       
-                      
+                        <span className="about-hero-brand">WORDART</span>
+
                         <p className="about-hero-quote">
                             &ldquo;Where ideas find form, stories find meaning, and
                             imagination becomes reality.&rdquo;

@@ -68,7 +68,7 @@ export default function CategoryPage() {
 
             <Navbar />
 
-            <section className="hero">
+            <section className={`hero${slug === "desk-objects" ? " desk-objects-hero" : ""}`}>
                 <div className="hero-banner">
                     <img
                         src={normalizeAssetPath(category?.imageUrl || "")}
