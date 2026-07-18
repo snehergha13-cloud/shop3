@@ -120,7 +120,10 @@ export default function About() {
 
                 {/* CLOSING BRAND MARK */}
                 <section className="about-cta">
-                    <img src="/assets/A5_softbound/C_2/mock up.png" alt="Wa.Wordart notebook collection on a desk" />
+                    <img
+                        src="/assets/about/about-cta-soft-background.png"
+                        alt="Soft neutral WordArt stationery desk arrangement"
+                    />
                     <div className="about-cta-content">
                         <span className="about-cta-brand">WORDART</span>
                         <h2>Ideas. Ink. Impact.</h2>
