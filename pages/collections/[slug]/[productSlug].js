@@ -58,16 +58,28 @@ export default function ProductPage() {
         ? selectedProduct.images
         : [fallbackCollectionImage];
 
-    const categorySlug =
-        collection?.category?.slug ||
-        selectedProduct?.category?.slug ||
-        selectedProduct?.category ||
-        "";
-    const categoryName =
-        collection?.category?.name || selectedProduct?.category?.name || "";
-    const isDeskObjects =
-        categorySlug === "desk-objects" ||
-        categoryName.toLowerCase() === "desk objects";
+    const normalizeIdentifier = (value) =>
+        String(value || "")
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, "");
+
+    const deskObjectIdentifiers = [
+        slug,
+        collection?.slug,
+        collection?.name,
+        collection?.category?.slug,
+        collection?.category?.name,
+        selectedProduct?.category?.slug,
+        selectedProduct?.category?.name,
+        selectedProduct?.category,
+        selectedProduct?.collection?.slug,
+        selectedProduct?.collection?.name,
+        selectedProduct?.collection,
+    ].map(normalizeIdentifier);
+
+    const isDeskObjects = deskObjectIdentifiers.some((identifier) =>
+        ["deskobjects", "deskobject", "dskobj"].includes(identifier)
+    );
 
     async function handleAddToCart() {
         if (!selectedProduct) return;
