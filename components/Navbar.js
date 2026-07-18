@@ -48,7 +48,9 @@ export default function Navbar() {
             <i className="fa-regular fa-user"></i>
           </Link>
 
-          <i className="fa-solid fa-magnifying-glass"></i>
+          <Link href="/search" aria-label="Search products">
+            <i className="fa-solid fa-magnifying-glass"></i>
+          </Link>
 
           <Link
             href={isLoggedIn ? "/account#wishlist" : "/login?redirect=/account%23wishlist"}

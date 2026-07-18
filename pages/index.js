@@ -122,26 +122,26 @@ export default function Home() {
 
             {/* SMALL IMAGE CARDS */}
             <section className="small-cards">
-                <div className="small-card">
+                <Link href="/about" className="small-card" aria-label="Read the founder's note">
                     <img src="/assets/tittle card/founders note image.jpeg" alt="Founder's Note" />
                     <span>FOUNDER&apos;S NOTE</span>
-                </div>
-                <div className="small-card">
+                </Link>
+                <Link href="/about" className="small-card" aria-label="Read WordArt craft stories">
                     <img src="/assets/tittle card/craft_stories.jpg" alt="Craft Stories" />
                     <span>CRAFT STORIES</span>
-                </div>
-                <div className="small-card">
+                </Link>
+                <Link href={categoryHref("notebooks")} className="small-card" aria-label="Shop notebooks">
                     <img src="/assets/A5_softbound/C_1/A5 Notebooks - 1A.png" alt="Notebooks" />
                     <span>NOTEBOOKS</span>
-                </div>
-                <div className="small-card">
+                </Link>
+                <Link href="/search?q=writing" className="small-card" aria-label="Search writing tools">
                     <img src="/assets/tittle card/writing_instrument.jpg" alt="Writing Tools" />
                     <span>WRITING TOOLS</span>
-                </div>
-                <div className="small-card">
+                </Link>
+                <Link href={categoryHref("desk_obj")} className="small-card" aria-label="Shop desk objects">
                     <img src="/assets/desk_obj/5.jpeg" alt="Desk Objects" />
                     <span>DESK OBJECTS</span>
-                </div>
+                </Link>
             </section>
 
 

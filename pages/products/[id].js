@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
 import WishlistButton from "../../components/WishlistButton";
-import { getNotebookBundleRule } from "../../lib/bundlePricing";
 
 const FALLBACK_IMGS = [
   "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=800&q=85",
@@ -74,7 +73,6 @@ export default function ProductPage() {
   }
 
   const imgs = product?.images?.length ? product.images : FALLBACK_IMGS;
-  const bundleRule = getNotebookBundleRule(product);
 
   return (
     <>
@@ -209,7 +207,9 @@ export default function ProductPage() {
           <Link href={isLoggedIn ? "/account" : "/login"} aria-label={isLoggedIn ? "My account" : "Sign in"}>
             <i className="fa-regular fa-user"></i>
           </Link>
-          <i className="fa-solid fa-magnifying-glass"></i>
+          <Link href="/search" aria-label="Search products">
+            <i className="fa-solid fa-magnifying-glass"></i>
+          </Link>
           <Link href={isLoggedIn ? "/account#wishlist" : "/login?redirect=/account%23wishlist"} aria-label="Wishlist">
             <i className="fa-regular fa-heart"></i>
           </Link>
@@ -295,11 +295,6 @@ export default function ProductPage() {
               </div>
 
               <div className="product-price">{fmt(product.price)}</div>
-              {bundleRule && (
-                <p style={{ margin: "-18px 0 22px", color: "#774f3e", fontSize: "13px", fontWeight: 600 }}>
-                  {bundleRule.label}
-                </p>
-              )}
 
               {cartMsg && <div className="cart-msg">{cartMsg}</div>}
 

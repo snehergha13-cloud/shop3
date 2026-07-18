@@ -18,10 +18,8 @@ export default function CheckoutPage() {
 
   const {
     cart,
-    cartSubtotal,
     cartDiscount,
     cartTotal,
-    bundleOffers,
     cartLoading,
     clearCart,
   } = useCart();
@@ -550,22 +548,12 @@ export default function CheckoutPage() {
                   </div>
                 ))}
 
-                <div className="summary-row">
-                  <span className="summary-item-name">
-                    Subtotal
-                  </span>
-
-                  <span>{fmt(cartSubtotal)}</span>
-                </div>
-
-                {cartDiscount > 0 && bundleOffers.map((offer) => (
-                  <div className="summary-row bundle-discount-row" key={offer.code}>
-                    <span className="summary-item-name">
-                      {offer.label}{offer.pairs > 1 ? ` × ${offer.pairs}` : ""}
-                    </span>
-                    <span>−{fmt(offer.discount)}</span>
+                {cartDiscount > 0 && (
+                  <div className="summary-row bundle-discount-row">
+                    <span className="summary-item-name">You Save</span>
+                    <span>−{fmt(cartDiscount)}</span>
                   </div>
-                ))}
+                )}
 
                 <div className="summary-row">
                   <span className="summary-item-name">

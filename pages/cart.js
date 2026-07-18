@@ -15,10 +15,8 @@ export default function CartPage() {
     cart,
     cartLoading,
     removeFromCart,
-    cartSubtotal,
     cartDiscount,
     cartTotal,
-    bundleOffers,
   } = useCart();
   const router = useRouter();
 
@@ -79,22 +77,10 @@ export default function CartPage() {
 
         <div style={styles.totalsBox}>
           {cartDiscount > 0 && (
-            <>
-              <div style={styles.totalLine}>
-                <span>Subtotal</span>
-                <span>{fmt(cartSubtotal)}</span>
-              </div>
-
-              {bundleOffers.map((offer) => (
-                <div key={offer.code} style={styles.offerLine}>
-                  <span>
-                    {offer.label}
-                    {offer.pairs > 1 ? ` × ${offer.pairs}` : ""}
-                  </span>
-                  <span>−{fmt(offer.discount)}</span>
-                </div>
-              ))}
-            </>
+            <div style={styles.offerLine}>
+              <span>You Save</span>
+              <span>−{fmt(cartDiscount)}</span>
+            </div>
           )}
 
           <div style={styles.total}>

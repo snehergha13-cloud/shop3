@@ -24,7 +24,31 @@ export default async function handler(req, res) {
         if (collectionDoc) filter.collection = collectionDoc._id;
         else filter.collection = null;
       }
-      if (search) filter.$text = { $search: search };
+      if (search) {
+        const searchTerm = String(search).trim().slice(0, 100);
+
+        if (searchTerm) {
+          const escapedSearch = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          const searchRegex = new RegExp(escapedSearch, "i");
+
+          const [matchingCategories, matchingCollections] = await Promise.all([
+            Category.find({ name: searchRegex }).select("_id").lean(),
+            Collection.find({
+              isActive: true,
+              $or: [{ name: searchRegex }, { description: searchRegex }],
+            }).select("_id").lean(),
+          ]);
+
+          filter.$or = [
+            { name: searchRegex },
+            { description: searchRegex },
+            { brand: searchRegex },
+            { tags: searchRegex },
+            { category: { $in: matchingCategories.map((item) => item._id) } },
+            { collection: { $in: matchingCollections.map((item) => item._id) } },
+          ];
+        }
+      }
       if (minPrice || maxPrice) filter.price = { ...(minPrice && { $gte: Number(minPrice) }), ...(maxPrice && { $lte: Number(maxPrice) }) };
       if (featured === "true") filter.isFeatured = true;
       const sortBy = sort === "collectionOrder" ? { collectionOrder: 1, createdAt: 1 } : sort;
