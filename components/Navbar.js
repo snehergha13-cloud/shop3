@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { useWishlist } from "../context/WishlistContext";
+import SearchOverlay from "./SearchOverlay";
 
 export default function Navbar() {
   const { cartCount } = useCart();
@@ -10,6 +11,7 @@ export default function Navbar() {
   const { count: wishlistCount } = useWishlist();
   const [categories, setCategories] = useState([]);
   const [collections, setCollections] = useState([]);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     fetch("/api/categories")
@@ -48,9 +50,16 @@ export default function Navbar() {
             <i className="fa-regular fa-user"></i>
           </Link>
 
-          <Link href="/search" aria-label="Search products">
+          <button
+            type="button"
+            className="search-trigger"
+            aria-label="Search products"
+            aria-haspopup="dialog"
+            aria-expanded={searchOpen}
+            onClick={() => setSearchOpen(true)}
+          >
             <i className="fa-solid fa-magnifying-glass"></i>
-          </Link>
+          </button>
 
           <Link
             href={isLoggedIn ? "/account#wishlist" : "/login?redirect=/account%23wishlist"}
@@ -134,6 +143,28 @@ export default function Navbar() {
           COLLECTIONS
         </Link>
       </div>
+
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+
+      <style jsx>{`
+        .search-trigger {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0;
+          color: inherit;
+          background: transparent;
+          border: 0;
+          cursor: pointer;
+          font: inherit;
+        }
+
+        .search-trigger:focus-visible {
+          outline: 2px solid rgba(255, 255, 255, 0.8);
+          outline-offset: 5px;
+          border-radius: 50%;
+        }
+      `}</style>
     </>
   );
 }
