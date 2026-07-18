@@ -15,7 +15,52 @@ const normalizeAssetPath = (value) => {
 const fmt = (paise) =>
     `₹${(paise / 100).toLocaleString("en-IN", { minimumFractionDigits: 2 })}`;
 
+
+const normalizeText = (value) => String(value || "").trim().toLowerCase();
+
+const getProductGroup = (product) => {
+    const categorySlug = normalizeText(product.category?.slug || product.category);
+    const categoryName = normalizeText(product.category?.name);
+    const collectionSlug = normalizeText(product.collection?.slug || product.collection);
+    const collectionName = normalizeText(product.collection?.name);
+
+    const isNotebook =
+        categorySlug === "notebooks" ||
+        categoryName === "notebooks" ||
+        categorySlug.includes("notebook") ||
+        categoryName.includes("notebook");
+
+    const isNoirEtBlanc =
+        collectionSlug.includes("noir") ||
+        collectionName.includes("noir et blanc");
+
+    const isDeskline =
+        collectionSlug.includes("deskline") ||
+        collectionName.includes("deskline a5");
+
+    const isDeskObject =
+        categorySlug.includes("desk-object") ||
+        categoryName.includes("desk object") ||
+        collectionSlug.includes("desk-object") ||
+        collectionName.includes("desk object");
+
+    if (isNotebook && isNoirEtBlanc) return 0;
+    if (isNotebook && isDeskline) return 1;
+    if (isDeskObject) return 2;
+    return 3;
+};
+
+const sortFeaturedProducts = (a, b) => {
+    const groupDifference = getProductGroup(a) - getProductGroup(b);
+    if (groupDifference !== 0) return groupDifference;
+
+    return String(a.name || "").localeCompare(String(b.name || ""), "en", {
+        sensitivity: "base",
+    });
+};
+
 const SORT_OPTIONS = [
+    { label: "Featured", value: "featured" },
     { label: "Newest", value: "newest" },
     { label: "Price: Low to High", value: "price_asc" },
     { label: "Price: High to Low", value: "price_desc" },
@@ -29,7 +74,7 @@ export default function Shop() {
     const [loading, setLoading] = useState(true);
     const [sortOpen, setSortOpen] = useState(false);
     const [filterOpen, setFilterOpen] = useState(false);
-    const [selectedSort, setSelectedSort] = useState("newest");
+    const [selectedSort, setSelectedSort] = useState("featured");
     const [priceRange, setPriceRange] = useState([0, 100000]);
     const [maxPrice, setMaxPrice] = useState(100000);
 
@@ -102,6 +147,9 @@ export default function Shop() {
         );
 
         switch (selectedSort) {
+            case "featured":
+                result.sort(sortFeaturedProducts);
+                break;
             case "price_asc":
                 result.sort((a, b) => a.price - b.price);
                 break;
