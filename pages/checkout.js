@@ -16,13 +16,7 @@ const fmt = (rupees) =>
 export default function CheckoutPage() {
   const router = useRouter();
 
-  const {
-    cart,
-    cartDiscount,
-    cartTotal,
-    cartLoading,
-    clearCart,
-  } = useCart();
+  const { cart, cartDiscount, cartTotal, cartLoading, clearCart } = useCart();
 
   const {
     user,
@@ -41,7 +35,6 @@ export default function CheckoutPage() {
     phone: "",
   });
 
-  const [paymentMethod, setPaymentMethod] = useState("cod");
   const [placing, setPlacing] = useState(false);
   const [error, setError] = useState("");
 
@@ -57,26 +50,13 @@ export default function CheckoutPage() {
       );
 
       if (existing) {
-        existing.addEventListener(
-          "load",
-          () => resolve(true),
-          { once: true }
-        );
-
-        existing.addEventListener(
-          "error",
-          () => resolve(false),
-          { once: true }
-        );
-
+        existing.addEventListener("load", () => resolve(true), { once: true });
+        existing.addEventListener("error", () => resolve(false), { once: true });
         return;
       }
 
       const script = document.createElement("script");
-
-      script.src =
-        "https://checkout.razorpay.com/v1/checkout.js";
-
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
       script.async = true;
       script.onload = () => resolve(true);
       script.onerror = () => resolve(false);
@@ -98,9 +78,6 @@ export default function CheckoutPage() {
     }));
   }
 
-  /*
-   * Shipping is disabled.
-   */
   const total = cartTotal;
 
   async function handlePlaceOrder(event) {
@@ -120,38 +97,7 @@ export default function CheckoutPage() {
     setPlacing(true);
 
     try {
-      if (paymentMethod === "cod") {
-        const response = await fetch("/api/orders", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            ...authHeaders(),
-          },
-          body: JSON.stringify({
-            shippingAddress,
-            paymentMethod: "cod",
-          }),
-        });
-
-        const data = await response.json();
-
-        if (!data.success) {
-          throw new Error(
-            data.error || "Could not place order"
-          );
-        }
-
-        await clearCart();
-
-        router.push(
-          `/account/orders?placed=${data.data.orderNumber}`
-        );
-
-        return;
-      }
-
-      const scriptLoaded =
-        await loadRazorpayScript();
+      const scriptLoaded = await loadRazorpayScript();
 
       if (!scriptLoaded) {
         throw new Error(
@@ -170,14 +116,10 @@ export default function CheckoutPage() {
         }
       );
 
-      const createData =
-        await createResponse.json();
+      const createData = await createResponse.json();
 
       if (!createData.success) {
-        throw new Error(
-          createData.error ||
-            "Could not start payment"
-        );
+        throw new Error(createData.error || "Could not start payment");
       }
 
       await new Promise((resolve, reject) => {
@@ -206,9 +148,7 @@ export default function CheckoutPage() {
 
           modal: {
             ondismiss: () => {
-              reject(
-                new Error("Payment was cancelled.")
-              );
+              reject(new Error("Payment was cancelled."));
             },
           },
 
@@ -219,8 +159,7 @@ export default function CheckoutPage() {
                 {
                   method: "POST",
                   headers: {
-                    "Content-Type":
-                      "application/json",
+                    "Content-Type": "application/json",
                     ...authHeaders(),
                   },
                   body: JSON.stringify({
@@ -230,13 +169,11 @@ export default function CheckoutPage() {
                 }
               );
 
-              const verifyData =
-                await verifyResponse.json();
+              const verifyData = await verifyResponse.json();
 
               if (!verifyData.success) {
                 throw new Error(
-                  verifyData.error ||
-                    "Payment verification failed"
+                  verifyData.error || "Payment verification failed"
                 );
               }
 
@@ -253,17 +190,14 @@ export default function CheckoutPage() {
           },
         });
 
-        razorpay.on(
-          "payment.failed",
-          (response) => {
-            reject(
-              new Error(
-                response.error?.description ||
-                  "Payment failed. Please try again."
-              )
-            );
-          }
-        );
+        razorpay.on("payment.failed", (response) => {
+          reject(
+            new Error(
+              response.error?.description ||
+                "Payment failed. Please try again."
+            )
+          );
+        });
 
         razorpay.open();
       });
@@ -294,81 +228,51 @@ export default function CheckoutPage() {
             <div className="checkout-section">
               <h2>Shipping Address</h2>
 
-              {error && (
-                <div className="auth-error">
-                  {error}
-                </div>
-              )}
+              {error && <div className="auth-error">{error}</div>}
 
               <div className="checkout-field">
-                <label htmlFor="name">
-                  Full Name
-                </label>
-
+                <label htmlFor="name">Full Name</label>
                 <input
                   id="name"
                   required
                   value={form.name || user?.name || ""}
-                  onChange={(event) =>
-                    updateField(
-                      "name",
-                      event.target.value
-                    )
-                  }
+                  onChange={(event) => updateField("name", event.target.value)}
                 />
               </div>
 
               <div className="checkout-field">
-                <label htmlFor="street">
-                  Street Address
-                </label>
-
+                <label htmlFor="street">Street Address</label>
                 <input
                   id="street"
                   required
                   value={form.street}
                   onChange={(event) =>
-                    updateField(
-                      "street",
-                      event.target.value
-                    )
+                    updateField("street", event.target.value)
                   }
                 />
               </div>
 
               <div className="checkout-grid-2">
                 <div className="checkout-field">
-                  <label htmlFor="city">
-                    City
-                  </label>
-
+                  <label htmlFor="city">City</label>
                   <input
                     id="city"
                     required
                     value={form.city}
                     onChange={(event) =>
-                      updateField(
-                        "city",
-                        event.target.value
-                      )
+                      updateField("city", event.target.value)
                     }
                   />
                 </div>
 
                 <div className="checkout-field">
-                  <label htmlFor="state">
-                    State
-                  </label>
-
+                  <label htmlFor="state">State</label>
                   <input
                     id="state"
                     required
                     value={form.state}
                     onChange={(event) =>
-                      updateField(
-                        "state",
-                        event.target.value
-                      )
+                      updateField("state", event.target.value)
                     }
                   />
                 </div>
@@ -376,56 +280,38 @@ export default function CheckoutPage() {
 
               <div className="checkout-grid-2">
                 <div className="checkout-field">
-                  <label htmlFor="postalCode">
-                    Postal Code
-                  </label>
-
+                  <label htmlFor="postalCode">Postal Code</label>
                   <input
                     id="postalCode"
                     required
                     value={form.postalCode}
                     onChange={(event) =>
-                      updateField(
-                        "postalCode",
-                        event.target.value
-                      )
+                      updateField("postalCode", event.target.value)
                     }
                   />
                 </div>
 
                 <div className="checkout-field">
-                  <label htmlFor="phone">
-                    Phone
-                  </label>
-
+                  <label htmlFor="phone">Phone</label>
                   <input
                     id="phone"
                     required
                     value={form.phone}
                     onChange={(event) =>
-                      updateField(
-                        "phone",
-                        event.target.value
-                      )
+                      updateField("phone", event.target.value)
                     }
                   />
                 </div>
               </div>
 
               <div className="checkout-field">
-                <label htmlFor="country">
-                  Country
-                </label>
-
+                <label htmlFor="country">Country</label>
                 <input
                   id="country"
                   required
                   value={form.country}
                   onChange={(event) =>
-                    updateField(
-                      "country",
-                      event.target.value
-                    )
+                    updateField("country", event.target.value)
                   }
                 />
               </div>
@@ -435,63 +321,20 @@ export default function CheckoutPage() {
               <h2>Payment Method</h2>
 
               <div className="payment-options">
-                <label
-                  className={`payment-option ${
-                    paymentMethod === "cod"
-                      ? "selected"
-                      : ""
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="cod"
-                    checked={
-                      paymentMethod === "cod"
-                    }
-                    onChange={() =>
-                      setPaymentMethod("cod")
-                    }
-                  />
-
-                  <span>
-                    Cash on Delivery
-                    <small>
-                      Pay when your order
-                      arrives.
-                    </small>
-                  </span>
-                </label>
-
-                <label
-                  className={`payment-option ${
-                    paymentMethod ===
-                    "razorpay"
-                      ? "selected"
-                      : ""
-                  }`}
-                >
+                <label className="payment-option selected">
                   <input
                     type="radio"
                     name="paymentMethod"
                     value="razorpay"
-                    checked={
-                      paymentMethod ===
-                      "razorpay"
-                    }
-                    onChange={() =>
-                      setPaymentMethod(
-                        "razorpay"
-                      )
-                    }
+                    checked
+                    readOnly
                   />
 
                   <span>
                     Pay Online (Razorpay)
                     <small>
-                      Pay securely using UPI,
-                      cards, netbanking or
-                      supported wallets.
+                      Pay securely using UPI, cards, netbanking or supported
+                      wallets.
                     </small>
                   </span>
                 </label>
@@ -501,17 +344,9 @@ export default function CheckoutPage() {
             <button
               type="submit"
               className="place-order-btn"
-              disabled={
-                placing ||
-                cartLoading ||
-                cart.length === 0
-              }
+              disabled={placing || cartLoading || cart.length === 0}
             >
-              {placing
-                ? "Placing Order..."
-                : `Place Order — ${fmt(
-                    total
-                  )}`}
+              {placing ? "Processing Payment..." : `Pay Now — ${fmt(total)}`}
             </button>
           </form>
 
@@ -522,28 +357,18 @@ export default function CheckoutPage() {
               <p>Loading cart...</p>
             ) : cart.length === 0 ? (
               <p>
-                Your cart is empty.{" "}
-                <Link href="/shop">
-                  Go shop!
-                </Link>
+                Your cart is empty. <Link href="/shop">Go shop!</Link>
               </p>
             ) : (
               <>
                 {cart.map((item) => (
-                  <div
-                    className="summary-row"
-                    key={item.product.id}
-                  >
+                  <div className="summary-row" key={item.product.id}>
                     <span className="summary-item-name">
-                      {item.product.name} ×{" "}
-                      {item.quantity}
+                      {item.product.name} × {item.quantity}
                     </span>
 
                     <span>
-                      {fmt(
-                        item.product.price *
-                          item.quantity
-                      )}
+                      {fmt(item.product.price * item.quantity)}
                     </span>
                   </div>
                 ))}
@@ -556,10 +381,7 @@ export default function CheckoutPage() {
                 )}
 
                 <div className="summary-row">
-                  <span className="summary-item-name">
-                    Shipping
-                  </span>
-
+                  <span className="summary-item-name">Shipping</span>
                   <span>Free</span>
                 </div>
 
