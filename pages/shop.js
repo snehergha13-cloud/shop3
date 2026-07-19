@@ -195,7 +195,7 @@ export default function Shop() {
 
             <section className="hero">
                 <div className="hero-banner">
-                    <img src="/assets/shop/shop_bg.jpg" alt="Shop" />
+                    <img src="/assets/banners/shop-collections-banner.png" alt="WordArt stationery collection" />
                     <div className="hero-overlay">
                         <h1>SHOP</h1>
                     </div>

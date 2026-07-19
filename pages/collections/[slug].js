@@ -14,6 +14,29 @@ const normalizeAssetPath = (value) => {
 const fmt = (paise) =>
     `₹${(paise / 100).toLocaleString("en-IN", { minimumFractionDigits: 2 })}`;
 
+const getCollectionBanner = (collection, routeSlug) => {
+  const slugValue = String(routeSlug || collection?.slug || "").toLowerCase();
+  const collectionName = String(collection?.name || "").toLowerCase();
+
+  if (
+      slugValue === "c2-notebooks" ||
+      slugValue.includes("noir") ||
+      collectionName.includes("noir et blanc")
+  ) {
+    return "/assets/banners/noir-et-blanc-banner.png";
+  }
+
+  if (
+      slugValue === "c1-notebooks" ||
+      slugValue.includes("deskline") ||
+      collectionName.includes("deskline a5")
+  ) {
+    return "/assets/banners/deskline-a5-banner.png";
+  }
+
+  return normalizeAssetPath(collection?.imageUrl || "");
+};
+
 export default function CollectionPage() {
   const router = useRouter();
   const { slug } = router.query;
@@ -69,7 +92,7 @@ export default function CollectionPage() {
         <section className="hero">
           <div className="hero-banner">
             <img
-                src={normalizeAssetPath(collection?.imageUrl || "")}
+                src={getCollectionBanner(collection, slug)}
                 alt={collection?.name || "Collection"}
             />
             <div className="hero-overlay">

@@ -85,7 +85,7 @@ export default function Collections() {
 
             <section className="hero shop-hero">
                 <div className="hero-banner">
-                    <img src="\assets\shop\shop_bg.jpg" alt="Collections" />
+                    <img src="/assets/banners/shop-collections-banner.png" alt="WordArt stationery collections" />
                     <div className="hero-overlay">
                         <h1>COLLECTIONS</h1>
                     </div>
