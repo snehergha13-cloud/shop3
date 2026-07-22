@@ -67,7 +67,7 @@ const productData = [
     name: "Let It Change Notebook",
     slug: "p1-c1-notebook",
     description: "A softbound A5 notebook with illustrated cover artwork, smooth writing pages, and a compact everyday format.",
-    price: 100,
+    price: 49900,
     comparePrice: 57000,
     sku: "NB-A5-C1-001",
     stock: 80,

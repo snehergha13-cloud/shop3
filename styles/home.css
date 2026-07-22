@@ -5,11 +5,30 @@
     box-sizing:border-box;
 }
 
+html,
 body{
-    font-family: "Georgia", serif;
-    background: #F4F0EA;
+    min-height:100%;
+}
+
+body{
+    position:relative;
+    isolation:isolate;
+    font-family:"Georgia", serif;
     color:#1a1a1a;
     overflow-x:hidden;
+    background:transparent;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background-image:url("/assets/background.png");
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat;
 }
 
 a{
@@ -30,8 +49,8 @@ nav{
     justify-content:space-between;
     align-items:center;
     padding:0 60px;
-    background:rgba(15,15,15,0.45);
-    backdrop-filter:blur(12px);
+    background:rgb(15, 15, 15);
+    backdrop-filter:blur(1px);
     z-index:1000;
     border-bottom:1px solid rgba(255,255,255,0.08);
     font-weight: 400;
