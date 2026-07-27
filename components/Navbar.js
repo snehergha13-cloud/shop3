@@ -25,8 +25,25 @@ export default function Navbar() {
       .catch(() => {});
   }, []);
 
+  const promoItems = [
+    "Free shipping above Rs. 699",
+    "On order of Rs. 1999 (1 Freebie)",
+    "On order of Rs. 2999 (1 Freebie + 1 Fridge magnet)",
+  ];
+
   return (
     <>
+      <div className="promo-banner" aria-label="Current offers">
+        <div className="promo-track">
+          {[...promoItems, ...promoItems].map((item, index) => (
+            <span className="promo-item" key={`${item}-${index}`} aria-hidden={index >= promoItems.length}>
+              <span>{item}</span>
+              <span className="promo-separator" aria-hidden="true">•</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
       <nav>
         <div className="nav-left">
           <Link href="/">HOME</Link>

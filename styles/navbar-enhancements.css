@@ -1,0 +1,163 @@
+/* ===== WORDART HEADER / RUNNING OFFER BANNER =====
+   Keeps the full fixed-header stack at the site's existing 132px desktop
+   and 104px mobile heights so page content does not jump or get covered. */
+:root {
+  --promo-height: 30px;
+  --main-nav-height: 64px;
+  --sub-nav-height: 38px;
+  --header-dark: #100d0b;
+  --header-dark-soft: #18120f;
+  --promo-bg: #774f3e;
+  --promo-text: #fff9e9;
+}
+
+.promo-banner {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--promo-height);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1002;
+  background: var(--promo-bg);
+  color: var(--promo-text);
+  border-bottom: 1px solid rgba(255, 249, 233, 0.15);
+  font-family: 'Montserrat', 'Jost', sans-serif;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.promo-track {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  will-change: transform;
+  animation: wordart-promo-scroll 26s linear infinite;
+}
+
+.promo-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 34px;
+  padding-left: 34px;
+}
+
+.promo-separator {
+  color: #e0b88d;
+  font-size: 14px;
+  line-height: 1;
+  opacity: 0.95;
+}
+
+@keyframes wordart-promo-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Darker main navigation, while preserving the existing page header footprint. */
+nav {
+  top: var(--promo-height) !important;
+  height: var(--main-nav-height) !important;
+  background: rgba(16, 13, 11, 0.98) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+nav .logo img {
+  max-height: 43px;
+  width: auto;
+}
+
+.menu-bar {
+  top: calc(var(--promo-height) + var(--main-nav-height)) !important;
+  height: var(--sub-nav-height) !important;
+  background: rgba(24, 18, 15, 0.94) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+
+.shop-dropdown {
+  top: var(--sub-nav-height) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .promo-banner:hover .promo-track {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-track {
+    animation: none;
+    transform: none;
+  }
+
+  .promo-banner {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .promo-banner::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --promo-height: 26px;
+    --main-nav-height: 50px;
+    --sub-nav-height: 28px;
+  }
+
+  .promo-banner {
+    font-size: 9px;
+    letter-spacing: 0.75px;
+  }
+
+  .promo-track {
+    animation-duration: 21s;
+  }
+
+  .promo-item {
+    gap: 22px;
+    padding-left: 22px;
+  }
+
+  .promo-separator {
+    font-size: 12px;
+  }
+
+  nav {
+    padding: 0 14px !important;
+  }
+
+  nav .logo img {
+    height: 31px !important;
+    max-height: 31px !important;
+  }
+
+  .nav-icons {
+    gap: 14px !important;
+  }
+
+  .nav-icons i {
+    font-size: 15px !important;
+  }
+
+  .menu-bar {
+    padding: 0 8px !important;
+    gap: 0 !important;
+  }
+
+  .menu-bar a,
+  .shop-link,
+  .menu-text {
+    padding: 0 13px !important;
+    font-size: 10px !important;
+    letter-spacing: 1.15px !important;
+  }
+}

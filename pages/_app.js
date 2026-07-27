@@ -9,6 +9,7 @@ import "../styles/projects.css";
 import "../styles/about.css";
 import "../styles/auth.css";
 import "../styles/admin.css";
+import "../styles/navbar-enhancements.css";
 
 export default function App({ Component, pageProps }) {
     return (
