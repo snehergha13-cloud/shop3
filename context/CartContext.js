@@ -19,6 +19,7 @@ import {
 } from "react";
 import { useAuth } from "./AuthContext";
 import { calculateBundlePricing } from "../lib/bundlePricing";
+import { calculateShippingCost } from "../lib/shippingPricing";
 
 const CartContext = createContext();
 const GUEST_CART_KEY = "woa_guest_cart";
@@ -246,6 +247,8 @@ export function CartProvider({ children }) {
     () => calculateBundlePricing(cart, { priceScale: 1 }),
     [cart]
   );
+  const shippingCost = calculateShippingCost(pricing.total, { priceScale: 1 });
+  const grandTotal = pricing.total + shippingCost;
 
   return (
     <CartContext.Provider
@@ -259,6 +262,8 @@ export function CartProvider({ children }) {
         cartSubtotal: pricing.regularSubtotal,
         cartDiscount: pricing.discount,
         cartTotal: pricing.total,
+        cartShippingCost: shippingCost,
+        cartGrandTotal: grandTotal,
         bundleOffers: pricing.offers,
         refreshCart: fetchServerCart,
       }}

@@ -16,7 +16,15 @@ const fmt = (rupees) =>
 export default function CheckoutPage() {
   const router = useRouter();
 
-  const { cart, cartDiscount, cartTotal, cartLoading, clearCart } = useCart();
+  const {
+    cart,
+    cartDiscount,
+    cartTotal,
+    cartShippingCost,
+    cartGrandTotal,
+    cartLoading,
+    clearCart,
+  } = useCart();
 
   const {
     user,
@@ -78,7 +86,7 @@ export default function CheckoutPage() {
     }));
   }
 
-  const total = cartTotal;
+  const total = cartGrandTotal;
 
   async function handlePlaceOrder(event) {
     event.preventDefault();
@@ -381,8 +389,13 @@ export default function CheckoutPage() {
                 )}
 
                 <div className="summary-row">
+                  <span className="summary-item-name">Merchandise total</span>
+                  <span>{fmt(cartTotal)}</span>
+                </div>
+
+                <div className="summary-row">
                   <span className="summary-item-name">Shipping</span>
-                  <span>Free</span>
+                  <span>{cartShippingCost === 0 ? "Free" : fmt(cartShippingCost)}</span>
                 </div>
 
                 <div className="summary-row total">

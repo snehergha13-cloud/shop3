@@ -17,6 +17,8 @@ export default function CartPage() {
     removeFromCart,
     cartDiscount,
     cartTotal,
+    cartShippingCost,
+    cartGrandTotal,
   } = useCart();
   const router = useRouter();
 
@@ -83,9 +85,19 @@ export default function CartPage() {
             </div>
           )}
 
+          <div style={styles.totalLine}>
+            <span>Merchandise total</span>
+            <span>{fmt(cartTotal)}</span>
+          </div>
+
+          <div style={styles.totalLine}>
+            <span>Shipping</span>
+            <span>{cartShippingCost === 0 ? "Free" : fmt(cartShippingCost)}</span>
+          </div>
+
           <div style={styles.total}>
             <strong>Total</strong>
-            <strong>{fmt(cartTotal)}</strong>
+            <strong>{fmt(cartGrandTotal)}</strong>
           </div>
         </div>
 
