@@ -1400,3 +1400,27 @@ COLLECTION DETAIL
     color:#9b3f3f;
     border-color:#9b3f3f;
 }
+
+
+/* Compact product labels on mobile shop cards */
+@media(max-width:768px){
+    .products-section .product-info{
+        padding-top:14px;
+    }
+
+    .products-section .product-info h3{
+        font-family:'Montserrat','Jost',Arial,sans-serif;
+        font-size:9px;
+        line-height:1.35;
+        letter-spacing:1px;
+        font-weight:600;
+        margin-bottom:8px;
+        overflow-wrap:anywhere;
+    }
+
+    .products-section .product-info p{
+        font-family:'Montserrat','Jost',Arial,sans-serif;
+        font-size:13px;
+        line-height:1.3;
+    }
+}

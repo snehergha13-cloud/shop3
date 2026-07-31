@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
@@ -25,6 +25,9 @@ const mobileSlides = [
 export default function Home() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [categories, setCategories] = useState([]);
+    const smallCardsRef = useRef(null);
+    const productButtonsRef = useRef(null);
+    const afterHeroRef = useRef(null);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -35,6 +38,24 @@ export default function Home() {
     }, []);
 
     // Used by the mobile-only "shop by category" scroller right under the hero.
+    const scrollCarousel = (ref, direction) => {
+        const container = ref.current;
+        if (!container) return;
+
+        const firstCard = container.querySelector("a");
+        const cardWidth = firstCard?.getBoundingClientRect().width || container.clientWidth * 0.75;
+        const gap = Number.parseFloat(getComputedStyle(container).gap) || 10;
+
+        container.scrollBy({
+            left: direction * (cardWidth + gap),
+            behavior: "smooth",
+        });
+    };
+
+    const scrollPastHero = () => {
+        afterHeroRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
     useEffect(() => {
         fetch("/api/categories")
             .then((r) => r.json())
@@ -88,10 +109,19 @@ export default function Home() {
                     ))}
                 </div>
 
+                <button
+                    type="button"
+                    className="hero-scroll-down"
+                    aria-label="Scroll down"
+                    onClick={scrollPastHero}
+                >
+                    <i className="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                </button>
+
             </section>
 
             {/* MOBILE-ONLY: SHOP BY CATEGORY SCROLLER */}
-            <section className="mobile-category-scroller">
+            <section className="mobile-category-scroller" ref={afterHeroRef}>
                 {(categories.length > 0 ? categories : [
                     { _id: "notebooks", name: "Notebooks", slug: "notebooks", imageUrl: "/assets/A5_softbound/C_1/A5 Notebooks - 1A.png" },
                     { _id: "journals", name: "Journals", slug: "journals", imageUrl: "/assets/Journals/c1/LUNAR JOURNAL _ A.png" },
@@ -121,7 +151,16 @@ export default function Home() {
             </section>
 
             {/* SMALL IMAGE CARDS */}
-            <section className="small-cards">
+            <section className="carousel-shell small-cards-shell" aria-label="Featured stories and categories">
+                <button
+                    type="button"
+                    className="carousel-arrow carousel-arrow-left"
+                    aria-label="Scroll featured cards left"
+                    onClick={() => scrollCarousel(smallCardsRef, -1)}
+                >
+                    <i className="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <div className="small-cards" ref={smallCardsRef}>
                 <Link href="/about" className="small-card" aria-label="Read the founder's note">
                     <img src="/assets/tittle card/founders note image.jpeg" alt="Founder's Note" />
                     <span>FOUNDER&apos;S NOTE</span>
@@ -142,6 +181,15 @@ export default function Home() {
                     <img src="/assets/desk_obj/5.jpeg" alt="Desk Objects" />
                     <span>DESK OBJECTS</span>
                 </Link>
+                </div>
+                <button
+                    type="button"
+                    className="carousel-arrow carousel-arrow-right"
+                    aria-label="Scroll featured cards right"
+                    onClick={() => scrollCarousel(smallCardsRef, 1)}
+                >
+                    <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </button>
             </section>
 
 
@@ -200,7 +248,16 @@ export default function Home() {
             </section>
 
             {/* FINAL PRODUCT IMAGES */}
-            <section className="product-buttons">
+            <section className="carousel-shell product-buttons-shell" aria-label="Paper goods categories">
+                <button
+                    type="button"
+                    className="carousel-arrow carousel-arrow-left"
+                    aria-label="Scroll paper goods left"
+                    onClick={() => scrollCarousel(productButtonsRef, -1)}
+                >
+                    <i className="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <div className="product-buttons" ref={productButtonsRef}>
                 <Link className="product-card" href={categoryHref("postcards")}>
                     <img src="/assets/card/postcard.jpg" alt="" />
                     <div className="product-overlay">
@@ -231,6 +288,15 @@ export default function Home() {
                         <button>ENVELOPES</button>
                     </div>
                 </Link>
+                </div>
+                <button
+                    type="button"
+                    className="carousel-arrow carousel-arrow-right"
+                    aria-label="Scroll paper goods right"
+                    onClick={() => scrollCarousel(productButtonsRef, 1)}
+                >
+                    <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </button>
             </section>
 
 
