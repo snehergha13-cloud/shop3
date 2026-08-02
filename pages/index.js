@@ -115,7 +115,20 @@ export default function Home() {
                     aria-label="Scroll down"
                     onClick={scrollPastHero}
                 >
-                    <i className="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    <svg
+                        className="hero-scroll-down-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M5 9l7 7 7-7"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
                 </button>
 
             </section>
