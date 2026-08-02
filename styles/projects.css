@@ -336,10 +336,9 @@ PRODUCT SECTION
 
 .products-container{
     width:1380px;
+    max-width:100%;
 
-    background:#f7f6f3;
-
-    border:1px solid rgba(0,0,0,0.08);
+    background:transparent;
 }
 
 /* FILTER BAR */
@@ -1132,51 +1131,15 @@ COLLECTION DETAIL
         width:100%;
     }
 }
-.description{
-  width:100%;
-  display:flex;
-  justify-content:center;
-  padding:40px 0;
-}
-
-.description p{
-  width:950px;
-  text-align:center;
-  line-height:34px;
-  font-size:19px;
-  color:#444;
-}
-
-.categories{
-  display:flex;
-  justify-content:center;
-  gap:38px;
-  padding-bottom:50px;
-}
-
-.category-item{
-  text-align:center;
-  cursor:pointer;
-  text-decoration:none;
-  color:inherit;
-}
-
-.category-item img{
-  width:95px;
-  height:95px;
-  border-radius:50%;
-  object-fit:cover;
-  margin-bottom:12px;
-}
-
-.category-item p{
-  font-size:14px;
-}
-
 .hero{
   width:100%;
 }
 
+.hero:has(.hero-banner){
+  height:auto;
+  min-height:0;
+  overflow:visible;
+}
 
 .hero-banner {
   margin-top:132px;
