@@ -453,7 +453,7 @@ PRODUCT SECTION
 }
 
 .product-info h3{
-    font-size:.92rem;
+    font-size:11px;
 
     letter-spacing:1.3px;
 
@@ -1130,7 +1130,7 @@ COLLECTION DETAIL
 .product-info h3{
     display:block !important;
     color:#111 !important;
-    font-size:.92rem !important;
+    font-size:11px !important;
     letter-spacing:1.3px !important;
 }
 
