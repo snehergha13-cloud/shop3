@@ -1132,6 +1132,7 @@ COLLECTION DETAIL
     color:#111 !important;
     font-size:11px !important;
     letter-spacing:1.3px !important;
+    font-weight: 500;
 }
 
 .product-info p{
@@ -1416,7 +1417,7 @@ COLLECTION DETAIL
         font-size:9px;
         line-height:1.35;
         letter-spacing:1px;
-        font-weight:600;
+        font-weight: 500;
         margin-bottom:8px;
         overflow-wrap:anywhere;
     }
