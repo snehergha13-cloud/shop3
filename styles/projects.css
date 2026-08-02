@@ -229,9 +229,9 @@ HERO
 }
 
 .hero-overlay h1{
-    font-size:54px;
+    font-size:40px;
 
-    letter-spacing:6px;
+    letter-spacing:5px;
 
     font-weight:500;
 }
@@ -282,9 +282,9 @@ CATEGORIES
     display:flex;
     justify-content:center;
     flex-wrap:wrap;
-    gap:34px;
+    gap:26px;
 
-    padding-bottom:36px;
+    padding-bottom:30px;
 }
 
 .category-item{
@@ -300,14 +300,14 @@ CATEGORIES
 }
 
 .category-item img{
-    width:72px;
-    height:72px;
+    width:64px;
+    height:64px;
 
     border-radius:50%;
 
     object-fit:cover;
 
-    margin-bottom:10px;
+    margin-bottom:8px;
 
     border:1px solid rgba(0,0,0,0.06);
 }
