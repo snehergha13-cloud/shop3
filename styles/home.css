@@ -378,7 +378,31 @@ nav{
 }
 
 .hero-scroll-down{
-    display:none;
+    position:absolute;
+    left:50%;
+    bottom:-34px;
+    transform:translateX(-50%);
+    width:64px;
+    height:64px;
+    border-radius:50%;
+    border:none;
+    background:#fff;
+    color:#2d241f;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.16);
+    transition:.3s;
+    z-index:40;
+}
+
+.hero-scroll-down:hover{
+    transform:translateX(-50%) translateY(-4px);
+}
+
+.hero-scroll-down i{
+    font-size:26px;
 }
 
 /* =========================
@@ -549,6 +573,27 @@ nav{
 
 .feature-overlay button:hover{
     background:#dedede;
+}
+
+.heroBannerBtn{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    background:#ffffff;
+    color:#1f1f1f;
+    border:none;
+    padding:15px 44px;
+    letter-spacing:3px;
+    font-size:.82rem;
+    font-weight:500;
+    transition:.3s;
+    cursor:pointer;
+}
+
+.heroBannerBtn:hover{
+    background:#111;
+    color:#fff;
 }
 
 /* =========================
@@ -1032,10 +1077,10 @@ FOOTER
         scroll-snap-type:x mandatory;
         scrollbar-width:none;
         grid-template-columns:unset;
-        gap:10px;
+        gap:18px;
         margin:24px auto;
         width:100%;
-        padding:0 16px;
+        padding:0 18px;
     }
 
     .small-cards::-webkit-scrollbar{
@@ -1043,16 +1088,16 @@ FOOTER
     }
 
     .small-card{
-        scroll-snap-align:start;
-        flex:0 0 42%;
-        height:220px;
+        scroll-snap-align:center;
+        flex:0 0 230px;
+        height:310px;
     }
 
     .small-card span{
-        font-size:0.75rem;
+        font-size:0.85rem;
         letter-spacing:1.5px;
-        bottom:12px;
-        left:12px;
+        bottom:14px;
+        left:14px;
     }
 
     /* --- FEATURE GRID --- */
@@ -1204,9 +1249,16 @@ FOOTER
 
     .carousel-arrow{
         display:flex;
-        width:44px;
-        height:44px;
+        width:52px;
+        height:52px;
         font-size:16px;
+        border-radius:50%;
+        background:rgba(255,255,255,.92);
+        box-shadow:0 8px 18px rgba(0,0,0,.18);
+    }
+
+    .carousel-arrow i{
+        font-size:28px;
     }
 
     .small-cards-shell,

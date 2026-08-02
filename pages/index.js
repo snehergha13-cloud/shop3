@@ -120,8 +120,10 @@ export default function Home() {
 
             </section>
 
+            <div id="homepage-content" ref={afterHeroRef}>
+
             {/* MOBILE-ONLY: SHOP BY CATEGORY SCROLLER */}
-            <section className="mobile-category-scroller" ref={afterHeroRef}>
+            <section className="mobile-category-scroller">
                 {(categories.length > 0 ? categories : [
                     { _id: "notebooks", name: "Notebooks", slug: "notebooks", imageUrl: "/assets/A5_softbound/C_1/A5 Notebooks - 1A.png" },
                     { _id: "journals", name: "Journals", slug: "journals", imageUrl: "/assets/Journals/c1/LUNAR JOURNAL _ A.png" },
@@ -196,21 +198,17 @@ export default function Home() {
             {/* FEATURE IMAGES */}
             <section className="feature-grid">
 
-                <Link href={categoryHref("journals")} className="feature-card">
+                <Link href={categoryHref("journals")} className="feature-card" aria-label="Shop journals">
                     <img src="/assets/Journals/LANDING PAGE/Jounal - 1.png" alt="Journals" />
                     <div className="feature-overlay">
-                        <h2>JOURNALS</h2>
-                        <p>Crafted for every passing thought.</p>
-                        <button>SHOP NOW</button>
+                        <span className="heroBannerBtn">SHOP NOW</span>
                     </div>
                 </Link>
 
-                <Link href={categoryHref("notebooks")} className="feature-card">
+                <Link href={categoryHref("notebooks")} className="feature-card" aria-label="Shop A5 notebooks">
                     <img src="/assets/A5_softbound/C_1/A5 Notebooks - 1B.png" alt="A5 Notebooks" />
                     <div className="feature-overlay">
-                        <h2>A5 NOTEBOOKS</h2>
-                        <p>Minimal tools for organized minds.</p>
-                        <button>SHOP NOW</button>
+                        <span className="heroBannerBtn">SHOP NOW</span>
                     </div>
                 </Link>
 
@@ -258,35 +256,20 @@ export default function Home() {
                     <i className="fa-solid fa-chevron-left" aria-hidden="true"></i>
                 </button>
                 <div className="product-buttons" ref={productButtonsRef}>
-                <Link className="product-card" href={categoryHref("postcards")}>
-                    <img src="/assets/card/postcard.jpg" alt="" />
-                    <div className="product-overlay">
-                        <button>POSTCARDS</button>
-                    </div>
+                <Link className="product-card" href={categoryHref("postcards")} aria-label="Shop postcards">
+                    <img src="/assets/card/postcard.jpg" alt="Postcards" />
                 </Link>
-                <Link className="product-card" href={categoryHref("greeting-cards")}>
-                    <img src="/assets/card/greeting-card.jpg" alt="" />
-                    <div className="product-overlay">
-                        <button>GREETING CARDS</button>
-                    </div>
+                <Link className="product-card" href={categoryHref("greeting-cards")} aria-label="Shop greeting cards">
+                    <img src="/assets/card/greeting-card.jpg" alt="Greeting Cards" />
                 </Link>
-                <Link className="product-card" href={categoryHref("book-marks")}>
-                    <img src="/assets/card/book-mark.jpg" alt="" />
-                    <div className="product-overlay">
-                        <button>BOOK MARKS</button>
-                    </div>
+                <Link className="product-card" href={categoryHref("book-marks")} aria-label="Shop book marks">
+                    <img src="/assets/card/book-mark.jpg" alt="Book Marks" />
                 </Link>
-                <Link className="product-card" href={categoryHref("art-prints")}>
-                    <img src="/assets/card/art-print.jpg" alt="" />
-                    <div className="product-overlay">
-                        <button>ARTPRINTS</button>
-                    </div>
+                <Link className="product-card" href={categoryHref("art-prints")} aria-label="Shop art prints">
+                    <img src="/assets/card/art-print.jpg" alt="Art Prints" />
                 </Link>
-                <Link className="product-card" href={categoryHref("envelopes")}>
-                    <img src="/assets/card/envelope.jpg" alt="" />
-                    <div className="product-overlay">
-                        <button>ENVELOPES</button>
-                    </div>
+                <Link className="product-card" href={categoryHref("envelopes")} aria-label="Shop envelopes">
+                    <img src="/assets/card/envelope.jpg" alt="Envelopes" />
                 </Link>
                 </div>
                 <button
@@ -300,8 +283,10 @@ export default function Home() {
             </section>
 
 
+            </div>
+
             {/* FOOTER */}
-            
+
             <Footer />
         </>
     );
