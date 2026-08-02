@@ -204,9 +204,7 @@ export default function Shop() {
 
             <section className="description">
                 <p>
-                    Designed to revive the desire for writing, our handcrafted stationery
-                    collection combines aesthetics, utility and timeless design
-                    philosophy.
+                    Handcrafted stationery combining aesthetics, utility and timeless design.
                 </p>
             </section>
 
