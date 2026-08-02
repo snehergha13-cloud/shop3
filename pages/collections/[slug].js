@@ -114,10 +114,18 @@ export default function CollectionPage() {
                 <i className="fa-solid fa-grip"></i>
                 <i className="fa-solid fa-table-cells-large"></i>
               </div>
-              <div className="filter-center">{collection?.name || "ALL"}</div>
+              <div className="filter-center">
+                <Link href="/shop">Home</Link>
+                <span className="filter-crumb-sep">&rsaquo;</span>
+                <span className="filter-crumb-current">{collection?.name || "ALL"}</span>
+              </div>
               <div className="filter-right">
-                <span>SORT</span>
-                <span>FILTER</span>
+                <span className="filter-action">
+                  SORT
+                  <i className="fa-solid fa-chevron-down"></i>
+                </span>
+                <span className="filter-divider" aria-hidden="true"></span>
+                <span className="filter-action">FILTER</span>
               </div>
             </div>
 

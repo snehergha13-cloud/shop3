@@ -195,7 +195,7 @@ export default function Shop() {
 
             <section className="hero">
                 <div className="hero-banner">
-                    <img src="/assets/banners/shop-collections-banner.png" alt="WordArt stationery collection" />
+                    <img src="/assets/banners/shop-collections-banner.jpg" alt="WordArt stationery collection" />
                     <div className="hero-overlay">
                         <h1>SHOP</h1>
                     </div>
@@ -232,15 +232,20 @@ export default function Shop() {
                         </div>
 
                         <div className="filter-center">
-                            {currentCategory ? currentCategory.toUpperCase() : "ALL"}
+                            <Link href="/shop">Home</Link>
+                            <span className="filter-crumb-sep">&rsaquo;</span>
+                            <span className="filter-crumb-current">
+                                {currentCategory ? currentCategory.toUpperCase() : "ALL"}
+                            </span>
                         </div>
 
                         <div className="filter-right" style={{ position: "relative" }}>
                             <span
                                 onClick={() => { setSortOpen((o) => !o); setFilterOpen(false); }}
-                                style={{ cursor: "pointer" }}
+                                className="filter-action"
                             >
                                 SORT
+                                <i className="fa-solid fa-chevron-down"></i>
                             </span>
 
                             {sortOpen && (
@@ -260,9 +265,11 @@ export default function Shop() {
                                 </div>
                             )}
 
+                            <span className="filter-divider" aria-hidden="true"></span>
+
                             <span
                                 onClick={() => { setFilterOpen((o) => !o); setSortOpen(false); }}
-                                style={{ cursor: "pointer", marginLeft: "16px" }}
+                                className="filter-action"
                             >
                                 FILTER
                             </span>

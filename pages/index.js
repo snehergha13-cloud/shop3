@@ -157,7 +157,13 @@ export default function Home() {
             </section>
 
             {/* MOBILE-ONLY: NEW ARRIVALS BANNER */}
-           
+            <section className="mobile-new-arrivals">
+                <img src="/assets/home/SLIDE - 1.jpg" alt="New Arrivals" />
+                <div className="mobile-new-arrivals-overlay">
+                    <h2>NEW ARRIVALS</h2>
+                    <Link href="/shop">VIEW COLLECTION</Link>
+                </div>
+            </section>
 
             {/* SMALL IMAGE CARDS */}
             <section className="carousel-shell small-cards-shell" aria-label="Featured stories and categories">

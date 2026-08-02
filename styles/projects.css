@@ -256,19 +256,21 @@ DESCRIPTION
     display:flex;
     justify-content:center;
 
-    padding:40px 0;
+    padding:30px 20px 34px;
 }
 
 .description p{
-    width:950px;
+    width:auto;
+    max-width:700px;
 
     text-align:center;
 
-    line-height:34px;
+    line-height:1.6;
 
-    font-size:19px;
+    font-size:14px;
+    letter-spacing:.2px;
 
-    color:#444;
+    color:#6b6b6b;
 }
 
 /* =========================
@@ -278,29 +280,43 @@ CATEGORIES
 .categories{
     display:flex;
     justify-content:center;
-    gap:38px;
+    flex-wrap:wrap;
+    gap:34px;
 
-    padding-bottom:50px;
+    padding-bottom:36px;
 }
 
 .category-item{
     text-align:center;
     cursor:pointer;
+    text-decoration:none;
+    color:inherit;
+    transition:transform .25s ease;
+}
+
+.category-item:hover{
+    transform:translateY(-3px);
 }
 
 .category-item img{
-    width:95px;
-    height:95px;
+    width:72px;
+    height:72px;
 
     border-radius:50%;
 
     object-fit:cover;
 
-    margin-bottom:12px;
+    margin-bottom:10px;
+
+    border:1px solid rgba(0,0,0,0.06);
 }
 
 .category-item p{
-    font-size:14px;
+    font-size:11px;
+    letter-spacing:.8px;
+    font-weight:500;
+    text-transform:uppercase;
+    color:#6b6b6b;
 }
 
 /* =========================
@@ -329,13 +345,12 @@ PRODUCT SECTION
 /* FILTER BAR */
 
 .filter-bar{
-    height:74px;
+    height:54px;
 
     display:flex;
-    justify-content:space-between;
     align-items:center;
 
-    padding:0 35px;
+    padding:0 24px;
 
     border-bottom:1px solid rgba(0,0,0,0.08);
 
@@ -344,22 +359,90 @@ PRODUCT SECTION
 
 .filter-left{
     display:flex;
-    gap:18px;
+    align-items:center;
+    gap:14px;
 
-    color:#555;
+    padding-right:22px;
+    margin-right:22px;
+
+    border-right:1px solid rgba(0,0,0,0.1);
+
+    color:#b9b3a8;
+    font-size:13px;
+}
+
+.filter-left i:first-child{
+    color:#1a1a1a;
+}
+
+.filter-left i{
+    cursor:pointer;
 }
 
 .filter-center{
-    letter-spacing:2px;
-    color:#555;
+    flex:1;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:#9c9691;
+}
+
+.filter-center a{
+    color:#9c9691;
+    text-decoration:none;
+}
+
+.filter-center a:hover{
+    color:#1a1a1a;
+}
+
+.filter-crumb-sep{
+    color:#c9c3ba;
+    font-size:13px;
+}
+
+.filter-crumb-current{
+    color:#1a1a1a;
+    font-weight:500;
 }
 
 .filter-right{
     display:flex;
-    gap:55px;
+    align-items:center;
 
-    letter-spacing:3px;
-    color:#555;
+    font-size:11px;
+    letter-spacing:2px;
+    color:#6b6b6b;
+}
+
+.filter-action{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+
+    cursor:pointer;
+    transition:color .2s ease;
+}
+
+.filter-action:hover{
+    color:#1a1a1a;
+}
+
+.filter-action i{
+    font-size:9px;
+}
+
+.filter-divider{
+    display:inline-block;
+    width:1px;
+    height:14px;
+    margin:0 18px;
+    background:rgba(0,0,0,0.12);
 }
 
 /* GRID */
@@ -1218,12 +1301,26 @@ COLLECTION DETAIL
     }
 
     .filter-bar {
-        padding: 0 16px;
-        height: 56px;
+        padding: 0 14px;
+        height: 50px;
+    }
+
+    .filter-left{
+        padding-right:14px;
+        margin-right:14px;
+    }
+
+    .filter-center{
+        font-size:10px;
     }
 
     .filter-right {
-        gap: 20px;
+        font-size:10px;
+        letter-spacing:1px;
+    }
+
+    .filter-divider{
+        margin:0 12px;
     }
 
     .products-grid {
@@ -1427,4 +1524,23 @@ COLLECTION DETAIL
         font-size:13px;
         line-height:1.3;
     }
+}
+
+/* =========================
+   COLLECTION DETAIL PAGE — HERO SPACING FIX
+   The breadcrumb above the hero already clears the fixed
+   nav stack with its own top padding, so the hero banner
+   on this page (unlike shop.js, where the hero is the very
+   first element) does not need any additional nav-clearance
+   margin. That extra margin was rendering as a solid block
+   of the .hero background color above the banner photo.
+========================= */
+.collection-breadcrumb + .hero{
+    background:transparent;
+    padding:0 !important;
+}
+
+.collection-breadcrumb + .hero .hero-banner,
+.collection-breadcrumb + .hero:has(.hero-banner) .hero-banner{
+    margin-top:0 !important;
 }
