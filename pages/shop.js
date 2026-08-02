@@ -72,6 +72,7 @@ export default function Shop() {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [categoriesLoading, setCategoriesLoading] = useState(true);
     const [sortOpen, setSortOpen] = useState(false);
     const [filterOpen, setFilterOpen] = useState(false);
     const [selectedSort, setSelectedSort] = useState("featured");
@@ -82,34 +83,58 @@ export default function Shop() {
     const currentCategory = router.query.category || null;
 
     useEffect(() => {
-        const loadData = async () => {
+        let cancelled = false;
+
+        // Categories: fetched and rendered independently, so a slow or
+        // failing products call never leaves the category row empty.
+        const loadCategories = async () => {
             try {
-                setLoading(true);
+                setCategoriesLoading(true);
 
-                const productsRes = await fetch(
-                    currentCategory
-                        ? `/api/products?category=${currentCategory}`
-                        : "/api/products"
-                );
+                const res = await fetch("/api/categories");
+                const json = await res.json();
 
-                const categoriesRes = await fetch("/api/categories");
+                if (cancelled) return;
 
-                const productsJson = await productsRes.json();
-                const categoriesJson = await categoriesRes.json();
-
-                // If a category filter is active, check it actually exists in the DB
-                if (currentCategory && categoriesJson.success) {
-                    const exists = categoriesJson.data.some(
-                        (c) => c.slug === currentCategory
-                    );
+                if (currentCategory && json.success) {
+                    const exists = json.data.some((c) => c.slug === currentCategory);
                     if (!exists) {
                         router.replace(`/categories/coming-soon?slug=${currentCategory}`);
                         return;
                     }
                 }
 
-                const loaded = productsJson.success
-                    ? productsJson.data.products.map((item) => ({
+                setCategories(
+                    json.success
+                        ? json.data.map((item) => ({
+                            ...item,
+                            imageUrl: normalizeAssetPath(item.imageUrl),
+                        }))
+                        : []
+                );
+            } catch (err) {
+                console.error(err);
+                if (!cancelled) setCategories([]);
+            } finally {
+                if (!cancelled) setCategoriesLoading(false);
+            }
+        };
+
+        const loadProducts = async () => {
+            try {
+                setLoading(true);
+
+                const res = await fetch(
+                    currentCategory
+                        ? `/api/products?category=${currentCategory}`
+                        : "/api/products"
+                );
+                const json = await res.json();
+
+                if (cancelled) return;
+
+                const loaded = json.success
+                    ? json.data.products.map((item) => ({
                         ...item,
                         imageUrl: normalizeAssetPath(item.images?.[0] || item.imageUrl || ""),
                     }))
@@ -120,25 +145,22 @@ export default function Shop() {
                 const max = loaded.reduce((m, p) => Math.max(m, p.price || 0), 0);
                 setMaxPrice(max || 100000);
                 setPriceRange([0, max || 100000]);
-
-                setCategories(
-                    categoriesJson.success
-                        ? categoriesJson.data.map((item) => ({
-                            ...item,
-                            imageUrl: normalizeAssetPath(item.imageUrl),
-                        }))
-                        : []
-                );
             } catch (err) {
                 console.error(err);
-                setProducts([]);
-                setCategories([]);
+                if (!cancelled) setProducts([]);
             } finally {
-                setLoading(false);
+                if (!cancelled) setLoading(false);
             }
         };
 
-        loadData();
+        // Fire both requests at once instead of awaiting them one after
+        // another — halves the wait and means neither blocks the other.
+        loadCategories();
+        loadProducts();
+
+        return () => {
+            cancelled = true;
+        };
     }, [currentCategory, router]);
 
     const filteredProducts = useMemo(() => {
@@ -209,16 +231,25 @@ export default function Shop() {
             </section>
 
             <section className="categories">
-                {categories.map((category) => (
-                    <Link
-                        key={category._id}
-                        href={`/shop?category=${category.slug}`}
-                        className="category-item"
-                    >
-                        <img src={category.imageUrl} alt={category.name} />
-                        <p>{category.name}</p>
-                    </Link>
-                ))}
+                {categoriesLoading &&
+                    Array.from({ length: 3 }).map((_, i) => (
+                        <div className="category-item category-item-skeleton" key={i}>
+                            <span className="category-item-skeleton-circle"></span>
+                            <span className="category-item-skeleton-label"></span>
+                        </div>
+                    ))}
+
+                {!categoriesLoading &&
+                    categories.map((category) => (
+                        <Link
+                            key={category._id}
+                            href={`/shop?category=${category.slug}`}
+                            className="category-item"
+                        >
+                            <img src={category.imageUrl} alt={category.name} />
+                            <p>{category.name}</p>
+                        </Link>
+                    ))}
             </section>
 
             <section className="products-section">
