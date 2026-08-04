@@ -136,25 +136,7 @@ export default function Home() {
             <div id="homepage-content" ref={afterHeroRef}>
 
             {/* MOBILE-ONLY: SHOP BY CATEGORY SCROLLER */}
-            <section className="mobile-category-scroller">
-                {(categories.length > 0 ? categories : [
-                    { _id: "notebooks", name: "Notebooks", slug: "notebooks", imageUrl: "/assets/A5_softbound/C_1/A5 Notebooks - 1A.png" },
-                    { _id: "journals", name: "Journals", slug: "journals", imageUrl: "/assets/Journals/c1/LUNAR JOURNAL _ A.png" },
-                ]).map((cat) => (
-                    <Link key={cat._id} href={categoryHref(cat.slug)} className="mobile-category-circle">
-                        <div className="mobile-category-circle-img">
-                            <img src={cat.imageUrl} alt={cat.name} />
-                        </div>
-                        <span>{cat.name}</span>
-                    </Link>
-                ))}
-                <Link href="/shop" className="mobile-category-circle">
-                    <div className="mobile-category-circle-img">
-                        <img src="/assets/home/SLIDE - 1.jpg" alt="All products" />
-                    </div>
-                    <span>All Products</span>
-                </Link>
-            </section>
+        
 
             {/* MOBILE-ONLY: NEW ARRIVALS BANNER */}
           
