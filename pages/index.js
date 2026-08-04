@@ -72,66 +72,7 @@ export default function Home() {
 
             <Navbar />
 
-            {/* HERO */}
-            <section className="hero">
-
-                {/* Desktop slides — hidden on mobile via CSS */}
-                {slides.map((slide, index) => (
-                    <div
-                        key={`desktop-${index}`}
-                        className={`slide slide-desktop ${currentSlide === index ? "active" : ""}`}
-                        style={{ backgroundImage: `url("${slide}")` }}
-                    />
-                ))}
-
-                {/* Mobile slides — hidden on desktop via CSS, shown only under the mobile breakpoint */}
-                {mobileSlides.map((slide, index) => (
-                    <div
-                        key={`mobile-${index}`}
-                        className={`slide slide-mobile ${currentSlide === index ? "active" : ""}`}
-                        style={{ backgroundImage: `url("${slide}")` }}
-                    />
-                ))}
-
-                {/* Mobile-only overlay — desktop slides already carry their own text */}
-                <div className="hero-mobile-overlay">
-                    <span className="hero-mobile-eyebrow">WORD OF ART</span>
-                    <h1>Ideas. Ink. Impact.</h1>
-                    <Link href="/shop" className="hero-mobile-cta">SHOP NOW</Link>
-                </div>
-
-                <div className="slide-dots">
-                    {slides.map((_, index) => (
-                        <div
-                            key={index}
-                            className={`dot ${currentSlide === index ? "active-dot" : ""}`}
-                        />
-                    ))}
-                </div>
-
-                <button
-                    type="button"
-                    className="hero-scroll-down"
-                    aria-label="Scroll down"
-                    onClick={scrollPastHero}
-                >
-                    <svg
-                        className="hero-scroll-down-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M6 9l6 6 6-6"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                    </svg>
-                </button>
-
-            </section>
+           
 
             <div id="homepage-content" ref={afterHeroRef}>
 
