@@ -384,6 +384,9 @@ nav{
     transform:translateX(-50%);
     width:46px;
     height:46px;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
     border-radius:50%;
     border:1px solid rgba(0,0,0,0.06);
     background:#fff;
@@ -392,6 +395,7 @@ nav{
     display:flex;
     align-items:center;
     justify-content:center;
+    line-height:0;
     box-shadow:0 10px 28px rgba(0,0,0,.14);
     transition:.3s ease;
     z-index:40;
@@ -403,8 +407,12 @@ nav{
 }
 
 .hero-scroll-down-icon{
+    display:block;
+    flex-shrink:0;
     width:16px;
     height:16px;
+    margin:0;
+    padding:0;
     transition:transform .3s ease;
 }
 
@@ -445,23 +453,27 @@ nav{
     position:absolute;
     top:50%;
     z-index:12;
-    width:48px;
-    height:48px;
+    width:30px;
+    height:30px;
     border:1px solid rgba(20,16,13,0.12);
     border-radius:50%;
     background:rgba(255,255,255,0.92);
     color:#211a16;
     align-items:center;
     justify-content:center;
-    box-shadow:0 8px 24px rgba(0,0,0,0.16);
+    box-shadow:0 6px 16px rgba(0,0,0,0.16);
     transform:translateY(-50%);
     cursor:pointer;
     backdrop-filter:blur(8px);
     -webkit-backdrop-filter:blur(8px);
 }
 
-.carousel-arrow-left{ left:14px; }
-.carousel-arrow-right{ right:14px; }
+.carousel-arrow i{
+    font-size:11px;
+}
+
+.carousel-arrow-left{ left:10px; }
+.carousel-arrow-right{ right:10px; }
 
 /* =========================
    SMALL IMAGE CARDS
@@ -549,7 +561,17 @@ nav{
 
     display:flex;
     flex-direction:column;
-    align-items:flex-start;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+
+.feature-overlay::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.04) 35%, rgba(0,0,0,0.3) 100%);
+    pointer-events:none;
 }
 
 .feature-overlay::before{
@@ -565,21 +587,42 @@ nav{
 .feature-card:hover .feature-overlay::before{
     opacity:1;
 }
+.feature-overlay-text{
+    position:relative;
+    z-index:1;
+}
+
 .feature-overlay h2{
-    font-size:3rem;
+    font-size:2.1rem;
     letter-spacing:5px;
-    font-weight:600;
-    margin:0;
-    color:#2a211d;
-    text-shadow:0 1px 14px rgba(255,255,255,0.38);
+    font-weight:500;
+    margin:0 0 14px;
+    color:#fff;
+    text-shadow:0 2px 18px rgba(0,0,0,0.3);
+
+    position:relative;
+    display:inline-block;
+    padding-bottom:14px;
+}
+
+.feature-overlay h2::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:0;
+    transform:translateX(-50%);
+    width:44px;
+    height:1px;
+    background:rgba(255,255,255,0.75);
 }
 
 .feature-overlay p{
-    margin-top:7px;
+    margin:0;
     font-weight:300;
-    font-size:1rem;
-    max-width:300px;
-    color: #6e5156;
+    font-size:.95rem;
+    letter-spacing:.3px;
+    color:rgba(255,255,255,0.88);
+    text-shadow:0 1px 10px rgba(0,0,0,0.25);
 }
 
 .feature-overlay button{
@@ -604,8 +647,8 @@ nav{
 .heroBannerBtn{
     position:absolute;
     left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
+    bottom:40px;
+    transform:translateX(-50%);
     display:inline-flex;
     align-items:center;
     gap:10px;
@@ -641,7 +684,7 @@ nav{
     border-color:#1c1712;
     letter-spacing:3.6px;
     box-shadow:0 18px 40px rgba(0,0,0,.3);
-    transform:translate(-50%,-50%) translateY(-2px);
+    transform:translateX(-50%) translateY(-2px);
 }
 
 .feature-card:hover .heroBannerBtn::after{
@@ -673,10 +716,12 @@ nav{
 }
 
 .category-card{
-    background:white;
-    padding:25px;
-    border-radius:4px;
-    box-shadow:0 4px 10px rgba(0,0,0,0.06);
+    background:transparent;
+    padding:0;
+    border-radius:0;
+    box-shadow:none;
+    text-decoration:none;
+    color:inherit;
 }
 
 .category-card img{
@@ -684,12 +729,19 @@ nav{
     height:240px;
     object-fit:cover;
     margin-bottom:20px;
+    border-radius:0;
+    transition:opacity .3s ease;
+}
+
+.category-card:hover img{
+    opacity:.85;
 }
 
 .category-card h3{
-    font-size:1rem;
-    letter-spacing:2px;
-    font-weight:400;
+    font-size:.85rem;
+    letter-spacing:3px;
+    font-weight:500;
+    color:#2a211d;
 }
 
 /* =========================
@@ -1211,7 +1263,7 @@ FOOTER
     }
 
     .category-card{
-        padding:14px;
+        padding:0;
     }
 
     .category-card img{
@@ -1301,16 +1353,15 @@ FOOTER
 
     .carousel-arrow{
         display:flex;
-        width:52px;
-        height:52px;
-        font-size:16px;
+        width:28px;
+        height:28px;
         border-radius:50%;
         background:rgba(255,255,255,.92);
-        box-shadow:0 8px 18px rgba(0,0,0,.18);
+        box-shadow:0 6px 14px rgba(0,0,0,.18);
     }
 
     .carousel-arrow i{
-        font-size:28px;
+        font-size:10px;
     }
 
     .small-cards-shell,

@@ -122,7 +122,7 @@ export default function Home() {
                         aria-hidden="true"
                     >
                         <path
-                            d="M5 9l7 7 7-7"
+                            d="M6 9l6 6 6-6"
                             stroke="currentColor"
                             strokeWidth="2"
                             strokeLinecap="round"
@@ -214,6 +214,10 @@ export default function Home() {
                 <Link href={categoryHref("journals")} className="feature-card" aria-label="Shop journals">
                     <img src="/assets/Journals/LANDING PAGE/Jounal - 1.png" alt="Journals" />
                     <div className="feature-overlay">
+                        <div className="feature-overlay-text">
+                            <h2>JOURNALS</h2>
+                            <p>Crafted for every passing thought.</p>
+                        </div>
                         <span className="heroBannerBtn">SHOP NOW</span>
                     </div>
                 </Link>
@@ -221,6 +225,10 @@ export default function Home() {
                 <Link href={categoryHref("notebooks")} className="feature-card" aria-label="Shop A5 notebooks">
                     <img src="/assets/A5_softbound/C_1/A5 Notebooks - 1B.png" alt="A5 Notebooks" />
                     <div className="feature-overlay">
+                        <div className="feature-overlay-text">
+                            <h2>A5 NOTEBOOKS</h2>
+                            <p>Minimal tools for organized minds.</p>
+                        </div>
                         <span className="heroBannerBtn">SHOP NOW</span>
                     </div>
                 </Link>

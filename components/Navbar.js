@@ -156,9 +156,58 @@ export default function Navbar() {
           </div>
         </div>
 
-        <Link className="menu-text" href="/projects">
-          COLLECTIONS
-        </Link>
+        <div className="shop-wrapper">
+          <Link href="/projects" className="shop-link">
+            COLLECTIONS
+          </Link>
+
+          <div className="shop-dropdown">
+            <div className="dropdown-column">
+              <h3>SHOP BY CATEGORIES</h3>
+              {categories.length > 0
+                ? categories.map((cat) => (
+                    <Link key={`col-cat-${cat._id}`} href={`/shop?category=${cat.slug}`}>
+                      {cat.name}
+                    </Link>
+                  ))
+                : (
+                  <>
+                    <Link href="/shop?category=notebooks">Notebooks</Link>
+                    <Link href="/shop?category=journals">Journals</Link>
+                    <Link href="/shop?category=stationery">Stationery</Link>
+                    <Link href="/shop?category=paper-products">Paper Products</Link>
+                  </>
+                )}
+            </div>
+
+            <div className="dropdown-column">
+              <h3>SHOP COLLECTIONS</h3>
+              {collections.length > 0
+                ? collections.map((col) => (
+                    <Link key={`col-col-${col._id}`} href={`/collections/${col.slug}`}>
+                      {col.name}
+                    </Link>
+                  ))
+                : (
+                  <>
+                    <Link href="/projects?category=notebooks">NOTEBOOKS</Link>
+                    <Link href="/projects?category=journals">JOURNALS</Link>
+                    <Link href="/projects?category=sketchbooks">SKETCHBOOKS</Link>
+                    <Link href="/projects?category=planners">PLANNERS</Link>
+                  </>
+                )}
+            </div>
+
+            <div className="dropdown-column">
+              <h3>SHOP PAPER GOODS</h3>
+              <Link href="/shop?category=postcards">POSTCARDS</Link>
+              <Link href="/shop?category=greeting-cards">GREETING CARDS</Link>
+              <Link href="/shop?category=book-marks">BOOK MARKS</Link>
+              <Link href="/shop?category=art-prints">ART PRINTS</Link>
+              <Link href="/shop?category=envelopes">ENVELOPES</Link>
+            </div>
+          </div>
+        </div>
       </div>
 
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />

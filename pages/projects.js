@@ -100,7 +100,18 @@ export default function Collections() {
                 </p>
             </section>
 
-        
+            <section className="categories">
+                {categories.map((category) => (
+                    <Link
+                        key={category._id}
+                        href={`/projects?category=${category.slug}`}
+                        className="category-item"
+                    >
+                        <img src={category.imageUrl} alt={category.name} />
+                        <p>{category.name}</p>
+                    </Link>
+                ))}
+            </section>
 
             <section className="products-section">
                 <div className="products-container">
