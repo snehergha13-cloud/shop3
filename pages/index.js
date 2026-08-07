@@ -191,8 +191,7 @@ export default function Home() {
                     <img src="/assets/Journals/LANDING PAGE/Jounal - 1.png" alt="Journals" />
                     <div className="feature-overlay">
                         <div className="feature-overlay-text">
-                            <h2>JOURNALS</h2>
-                            <p>Crafted for every passing thought.</p>
+                            
                         </div>
                         <span className="heroBannerBtn">SHOP NOW</span>
                     </div>
@@ -202,8 +201,7 @@ export default function Home() {
                     <img src="/assets/A5_softbound/C_1/A5 Notebooks - 1B.png" alt="A5 Notebooks" />
                     <div className="feature-overlay">
                         <div className="feature-overlay-text">
-                            <h2>A5 NOTEBOOKS</h2>
-                            <p>Minimal tools for organized minds.</p>
+                            
                         </div>
                         <span className="heroBannerBtn">SHOP NOW</span>
                     </div>
