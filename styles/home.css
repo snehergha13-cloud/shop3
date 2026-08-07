@@ -1195,7 +1195,7 @@ FOOTER
     .small-card{
         scroll-snap-align:center;
         flex:0 0 230px;
-        height:310px;
+        height:270px;
     }
 
     .small-card span{
