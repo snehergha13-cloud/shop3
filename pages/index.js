@@ -1,445 +1,289 @@
-import { useEffect, useState } from "react";
 import Head from "next/head";
-
-const slides = [
-  {
-    image: "/images/hero-01.jpg",
-    eyebrow: "THE ART OF WRITING",
-    title: "Made for\nthoughts worth keeping.",
-    text: "Elegant paper goods, designed for everyday rituals.",
-    button: "EXPLORE COLLECTION",
-  },
-  {
-    image: "/images/hero-02.jpg",
-    eyebrow: "THE NOTEBOOK EDIT",
-    title: "Put your ideas\nsomewhere beautiful.",
-    text: "Thoughtfully made notebooks for notes, plans and everything between.",
-    button: "SHOP NOTEBOOKS",
-  },
-  {
-    image: "/images/hero-03.jpg",
-    eyebrow: "THE DESK EDIT",
-    title: "A desk,\nwell considered.",
-    text: "Objects that make working feel a little more intentional.",
-    button: "DISCOVER THE EDIT",
-  },
-];
-
-const categories = [
-  {
-    title: "NEW ARRIVALS",
-    image: "/images/category-01.jpg",
-  },
-  {
-    title: "NOTEBOOKS",
-    image: "/images/category-02.jpg",
-  },
-  {
-    title: "WRITING",
-    image: "/images/category-03.jpg",
-  },
-  {
-    title: "DESK OBJECTS",
-    image: "/images/category-04.jpg",
-  },
-  {
-    title: "GIFTS",
-    image: "/images/category-05.jpg",
-  },
-];
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slides = [
+    {
+      image: "/images/hero-1.jpg",
+      eyebrow: "THE WORDART COLLECTION",
+      title: "Stationery Made Beautiful",
+      subtitle: "Thoughtfully designed for everyday moments",
+    },
+    {
+      image: "/images/hero-2.jpg",
+      eyebrow: "THE CLASSIC COLLECTION",
+      title: "Made To Be Kept",
+      subtitle: "Elegant stationery for work, study & beyond",
+    },
+    {
+      image: "/images/hero-3.jpg",
+      eyebrow: "THE DESK EDIT",
+      title: "For Your Everyday Ideas",
+      subtitle: "Paper goods designed around the way you create",
+    },
+  ];
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveSlide((current) => (current + 1) % slides.length);
-    }, 6500);
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
 
-    return () => clearInterval(timer);
-  }, []);
+    return () => clearInterval(interval);
+  }, [slides.length]);
 
-  const slide = slides[activeSlide];
+  const categories = [
+    {
+      image: "/images/category-new.jpg",
+      title: "NEW ARRIVAL",
+    },
+    {
+      image: "/images/category-men.jpg",
+      title: "NOTEBOOKS",
+    },
+    {
+      image: "/images/category-women.jpg",
+      title: "JOURNALS",
+    },
+  ];
 
   return (
     <>
       <Head>
-        <title>WORDART — Elegant Stationery</title>
+        <title>WordArt — Elegant Stationery</title>
         <meta
           name="description"
-          content="WORDART creates elegant stationery for writing, thinking and everyday rituals."
+          content="WordArt — elegant stationery designed for everyday moments."
         />
-        <meta name="theme-color" content="#25221d" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
       <main className="site">
 
         {/* =====================================================
             NAVIGATION
-        ===================================================== */}
+        ====================================================== */}
 
         <header className="navbar">
-          <button
-            className={`menu-button ${menuOpen ? "active" : ""}`}
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Open menu"
-          >
+
+          <button className="menu-button" aria-label="Open menu">
             <span></span>
             <span></span>
             <span></span>
           </button>
 
           <div className="brand">
-            W<span>O</span>R<span>D</span>A<span>R</span>T
+            W&nbsp;&nbsp;O&nbsp;&nbsp;R&nbsp;&nbsp;D&nbsp;&nbsp;A&nbsp;&nbsp;R&nbsp;&nbsp;T
           </div>
 
-          <nav className="desktop-nav">
-            <a href="#shop">SHOP</a>
-            <a href="#collections">COLLECTIONS</a>
-            <a href="#studio">STUDIO</a>
-            <a href="#journal">JOURNAL</a>
-          </nav>
+          <div className="nav-right">
 
-          <div className="nav-actions">
-            <button aria-label="Search" className="nav-icon search-icon">
-              <span></span>
+            <button className="search-button" aria-label="Search">
+              <span className="search-circle"></span>
+              <span className="search-handle"></span>
             </button>
 
             <button className="currency">
               INR
-              <span className="chevron">⌄</span>
+              <span className="currency-arrow">⌄</span>
             </button>
 
-            <button aria-label="Shopping bag" className="bag-icon">
-              <span className="bag-handle"></span>
-              <span className="bag-body"></span>
-              <small>0</small>
+            <button className="bag-button" aria-label="Shopping bag">
+              <span className="bag-icon"></span>
             </button>
+
           </div>
+
         </header>
 
-        {/* =====================================================
-            MOBILE MENU
-        ===================================================== */}
-
-        <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
-          <div className="mobile-menu-inner">
-            <p className="mobile-menu-label">WORDART</p>
-
-            <a href="#shop" onClick={() => setMenuOpen(false)}>
-              SHOP
-            </a>
-
-            <a href="#collections" onClick={() => setMenuOpen(false)}>
-              COLLECTIONS
-            </a>
-
-            <a href="#studio" onClick={() => setMenuOpen(false)}>
-              STUDIO
-            </a>
-
-            <a href="#journal" onClick={() => setMenuOpen(false)}>
-              JOURNAL
-            </a>
-
-            <div className="mobile-menu-footer">
-              <span>INSTAGRAM</span>
-              <span>CONTACT</span>
-            </div>
-          </div>
-        </div>
 
         {/* =====================================================
             HERO SLIDESHOW
-        ===================================================== */}
+        ====================================================== */}
 
         <section className="hero">
 
-          {slides.map((item, index) => (
+          {slides.map((slide, index) => (
             <div
-              key={item.image}
+              key={index}
               className={`hero-slide ${
-                index === activeSlide ? "active" : ""
+                index === currentSlide ? "active" : ""
               }`}
               style={{
-                backgroundImage: `url("${item.image}")`,
+                backgroundImage: `url(${slide.image})`,
               }}
             >
-              <div className="hero-overlay"></div>
 
               <div className="hero-content">
 
-                <p className="hero-eyebrow">{item.eyebrow}</p>
+                <div className="hero-eyebrow">
+                  {slide.eyebrow}
+                </div>
 
-                <h1>
-                  {item.title.split("\n").map((line, i) => (
-                    <span key={i}>
-                      {line}
-                      <br />
-                    </span>
-                  ))}
-                </h1>
+                <h1>{slide.title}</h1>
 
-                <p className="hero-description">
-                  {item.text}
-                </p>
+                <div className="hero-line"></div>
 
-                <a href="#shop" className="hero-button">
-                  {item.button}
-                  <span>→</span>
-                </a>
+                <p>{slide.subtitle}</p>
+
+                <button className="shop-button">
+                  SHOP NOW
+                </button>
 
               </div>
+
             </div>
           ))}
 
-          <div className="hero-controls">
 
-            <div className="slide-counter">
-              <span>
-                {String(activeSlide + 1).padStart(2, "0")}
-              </span>
-              <i></i>
-              <span>
-                {String(slides.length).padStart(2, "0")}
-              </span>
-            </div>
+          <div className="hero-dots">
 
-            <div className="hero-dots">
-              {slides.map((_, index) => (
-                <button
-                  key={index}
-                  className={index === activeSlide ? "active" : ""}
-                  onClick={() => setActiveSlide(index)}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                className={`hero-dot ${
+                  index === currentSlide ? "active" : ""
+                }`}
+                onClick={() => setCurrentSlide(index)}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+
           </div>
 
-          <button
-            className="scroll-button"
-            onClick={() =>
-              document
-                .getElementById("collections")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
-            aria-label="Scroll down"
-          >
-            ↓
+
+          <button className="hero-down" aria-label="Scroll down">
+            <span></span>
           </button>
+
         </section>
 
+
         {/* =====================================================
-            INTRODUCTION
-        ===================================================== */}
+            EDITORIAL TWO IMAGE SECTION
+        ====================================================== */}
 
-        <section className="intro-section">
+        <section className="editorial">
 
-          <div className="section-number">01 / 05</div>
+          <div className="editorial-grid">
 
-          <div className="intro-content">
-            <p className="small-label">THE WORDART PHILOSOPHY</p>
+            <div className="editorial-image">
+              <img
+                src="/images/editorial-1.jpg"
+                alt="WordArt stationery collection"
+              />
 
-            <h2>
-              Stationery should be
-              <em> felt</em>, not simply used.
-            </h2>
+              <div className="editorial-overlay">
+                <span>THE DESK EDIT</span>
+              </div>
 
-            <p className="intro-copy">
-              We believe the things surrounding your thoughts should
-              deserve as much consideration as the thoughts themselves.
-            </p>
+            </div>
 
-            <a href="#studio" className="text-link">
-              OUR STORY
-              <span>→</span>
-            </a>
+
+            <div className="editorial-image">
+              <img
+                src="/images/editorial-2.jpg"
+                alt="WordArt notebooks"
+              />
+
+              <div className="editorial-overlay">
+                <span>THE NOTEBOOK EDIT</span>
+              </div>
+
+            </div>
+
           </div>
 
         </section>
 
+
         {/* =====================================================
-            EDITORIAL SPLIT
-        ===================================================== */}
+            LARGE FEATURE — SLINGS STYLE
+        ====================================================== */}
 
-        <section className="editorial-grid" id="collections">
+        <section className="feature-section">
 
-          <article className="editorial-card editorial-large">
-            <div
-              className="editorial-image"
-              style={{
-                backgroundImage:
-                  "url('/images/editorial-01.jpg')",
-              }}
+          <div className="feature-image">
+
+            <img
+              src="/images/slings.jpg"
+              alt="WordArt collection"
             />
 
-            <div className="editorial-overlay"></div>
+            <div className="feature-content">
 
-            <div className="editorial-content">
-              <p>THE PAPER COLLECTION</p>
-              <h3>
-                Pages made
-                <br />
-                for ideas.
-              </h3>
+              <h2>JOURNALS</h2>
 
-              <a href="#shop">
-                EXPLORE <span>→</span>
-              </a>
+              <p>
+                Made for every thought, idea and everyday moment.
+              </p>
+
+              <button className="feature-button">
+                SHOP NOW
+              </button>
+
             </div>
-          </article>
 
-          <article className="editorial-card">
-            <div
-              className="editorial-image"
-              style={{
-                backgroundImage:
-                  "url('/images/editorial-02.jpg')",
-              }}
+          </div>
+
+        </section>
+
+
+        {/* =====================================================
+            SECOND LARGE FEATURE
+        ====================================================== */}
+
+        <section className="feature-section feature-second">
+
+          <div className="feature-image">
+
+            <img
+              src="/images/laptop-bags.jpg"
+              alt="WordArt stationery and writing collection"
             />
 
-            <div className="editorial-overlay"></div>
+            <div className="feature-content">
 
-            <div className="editorial-content">
-              <p>WRITING INSTRUMENTS</p>
-              <h3>
-                Write
-                <br />
-                beautifully.
-              </h3>
+              <h2>NOTEBOOKS</h2>
 
-              <a href="#shop">
-                DISCOVER <span>→</span>
-              </a>
-            </div>
-          </article>
+              <p>
+                Paper goods designed for work, study & beyond.
+              </p>
 
-        </section>
+              <button className="feature-button">
+                SHOP NOW
+              </button>
 
-        {/* =====================================================
-            FEATURE CAMPAIGN
-        ===================================================== */}
-
-        <section className="feature-section" id="shop">
-
-          <div
-            className="feature-image"
-            style={{
-              backgroundImage:
-                "url('/images/notebook.jpg')",
-            }}
-          />
-
-          <div className="feature-overlay"></div>
-
-          <div className="feature-content">
-            <p className="feature-label">THE NOTEBOOK COLLECTION</p>
-
-            <h2>
-              For thoughts
-              <br />
-              in progress.
-            </h2>
-
-            <p>
-              Linen covers. Considered details.
-              <br />
-              Pages waiting for you.
-            </p>
-
-            <a href="#shop" className="cream-button">
-              SHOP NOTEBOOKS
-            </a>
-          </div>
-
-        </section>
-
-        {/* =====================================================
-            SECOND FEATURE
-        ===================================================== */}
-
-        <section className="wide-feature">
-
-          <div
-            className="wide-feature-image"
-            style={{
-              backgroundImage:
-                "url('/images/writing.jpg')",
-            }}
-          />
-
-          <div className="wide-feature-copy">
-            <p className="small-label">WRITING, REFINED</p>
-
-            <h2>
-              A good pen changes
-              <br />
-              the way a thought arrives.
-            </h2>
-
-            <p>
-              Discover writing instruments designed to become
-              part of your daily ritual.
-            </p>
-
-            <a href="#shop" className="text-link">
-              VIEW WRITING
-              <span>→</span>
-            </a>
-          </div>
-
-        </section>
-
-        {/* =====================================================
-            CATEGORIES
-        ===================================================== */}
-
-        <section className="category-section">
-
-          <div className="section-heading">
-
-            <div>
-              <span className="section-kicker">
-                04 / 05
-              </span>
-
-              <h2>SHOP BY CATEGORY</h2>
             </div>
 
-            <p>
-              Objects for writing,
-              <br />
-              working and gifting.
-            </p>
-
           </div>
 
-          <div className="category-scroll">
+        </section>
+
+
+        {/* =====================================================
+            SHOP BY CATEGORY
+        ====================================================== */}
+
+        <section className="categories">
+
+          <h2>SHOP BY CATEGORY</h2>
+
+          <div className="category-grid">
 
             {categories.map((category, index) => (
-              <a
-                href="#shop"
-                className="category"
-                key={category.title}
-              >
+              <a href="#" className="category" key={index}>
+
                 <div className="category-image">
                   <img
                     src={category.image}
                     alt={category.title}
                   />
-
-                  <span className="category-number">
-                    0{index + 1}
-                  </span>
                 </div>
 
                 <h3>{category.title}</h3>
 
-                <span className="category-arrow">
-                  →
-                </span>
               </a>
             ))}
 
@@ -447,196 +291,57 @@ export default function Home() {
 
         </section>
 
-        {/* =====================================================
-            DESK CAMPAIGN
-        ===================================================== */}
-
-        <section className="desk-section">
-
-          <div
-            className="desk-image"
-            style={{
-              backgroundImage:
-                "url('/images/desk.jpg')",
-            }}
-          />
-
-          <div className="desk-overlay"></div>
-
-          <div className="desk-content">
-
-            <p>THE DESK EDIT</p>
-
-            <h2>
-              Make room
-              <br />
-              for good work.
-            </h2>
-
-            <a href="#shop" className="cream-button">
-              EXPLORE THE DESK EDIT
-            </a>
-
-          </div>
-
-        </section>
 
         {/* =====================================================
-            STUDIO
-        ===================================================== */}
+            LUGGAGE / FINAL FEATURE
+        ====================================================== */}
 
-        <section className="studio-section" id="studio">
+        <section className="luggage">
 
-          <div className="studio-number">
-            05 / 05
-          </div>
+          <div className="luggage-image">
 
-          <div className="studio-content">
-
-            <p className="small-label">
-              FROM THE WORDART STUDIO
-            </p>
-
-            <h2>
-              Designed slowly.
-              <br />
-              Made to stay.
-            </h2>
-
-            <p>
-              From the grain of a notebook cover to the weight
-              of a pen in your hand, every WORDART object begins
-              with a simple question:
-              <br />
-              <strong>
-                can everyday things be made more beautiful?
-              </strong>
-            </p>
-
-            <a href="#journal" className="text-link">
-              VISIT OUR JOURNAL
-              <span>→</span>
-            </a>
-
-          </div>
-
-        </section>
-
-        {/* =====================================================
-            NEWSLETTER
-        ===================================================== */}
-
-        <section className="newsletter" id="journal">
-
-          <p className="small-label">
-            THE WORDART LETTER
-          </p>
-
-          <h2>
-            Notes from
-            <br />
-            our desk.
-          </h2>
-
-          <p>
-            New collections, studio stories and things
-            worth writing about.
-          </p>
-
-          <form className="newsletter-form">
-            <input
-              type="email"
-              placeholder="YOUR EMAIL ADDRESS"
-              aria-label="Email address"
+            <img
+              src="/images/luggage.jpg"
+              alt="WordArt collection"
             />
 
-            <button type="submit">
-              →
-            </button>
-          </form>
+            <div className="luggage-content">
+
+              <h2>THE WORDART COLLECTION</h2>
+
+              <button className="luggage-button">
+                SHOP NOW
+              </button>
+
+            </div>
+
+          </div>
 
         </section>
+
 
         {/* =====================================================
             FOOTER
-        ===================================================== */}
+        ====================================================== */}
 
         <footer className="footer">
 
-          <div className="footer-top">
-
-            <div className="footer-brand">
-              WORDART
-              <span>
-                ELEGANT STATIONERY
-              </span>
-            </div>
-
-            <div className="footer-columns">
-
-              <div>
-                <h4>SHOP</h4>
-                <a href="#shop">Notebooks</a>
-                <a href="#shop">Writing</a>
-                <a href="#shop">Desk</a>
-                <a href="#shop">Gifts</a>
-              </div>
-
-              <div>
-                <h4>ABOUT</h4>
-                <a href="#studio">Our Story</a>
-                <a href="#studio">Studio</a>
-                <a href="#journal">Journal</a>
-                <a href="#journal">Contact</a>
-              </div>
-
-              <div>
-                <h4>FOLLOW</h4>
-                <a href="#instagram">Instagram</a>
-                <a href="#instagram">Pinterest</a>
-              </div>
-
-            </div>
-
+          <div className="footer-brand">
+            W&nbsp;&nbsp;O&nbsp;&nbsp;R&nbsp;&nbsp;D&nbsp;&nbsp;A&nbsp;&nbsp;R&nbsp;&nbsp;T
           </div>
 
-          <div className="footer-bottom">
+          <div className="footer-links">
+            <a href="#">ABOUT</a>
+            <a href="#">CONTACT</a>
+            <a href="#">SHIPPING</a>
+            <a href="#">PRIVACY</a>
+          </div>
 
-            <span>
-              © {new Date().getFullYear()} WORDART
-            </span>
-
-            <span>
-              MADE FOR THE THINGS WORTH WRITING DOWN.
-            </span>
-
-            <span>
-              INDIA
-            </span>
-
+          <div className="footer-copy">
+            © {new Date().getFullYear()} WordArt. All rights reserved.
           </div>
 
         </footer>
-
-        {/* =====================================================
-            FLOATING WHATSAPP
-        ===================================================== */}
-
-        <a
-          href="https://wa.me/"
-          className="whatsapp"
-          aria-label="WhatsApp"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.6 4.1 1.6 5.9L.2 24l6.5-1.7a11.8 11.8 0 0 0 5.4 1.3h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.1-1.2-6.1-3.5-8.3Zm-8.4 18.1h-.1a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.9 1 1-3.8-.3-.4a9.8 9.8 0 0 1-1.5-5.1C1.9 6.4 6.4 1.9 12 1.9c2.7 0 5.1 1 7 2.9 1.9 1.9 2.9 4.3 2.9 7 0 5.4-4.4 9.8-9.8 9.8Zm5.4-7.3c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.8-1.7.1-.2 0-.4-.1-.6-.1-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9 0 1.7 1.2 3.4 1.4 3.6.2.2 2.4 3.7 5.8 5.1 2.2 1 2.7.8 3.2.8.5-.1 1.8-.7 2.1-1.3.3-.6.3-1.1.2-1.3-.1-.1-.3-.2-.6-.4Z"
-              fill="currentColor"
-            />
-          </svg>
-        </a>
 
       </main>
     </>
