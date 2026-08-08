@@ -135,63 +135,67 @@ export default function Home() {
 
             <div id="homepage-content" ref={afterHeroRef}>
 
-            {/* MOBILE-ONLY: SHOP BY CATEGORY SCROLLER */}
-            
-
-            {/* MOBILE-ONLY: NEW ARRIVALS BANNER */}
-           
-
-            {/* SMALL IMAGE CARDS */}
-            <section className="carousel-shell small-cards-shell" aria-label="Featured stories and categories">
-                <button
-                    type="button"
-                    className="carousel-arrow carousel-arrow-left"
-                    aria-label="Scroll featured cards left"
-                    onClick={() => scrollCarousel(smallCardsRef, -1)}
-                >
-                    <i className="fa-solid fa-chevron-left" aria-hidden="true"></i>
-                </button>
-                <div className="small-cards" ref={smallCardsRef}>
-                <Link href="/about" className="small-card" aria-label="Read the founder's note">
-                    <img src="/assets/tittle card/founders note image.jpeg" alt="Founder's Note" />
-                    <span>FOUNDER&apos;S NOTE</span>
-                </Link>
-                <Link href="/about" className="small-card" aria-label="Read WordArt craft stories">
-                    <img src="/assets/tittle card/craft_stories.jpg" alt="Craft Stories" />
-                    <span>CRAFT STORIES</span>
-                </Link>
-                <Link href={categoryHref("notebooks")} className="small-card" aria-label="Shop notebooks">
-                    <img src="/assets/A5_softbound/C_1/A5 Notebooks - 1A.png" alt="Notebooks" />
-                    <span>NOTEBOOKS</span>
-                </Link>
-                <Link href="/search?q=writing" className="small-card" aria-label="Search writing tools">
-                    <img src="/assets/tittle card/writing_instrument.jpg" alt="Writing Tools" />
-                    <span>WRITING TOOLS</span>
-                </Link>
-                <Link href={categoryHref("desk_obj")} className="small-card" aria-label="Shop desk objects">
-                    <img src="/assets/desk_obj/5.jpeg" alt="Desk Objects" />
-                    <span>DESK OBJECTS</span>
-                </Link>
+            {/* SHOP BY CATEGORY — icon slider, shown at every screen size,
+                matching Nappa Dori's category strip rather than being a
+                mobile-only element. */}
+            <section className="category-scroller-shell">
+                <h2 className="category-scroller-heading">Shop By Category</h2>
+                <div className="mobile-category-scroller">
+                    {(categories.length > 0 ? categories : [
+                        { _id: "notebooks", name: "Notebooks", slug: "notebooks", imageUrl: "/assets/A5_softbound/C_1/A5 Notebooks - 1A.png" },
+                        { _id: "journals", name: "Journals", slug: "journals", imageUrl: "/assets/Journals/c1/LUNAR JOURNAL _ A.png" },
+                    ]).map((cat) => (
+                        <Link key={cat._id} href={categoryHref(cat.slug)} className="mobile-category-circle">
+                            <div className="mobile-category-circle-img">
+                                <img src={cat.imageUrl} alt={cat.name} />
+                            </div>
+                            <span>{cat.name}</span>
+                        </Link>
+                    ))}
+                    <Link href={categoryHref("postcards")} className="mobile-category-circle">
+                        <div className="mobile-category-circle-img">
+                            <img src="/assets/card/postcard.jpg" alt="Postcards" />
+                        </div>
+                        <span>Postcards</span>
+                    </Link>
+                    <Link href={categoryHref("book-marks")} className="mobile-category-circle">
+                        <div className="mobile-category-circle-img">
+                            <img src="/assets/card/book-mark.jpg" alt="Book Marks" />
+                        </div>
+                        <span>Book Marks</span>
+                    </Link>
+                    <Link href="/shop" className="mobile-category-circle">
+                        <div className="mobile-category-circle-img">
+                            <img src="/assets/home/SLIDE - 1.jpg" alt="All products" />
+                        </div>
+                        <span>All Products</span>
+                    </Link>
                 </div>
-                <button
-                    type="button"
-                    className="carousel-arrow carousel-arrow-right"
-                    aria-label="Scroll featured cards right"
-                    onClick={() => scrollCarousel(smallCardsRef, 1)}
-                >
-                    <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
-                </button>
             </section>
 
+            {/* FEATURED BANNER — single full-bleed promo, Nappa Dori's
+                "Luggage" collection-banner equivalent. */}
+            <section className="featured-banner">
+                <img src="/assets/home/SLIDE - 1.jpg" alt="Shop the full collection" />
+                <div className="featured-banner-overlay">
+                    <div className="featured-banner-text">
+                        <h2>THE FULL COLLECTION</h2>
+                        <p>Every notebook, journal and paper good in one place.</p>
+                    </div>
+                    <Link href="/shop" className="heroBannerBtn">SHOP NOW</Link>
+                </div>
+            </section>
 
-            {/* FEATURE IMAGES */}
+            {/* DUAL BANNER — two side-by-side promos, mirrors Nappa Dori's
+                FOR HIM / FOR HER pairing. */}
             <section className="feature-grid">
 
                 <Link href={categoryHref("journals")} className="feature-card" aria-label="Shop journals">
                     <img src="/assets/Journals/LANDING PAGE/Jounal - 1.png" alt="Journals" />
                     <div className="feature-overlay">
                         <div className="feature-overlay-text">
-                            
+                            <h2>JOURNALS</h2>
+                            <p>Crafted for every passing thought.</p>
                         </div>
                         <span className="heroBannerBtn">SHOP NOW</span>
                     </div>
@@ -201,7 +205,8 @@ export default function Home() {
                     <img src="/assets/A5_softbound/C_1/A5 Notebooks - 1B.png" alt="A5 Notebooks" />
                     <div className="feature-overlay">
                         <div className="feature-overlay-text">
-                            
+                            <h2>A5 NOTEBOOKS</h2>
+                            <p>Minimal tools for organized minds.</p>
                         </div>
                         <span className="heroBannerBtn">SHOP NOW</span>
                     </div>
@@ -209,43 +214,15 @@ export default function Home() {
 
             </section>
 
-            {/* SHOP BY CATEGORY */}
-            <section className="category-section">
-
-                <h2>SHOP BY CATEGORY</h2>
-
-                <div className="category-grid">
-                    <Link className="category-card" href={categoryHref("notebooks")}>
-                        <img src="/assets/A5_softbound/C_1/A5 Notebooks - 1B.png" alt="" />
-                        <h3>NOTEBOOKS</h3>
-                    </Link>
-                    <Link className="category-card" href={categoryHref("journals")}>
-                        <img src="/assets/Journals/LANDING PAGE/Jounal - 1.png" alt="" />
-                        <h3>JOURNALS</h3>
-                    </Link>
-                    <Link className="category-card" href={categoryHref("sketchbooks")}>
-                        <img src="/assets/tittle card/sketchbook.png" alt="" />
-                        <h3>SKETCHBOOKS</h3>
-                    </Link>
-                    <Link className="category-card" href={categoryHref("planners")}>
-                        <img src="/assets/tittle card/planner.jpg" alt="" />
-                        <h3>PLANNERS</h3>
-                    </Link>
-                    <Link className="category-card" href={categoryHref("pocket-notebooks")}>
-                        <img src="/assets/tittle card/pocket_notebooks.jpg" alt="" />
-                        <h3>POCKET NOTEBOOKS</h3>
-                    </Link>
-                
-                </div>
-
-            </section>
-
-            {/* FINAL PRODUCT IMAGES */}
-            <section className="carousel-shell product-buttons-shell" aria-label="Paper goods categories">
+            {/* OUR BEST SELLERS — product slider, mirrors Nappa Dori's
+                best-sellers carousel. */}
+            <section className="carousel-shell product-buttons-shell" aria-label="Our best sellers">
+                <h2 className="section-heading">Our Best Sellers</h2>
+                <div className="carousel-track">
                 <button
                     type="button"
                     className="carousel-arrow carousel-arrow-left"
-                    aria-label="Scroll paper goods left"
+                    aria-label="Scroll best sellers left"
                     onClick={() => scrollCarousel(productButtonsRef, -1)}
                 >
                     <i className="fa-solid fa-chevron-left" aria-hidden="true"></i>
@@ -253,30 +230,51 @@ export default function Home() {
                 <div className="product-buttons" ref={productButtonsRef}>
                 <Link className="product-card" href={categoryHref("postcards")} aria-label="Shop postcards">
                     <img src="/assets/card/postcard.jpg" alt="Postcards" />
+                    <span>Postcards</span>
                 </Link>
                 <Link className="product-card" href={categoryHref("greeting-cards")} aria-label="Shop greeting cards">
                     <img src="/assets/card/greeting-card.jpg" alt="Greeting Cards" />
+                    <span>Greeting Cards</span>
                 </Link>
                 <Link className="product-card" href={categoryHref("book-marks")} aria-label="Shop book marks">
                     <img src="/assets/card/book-mark.jpg" alt="Book Marks" />
+                    <span>Book Marks</span>
                 </Link>
                 <Link className="product-card" href={categoryHref("art-prints")} aria-label="Shop art prints">
                     <img src="/assets/card/art-print.jpg" alt="Art Prints" />
+                    <span>Art Prints</span>
                 </Link>
                 <Link className="product-card" href={categoryHref("envelopes")} aria-label="Shop envelopes">
                     <img src="/assets/card/envelope.jpg" alt="Envelopes" />
+                    <span>Envelopes</span>
                 </Link>
                 </div>
                 <button
                     type="button"
                     className="carousel-arrow carousel-arrow-right"
-                    aria-label="Scroll paper goods right"
+                    aria-label="Scroll best sellers right"
                     onClick={() => scrollCarousel(productButtonsRef, 1)}
                 >
                     <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
                 </button>
+                </div>
             </section>
 
+            {/* OUR CRAFT — brand-story pairing, mirrors Nappa Dori's
+                "Design Definition" section. */}
+            <section className="carousel-shell small-cards-shell" aria-label="Our craft">
+                <h2 className="section-heading">Our Craft</h2>
+                <div className="small-cards" ref={smallCardsRef}>
+                <Link href="/about" className="small-card" aria-label="Read the founder's note">
+                    <img src="/assets/tittle card/founders note image.jpeg" alt="Founder's Note" />
+                    <span>FOUNDER&apos;S NOTE</span>
+                </Link>
+                <Link href="/about" className="small-card" aria-label="Read WordArt craft stories">
+                    <img src="/assets/tittle card/craft_stories.jpg" alt="Craft Stories" />
+                    <span>CRAFT STORIES</span>
+                </Link>
+                </div>
+            </section>
 
             </div>
 

@@ -1,3 +1,4 @@
+
 *{
     margin:0;
     padding:0;
@@ -420,23 +421,73 @@ nav{
 }
 
 /* =========================
-   MOBILE CATEGORY SCROLLER
-   (hidden on desktop — replaced by the navbar's
-   SHOP dropdown there)
+   SHOP BY CATEGORY (icon slider)
+   Shown at every screen size now, matching Nappa Dori's
+   category strip rather than being a mobile-only element.
 ========================== */
 
-.mobile-category-scroller{
-    display:none;
+.category-scroller-shell{
+    width:100%;
+    padding:56px 0 8px;
+    background:#fff;
+    text-align:center;
 }
 
-/* =========================
-   MOBILE NEW ARRIVALS BANNER
-   (hidden on desktop — the feature-grid below
-   already covers this on larger screens)
-========================== */
+.category-scroller-heading{
+    font-family:'Jost', sans-serif;
+    font-size:1.4rem;
+    font-weight:500;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color:#1c1b1b;
+    margin-bottom:32px;
+}
 
-.mobile-new-arrivals{
-    display:none;
+.mobile-category-scroller{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:36px;
+    padding:0 40px;
+}
+
+.mobile-category-circle{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-decoration:none;
+    width:90px;
+    transition:transform .25s ease;
+}
+
+.mobile-category-circle:hover{
+    transform:translateY(-3px);
+}
+
+.mobile-category-circle-img{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    overflow:hidden;
+    background:#f0eee9;
+    border:1px solid rgba(0,0,0,0.06);
+}
+
+.mobile-category-circle-img img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.mobile-category-circle span{
+    display:block;
+    margin-top:12px;
+    font-family:'Jost','Montserrat', sans-serif;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:.5px;
+    text-align:center;
+    color:#1c1b1b;
 }
 
 /* =========================
@@ -444,6 +495,10 @@ nav{
 ========================== */
 
 .carousel-shell{
+    position:relative;
+}
+
+.carousel-track{
     position:relative;
 }
 
@@ -691,57 +746,88 @@ nav{
 }
 
 /* =========================
-   SHOP BY CATEGORY
+   FEATURED BANNER (single, full-bleed)
 ========================== */
 
-.category-section{
-    width:90%;
-    margin:100px auto;
-    text-align:center;
-}
-
-.category-section h2{
-    font-size:2rem;
-    letter-spacing:6px;
-    margin-bottom:50px;
-    font-weight:400;
-
-}
-
-.category-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:30px;
-}
-
-.category-card{
-    background:transparent;
-    padding:0;
-    border-radius:0;
-    box-shadow:none;
-    text-decoration:none;
-    color:inherit;
-}
-
-.category-card img{
+.featured-banner{
+    position:relative;
     width:100%;
-    aspect-ratio:1 / 1;
-    height:auto;
+    height:520px;
+    overflow:hidden;
+    display:block;
+}
+
+.featured-banner img{
+    width:100%;
+    height:100%;
     object-fit:cover;
-    margin-bottom:20px;
-    border-radius:0;
-    transition:opacity .3s ease;
+    transition:transform .7s cubic-bezier(.25,.8,.25,1);
 }
 
-.category-card:hover img{
-    opacity:.85;
+.featured-banner:hover img{
+    transform:scale(1.03);
 }
 
-.category-card h3{
-    font-size:.85rem;
-    letter-spacing:3px;
+.featured-banner-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    gap:26px;
+    background:linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.35) 100%);
+    padding:40px;
+}
+
+.featured-banner-text h2{
+    font-family:'Jost', sans-serif;
+    font-size:2.4rem;
     font-weight:500;
-    color:#2a211d;
+    letter-spacing:6px;
+    color:#fff;
+    text-shadow:0 2px 18px rgba(0,0,0,0.3);
+    position:relative;
+    display:inline-block;
+    padding-bottom:16px;
+}
+
+.featured-banner-text h2::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:0;
+    transform:translateX(-50%);
+    width:56px;
+    height:1px;
+    background:rgba(255,255,255,0.75);
+}
+
+.featured-banner-text p{
+    margin-top:8px;
+    font-family:'Jost', sans-serif;
+    font-size:1rem;
+    font-weight:300;
+    letter-spacing:.4px;
+    color:rgba(255,255,255,0.9);
+}
+
+/* =========================
+   SHARED SECTION HEADING
+   (used above "Our Best Sellers" and "Our Craft")
+========================== */
+
+.section-heading{
+    width:100%;
+    text-align:center;
+    font-family:'Jost', sans-serif;
+    font-size:1.4rem;
+    font-weight:500;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color:#1c1b1b;
+    margin-bottom:32px;
 }
 
 /* =========================
@@ -760,35 +846,41 @@ nav{
     position:relative;
     height:350px;
     overflow:hidden;
+    display:block;
+    text-decoration:none;
 }
 
 .product-card img{
     width:100%;
     height:100%;
     object-fit:cover;
+    transition:transform .5s ease;
 }
 
-.product-overlay{
+.product-card:hover img{
+    transform:scale(1.04);
+}
+
+.product-card::after{
+    content:"";
     position:absolute;
     inset:0;
-    background:rgba(0,0,0,0.28);
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45) 100%);
+    pointer-events:none;
 }
 
-.product-overlay button{
-    padding:14px 24px;
-    border:none;
-    background:white;
-    color:black;
-    letter-spacing:2px;
-    cursor:pointer;
-    transition:0.3s ease;
-}
-
-.product-overlay button:hover{
-    background:#dedede;
+.product-card span{
+    position:absolute;
+    left:18px;
+    bottom:16px;
+    z-index:1;
+    font-family:'Jost','Montserrat', sans-serif;
+    font-size:.85rem;
+    font-weight:500;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:#fff;
+    text-shadow:0 1px 8px rgba(0,0,0,0.35);
 }
 
 /* =========================
@@ -805,8 +897,8 @@ nav{
         grid-template-columns:1fr;
     }
 
-    .category-grid{
-        grid-template-columns:repeat(2,1fr);
+    .featured-banner{
+        height:420px;
     }
 
     .product-buttons{
@@ -998,7 +1090,7 @@ FOOTER
     /* --- HERO --- */
     .hero{
         height:62vh;
-        min-height:620px;
+        min-height:380px;
         max-height:620px;
         margin-top:0;
     }
@@ -1077,9 +1169,23 @@ FOOTER
     }
 
     /* --- MOBILE CATEGORY SCROLLER --- */
+    .category-scroller-shell{
+        padding:32px 0 0;
+    }
+
+    .category-scroller-heading{
+        font-size:1rem;
+        letter-spacing:2.5px;
+        margin-bottom:0;
+        padding:0 20px;
+    }
+
+    /* Matches Nappa Dori's real mobile category strip: uniform circles,
+       evenly spaced, plain centered label underneath. */
     .mobile-category-scroller{
         display:flex;
-        gap:20px;
+        justify-content:space-between;
+        gap:14px;
         margin-top:22px;
         overflow-x:auto;
         -webkit-overflow-scrolling:touch;
@@ -1096,14 +1202,13 @@ FOOTER
         display:flex;
         flex-direction:column;
         align-items:center;
-        gap:8px;
         flex-shrink:0;
-        width:68px;
+        width:75px;
     }
 
     .mobile-category-circle-img{
-        width:62px;
-        height:62px;
+        width:75px;
+        height:75px;
         border-radius:50%;
         overflow:hidden;
         background:#f0eee9;
@@ -1117,60 +1222,15 @@ FOOTER
     }
 
     .mobile-category-circle span{
-        font-family:'Montserrat', sans-serif;
-        font-size:10px;
-        letter-spacing:0.3px;
-        font-weight:600;
-        text-align:center;
-        line-height:1.3;
-        color:#1a1a1a;
-    }
-
-    /* --- MOBILE NEW ARRIVALS BANNER --- */
-    .mobile-new-arrivals{
         display:block;
-        position:relative;
-        width:100%;
-        height:380px;
-        overflow:hidden;
-    }
-
-    .mobile-new-arrivals img{
-        width:100%;
-        height:100%;
-        object-fit:cover;
-    }
-
-    .mobile-new-arrivals-overlay{
-        position:absolute;
-        left:0;
-        bottom:0;
-        width:100%;
-        padding:24px 20px 28px;
-        background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.45) 100%);
-        display:flex;
-        flex-direction:column;
-        align-items:flex-start;
-        gap:14px;
-    }
-
-    .mobile-new-arrivals-overlay h2{
-        font-family:"Georgia", serif;
-        font-weight:400;
-        font-size:1.4rem;
-        letter-spacing:2px;
-        color:#fff9e9;
-    }
-
-    .mobile-new-arrivals-overlay a{
-        display:inline-block;
-        padding:11px 22px;
-        background:#fff9e9;
-        color:#1a1a1a;
+        margin-top:10px;
         font-family:'Montserrat', sans-serif;
         font-size:11px;
-        font-weight:600;
-        letter-spacing:1.5px;
+        letter-spacing:0.2px;
+        font-weight:500;
+        text-align:center;
+        line-height:1.3;
+        color:#000000;
     }
 
     /* --- SMALL CARDS --- */
@@ -1181,9 +1241,8 @@ FOOTER
         scroll-snap-type:x mandatory;
         scrollbar-width:none;
         grid-template-columns:unset;
-        gap:18px;
-        margin:24px auto;
-        height: 80%;
+        gap:16px;
+        margin:56px auto;
         width:100%;
         padding:0 18px;
     }
@@ -1195,13 +1254,15 @@ FOOTER
     .small-card{
         scroll-snap-align:center;
         flex:0 0 230px;
-        width: 230px;
-        height:270px;
+        height:310px;
     }
 
     .small-card span{
-        font-size:0.85rem;
-        letter-spacing:1.5px;
+        font-family:'Jost','Montserrat', sans-serif;
+        font-size:0.8rem;
+        font-weight:500;
+        letter-spacing:2px;
+        text-transform:uppercase;
         bottom:14px;
         left:14px;
     }
@@ -1225,7 +1286,7 @@ FOOTER
 
     .feature-card{
         scroll-snap-align:start;
-        flex:0 0 100%;
+        flex:0 0 92%;
         height:420px;
     }
 
@@ -1234,48 +1295,52 @@ FOOTER
     }
 
     .feature-overlay h2{
-        font-size:1.8rem;
-        letter-spacing:3px;
+        font-family:'Jost', sans-serif;
+        font-size:1.7rem;
+        font-weight:400;
+        letter-spacing:4px;
     }
 
     .feature-overlay p{
+        font-family:'Jost', sans-serif;
         font-size:0.9rem;
+        letter-spacing:.3px;
     }
 
     .feature-overlay button{
-        padding:10px 22px;
-        font-size:0.8rem;
+        padding:13px 26px;
+        font-family:'Jost','Montserrat', sans-serif;
+        font-size:0.75rem;
+        font-weight:500;
+        letter-spacing:2.5px;
+        text-transform:uppercase;
     }
 
-    /* --- CATEGORY SECTION --- */
-    .category-section{
-        width:95%;
-        margin:48px auto;
+    /* --- FEATURED BANNER --- */
+    .featured-banner{
+        height:340px;
     }
 
-    .category-section h2{
-        font-size:1.2rem;
+    .featured-banner-overlay{
+        padding:24px;
+        gap:16px;
+    }
+
+    .featured-banner-text h2{
+        font-size:1.5rem;
         letter-spacing:3px;
-        margin-bottom:24px;
     }
 
-    .category-grid{
-        grid-template-columns:repeat(2,1fr);
-        gap:12px;
+    .featured-banner-text p{
+        font-size:0.85rem;
     }
 
-    .category-card{
-        padding:0;
-    }
-
-    .category-card img{
-        height:auto;
-        margin-bottom:12px;
-    }
-
-    .category-card h3{
-        font-size:0.8rem;
-        letter-spacing:1.5px;
+    /* --- SHARED SECTION HEADING --- */
+    .section-heading{
+        font-size:1rem;
+        letter-spacing:2.5px;
+        margin-bottom:20px;
+        padding:0 20px;
     }
 
     /* --- PRODUCT BUTTONS --- */
@@ -1287,7 +1352,7 @@ FOOTER
         scroll-snap-type:x mandatory;
         scrollbar-width:none;
         gap:10px;
-        margin:48px auto;
+        margin:56px auto;
         width:100%;
         padding:0 16px;
     }
@@ -1302,10 +1367,10 @@ FOOTER
         height:240px;
     }
 
-    .product-overlay button{
-        padding:10px 14px;
-        font-size:0.75rem;
-        letter-spacing:1.5px;
+    .product-card span{
+        font-size:0.7rem;
+        left:12px;
+        bottom:10px;
     }
 
     /* --- FOOTER --- */
