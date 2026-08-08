@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import "../styles/home.css";
+
 
 const slides = [
   {
