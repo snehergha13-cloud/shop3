@@ -1,317 +1,344 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
-const heroSlides = [
+const slides = [
   {
     image:
       "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=2200&q=90",
-    kicker: "THE NEW NOTEBOOK COLLECTION",
-    title: "Made for\nthe things\nworth keeping.",
-    text: "Paper objects designed to become part of your everyday.",
+    eyebrow: "THE NOTEBOOK STUDY / 01",
+    title: "Things worth\nwriting down.",
+    description:
+      "Paper goods for ideas, lists, letters and everything that happens between them.",
   },
   {
     image:
       "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=2200&q=90",
-    kicker: "THE WRITING EDIT",
-    title: "Put your\nthoughts\nsomewhere.",
-    text: "Beautifully considered tools for writing, sketching and planning.",
+    eyebrow: "THE WRITING STUDY / 02",
+    title: "Make a little\nroom for thought.",
+    description:
+      "Quiet, considered stationery made for slow mornings and busy desks.",
   },
   {
     image:
       "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=2200&q=90",
-    kicker: "OBJECTS FOR THE DESK",
-    title: "A desk\nworth sitting\nat.",
-    text: "Stationery and desk objects with purpose, character and restraint.",
+    eyebrow: "THE DESK STUDY / 03",
+    title: "A desk,\nproperly kept.",
+    description:
+      "Objects designed to make everyday work feel a little more intentional.",
   },
 ];
 
 const products = [
   {
-    name: "Classic Journal",
-    type: "HARD COVER · RULED",
+    name: "The Everyday Journal",
+    category: "JOURNAL / 160 PAGES",
     price: "₹695",
     image:
-      "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1000&q=90",
+      "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1100&q=90",
   },
   {
-    name: "Field Notes",
-    type: "POCKET NOTEBOOK · PLAIN",
+    name: "No. 04 Field Notes",
+    category: "POCKET NOTEBOOK / PLAIN",
     price: "₹395",
     image:
-      "https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&w=1000&q=90",
+      "https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&w=1100&q=90",
   },
   {
-    name: "Desk Folio",
-    type: "DESK ORGANISER",
-    price: "₹1,850",
-    image:
-      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1000&q=90",
-  },
-  {
-    name: "Correspondence Set",
-    type: "PAPER · ENVELOPES",
+    name: "Correspondence",
+    category: "WRITING SET / 12 SHEETS",
     price: "₹545",
     image:
-      "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=1000&q=90",
+      "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=1100&q=90",
   },
 ];
 
-const categories = [
+const collections = [
   {
-    title: "Journals",
+    number: "01",
+    title: "Paper",
+    subtitle: "Journals, notes & correspondence",
     image:
-      "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1400&q=90",
+      "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1500&q=90",
   },
   {
+    number: "02",
     title: "Writing",
+    subtitle: "Pens, pencils & little tools",
     image:
-      "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1400&q=90",
+      "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1500&q=90",
   },
   {
-    title: "Desk Objects",
+    number: "03",
+    title: "Desk",
+    subtitle: "Objects for the working table",
     image:
-      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1400&q=90",
+      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1500&q=90",
   },
 ];
 
 export default function Home() {
-  const [slide, setSlide] = useState(0);
-  const [menu, setMenu] = useState(false);
+  const [active, setActive] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setSlide((current) => (current + 1) % heroSlides.length);
-    }, 6000);
+    const interval = setInterval(() => {
+      setActive((current) => (current + 1) % slides.length);
+    }, 6500);
 
-    return () => clearInterval(timer);
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <>
       <Head>
-        <title>ARTHUR & CO. — Objects for Writing</title>
+        <title>FORM & FOLD — Stationery for Everyday Ideas</title>
         <meta
           name="description"
-          content="Thoughtfully designed stationery and objects for everyday life."
+          content="Elegant stationery and paper objects designed for everyday use."
         />
       </Head>
 
-      <div className="site">
+      <main className="home">
 
-        {/* TOP STRIP */}
+        {/* =====================================================
+            HEADER
+        ===================================================== */}
 
-        <div className="top-strip">
-          <span>DESIGNED IN INDIA</span>
-          <span>•</span>
-          <span>FREE SHIPPING ABOVE ₹699</span>
-          <span>•</span>
-          <span>CRAFTED FOR EVERYDAY USE</span>
-        </div>
-
-        {/* HEADER */}
-
-        <header className="header">
+        <header className="site-header">
 
           <button
-            className="mobile-toggle"
-            onClick={() => setMenu(!menu)}
+            className="menu-button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
           >
             <span />
             <span />
           </button>
 
-          <nav className={`main-nav ${menu ? "mobile-open" : ""}`}>
+          <nav className={`navigation ${menuOpen ? "open" : ""}`}>
             <a href="#shop">SHOP</a>
             <a href="#collections">COLLECTIONS</a>
+            <a href="#about">ABOUT</a>
             <a href="#journal">JOURNAL</a>
           </nav>
 
-          <a className="logo" href="/">
-            <span>ARTHUR & CO.</span>
-            <small>OBJECTS FOR EVERYDAY LIFE</small>
+          <a href="/" className="brand-mark">
+            <span>FORM</span>
+            <b>&</b>
+            <span>FOLD</span>
           </a>
 
-          <div className="header-right">
-
-            <a href="#search" className="desktop-only">
-              SEARCH
-            </a>
-
-            <a href="#account" className="desktop-only">
-              ACCOUNT
-            </a>
-
+          <div className="header-actions">
+            <a href="#search">SEARCH</a>
+            <a href="#account">ACCOUNT</a>
             <a href="#bag">
               BAG <sup>0</sup>
             </a>
-
           </div>
 
         </header>
 
-        {/* HERO */}
+        {/* =====================================================
+            HERO
+        ===================================================== */}
 
         <section className="hero">
 
-          {heroSlides.map((item, index) => (
-            <div
-              key={item.title}
-              className={`hero-slide ${
-                index === slide ? "hero-active" : ""
-              }`}
-              style={{
-                backgroundImage: `url("${item.image}")`,
-              }}
-            />
-          ))}
+          <div className="hero-image-wrap">
 
-          <div className="hero-shade" />
+            {slides.map((slide, index) => (
+              <div
+                key={slide.title}
+                className={`hero-image ${
+                  active === index ? "active" : ""
+                }`}
+                style={{
+                  backgroundImage: `url("${slide.image}")`,
+                }}
+              />
+            ))}
 
-          <div className="hero-copy">
+          </div>
 
-            <div className="hero-kicker">
-              {heroSlides[slide].kicker}
+          <div className="hero-tint" />
+
+          <div className="hero-yellow-mark">
+            <span>FF</span>
+          </div>
+
+          <div className="hero-content">
+
+            <div className="hero-eyebrow">
+              {slides[active].eyebrow}
             </div>
 
             <h1>
-              {heroSlides[slide].title}
+              {slides[active].title}
             </h1>
 
             <p>
-              {heroSlides[slide].text}
+              {slides[active].description}
             </p>
 
-            <a href="#shop" className="hero-link">
-              EXPLORE COLLECTION
+            <a href="#shop" className="yellow-button">
+              SHOP THE COLLECTION
               <Arrow />
             </a>
 
           </div>
 
-          <div className="hero-meta">
+          <div className="hero-bottom">
 
-            <div className="hero-count">
-              <span>0{slide + 1}</span>
-              <i />
-              <span>0{heroSlides.length}</span>
+            <div className="slide-counter">
+              <strong>
+                0{active + 1}
+              </strong>
+
+              <span />
+
+              <small>
+                0{slides.length}
+              </small>
             </div>
 
-            <div className="hero-dots">
-              {heroSlides.map((_, index) => (
+            <div className="slide-lines">
+              {slides.map((_, index) => (
                 <button
                   key={index}
-                  className={index === slide ? "selected" : ""}
-                  onClick={() => setSlide(index)}
+                  onClick={() => setActive(index)}
+                  className={index === active ? "active" : ""}
                 />
               ))}
             </div>
 
+            <div className="scroll-note">
+              SCROLL TO EXPLORE ↓
+            </div>
+
           </div>
 
         </section>
 
-        {/* MANIFESTO */}
+        {/* =====================================================
+            INTRO
+        ===================================================== */}
 
-        <section className="manifesto">
+        <section className="intro" id="about">
 
-          <div className="section-index">
-            01
+          <div className="intro-number">
+            001
           </div>
 
-          <div className="manifesto-content">
+          <div className="intro-main">
 
-            <p className="small-heading">
-              OUR APPROACH
-            </p>
+            <div className="label">
+              A SMALL NOTE
+            </div>
 
             <h2>
-              Objects should become
-              <em> better </em>
-              with use.
+              Stationery should
+              <br />
+              <i>invite</i> you to use it.
             </h2>
 
-            <p className="manifesto-text">
-              We make stationery for people who still enjoy
-              writing things down. Simple objects, honest
-              materials and thoughtful details — made to be
-              used every day rather than kept away.
+            <p>
+              We make things for the moments that rarely make
+              it into photographs — the morning list, the
+              half-finished thought, the letter you actually
+              decided to send.
             </p>
 
-            <a href="#story" className="editorial-link">
-              OUR STORY
+            <a href="#story" className="text-link">
+              MORE ABOUT FORM & FOLD
               <Arrow />
             </a>
 
           </div>
 
-          <div className="manifesto-image">
+          <div className="intro-side">
 
-            <img
-              src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1200&q=90"
-              alt="Notebook and writing desk"
-            />
+            <div className="vertical-text">
+              EST. 2026 / INDIA
+            </div>
 
-            <span>
-              FIG. 01 — THE WRITING DESK
-            </span>
+            <div className="intro-image">
+              <img
+                src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1200&q=90"
+                alt="Stationery on a desk"
+              />
+
+              <span>
+                IMAGE / 001
+              </span>
+            </div>
 
           </div>
 
         </section>
 
-        {/* CATEGORY ROW */}
+        {/* =====================================================
+            COLLECTIONS
+        ===================================================== */}
 
-        <section className="category-section" id="collections">
+        <section className="collections" id="collections">
 
-          <div className="section-title-row">
+          <div className="section-heading">
 
             <div>
-              <p className="small-heading">
-                EXPLORE
-              </p>
+              <span className="section-number">
+                002
+              </span>
+
+              <div className="label">
+                THE COLLECTION
+              </div>
 
               <h2>
-                The collection
+                Made in
+                <i> three parts.</i>
               </h2>
             </div>
 
-            <a href="#shop" className="editorial-link">
-              VIEW EVERYTHING
-              <Arrow />
-            </a>
+            <p>
+              Paper, writing and the objects that
+              make a desk feel like your own.
+            </p>
 
           </div>
 
-          <div className="category-grid">
+          <div className="collection-list">
 
-            {categories.map((category, index) => (
+            {collections.map((collection, index) => (
               <a
                 href="#shop"
-                className={`category category-${index + 1}`}
-                key={category.title}
+                className={`collection-item item-${index + 1}`}
+                key={collection.title}
               >
 
-                <img
-                  src={category.image}
-                  alt={category.title}
-                />
+                <div className="collection-image">
+                  <img
+                    src={collection.image}
+                    alt={collection.title}
+                  />
+                </div>
 
-                <div className="category-overlay" />
-
-                <div className="category-copy">
+                <div className="collection-details">
 
                   <span>
-                    0{index + 1}
+                    {collection.number}
                   </span>
 
-                  <h3>
-                    {category.title}
-                  </h3>
-
                   <div>
-                    EXPLORE
-                    <Arrow />
+                    <h3>
+                      {collection.title}
+                    </h3>
+
+                    <p>
+                      {collection.subtitle}
+                    </p>
                   </div>
+
+                  <Arrow />
 
                 </div>
 
@@ -322,55 +349,68 @@ export default function Home() {
 
         </section>
 
-        {/* FEATURED PRODUCTS */}
+        {/* =====================================================
+            PRODUCT EDIT
+        ===================================================== */}
 
-        <section className="featured-section" id="shop">
+        <section className="product-edit" id="shop">
 
-          <div className="section-title-row">
+          <div className="product-edit-heading">
 
             <div>
-              <p className="small-heading">
-                THE EDIT
-              </p>
+              <span className="section-number">
+                003
+              </span>
+
+              <div className="label">
+                CURRENT EDIT
+              </div>
 
               <h2>
-                Things we keep close.
+                Objects we
+                <br />
+                <i>keep close.</i>
               </h2>
             </div>
 
-            <p className="section-description">
-              A selection of everyday objects designed
-              to live on your desk, in your bag and
-              everywhere in between.
-            </p>
+            <a href="#shop" className="text-link">
+              VIEW ALL OBJECTS
+              <Arrow />
+            </a>
 
           </div>
 
-          <div className="products">
+          <div className="product-grid">
 
             {products.map((product, index) => (
               <article
-                className={`product product-${index + 1}`}
+                className={`product-card card-${index + 1}`}
                 key={product.name}
               >
 
-                <div className="product-image">
+                <div className="product-photo">
 
                   <img
                     src={product.image}
                     alt={product.name}
                   />
 
-                  <button>
+                  <span className="product-number">
+                    0{index + 1}
+                  </span>
+
+                  <button className="quick-add">
                     ADD TO BAG
                   </button>
 
                 </div>
 
-                <div className="product-info">
+                <div className="product-meta">
 
                   <div>
-                    <span>{product.type}</span>
+                    <span>
+                      {product.category}
+                    </span>
 
                     <h3>
                       {product.name}
@@ -390,43 +430,46 @@ export default function Home() {
 
         </section>
 
-        {/* LARGE EDITORIAL */}
+        {/* =====================================================
+            STATEMENT
+        ===================================================== */}
 
-        <section className="large-editorial">
+        <section className="statement">
 
-          <div className="large-editorial-image">
-
+          <div className="statement-image">
             <img
               src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=2000&q=90"
               alt="Creative workspace"
             />
-
           </div>
 
-          <div className="large-editorial-content">
+          <div className="statement-copy">
 
-            <span className="large-number">
-              02
+            <span className="section-number">
+              004
             </span>
 
-            <p className="small-heading">
-              THE EVERYDAY DESK
-            </p>
+            <div className="label">
+              THE DESK
+            </div>
 
             <h2>
-              Make room
+              Keep only
               <br />
-              for ideas.
+              <i>good things</i>
+              <br />
+              nearby.
             </h2>
 
             <p>
-              A good desk is not about having more.
-              It is about having the right things within
-              reach.
+              There is something satisfying about a desk
+              where everything has its place. A notebook.
+              A good pen. A small object you don't really
+              need but enjoy having around.
             </p>
 
-            <a href="#shop" className="editorial-link light">
-              SHOP DESK OBJECTS
+            <a href="#shop" className="yellow-button">
+              EXPLORE THE DESK
               <Arrow />
             </a>
 
@@ -434,55 +477,63 @@ export default function Home() {
 
         </section>
 
-        {/* CRAFT SECTION */}
+        {/* =====================================================
+            CRAFT / MATERIAL
+        ===================================================== */}
 
-        <section className="craft-section" id="story">
+        <section className="material">
 
-          <div className="craft-image">
+          <div className="material-left">
 
-            <img
-              src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1500&q=90"
-              alt="Handwriting"
-            />
+            <span className="section-number">
+              005
+            </span>
+
+            <div className="label">
+              MATERIAL & FORM
+            </div>
+
+            <h2>
+              Less noise.
+              <br />
+              <i>More object.</i>
+            </h2>
 
           </div>
 
-          <div className="craft-copy">
+          <div className="material-right">
 
-            <p className="small-heading">
-              MADE WITH INTENTION
-            </p>
+            <div className="material-text">
+              <p>
+                We care about the weight of paper, the
+                sound of a pencil against it, the way a
+                cover feels when you pick it up.
+              </p>
 
-            <h2>
-              Good design
-              <br />
-              doesn't need
-              <br />
-              to shout.
-            </h2>
+              <p>
+                Small details are where an object gets
+                its personality.
+              </p>
+            </div>
 
-            <p>
-              From the weight of the paper to the way a
-              notebook opens flat, every detail has a
-              purpose. We believe functionality can be
-              beautiful when it is quietly considered.
-            </p>
-
-            <div className="craft-details">
+            <div className="material-list">
 
               <div>
-                <strong>01</strong>
-                <span>CONSIDERED MATERIALS</span>
+                <span>01</span>
+                <strong>GOOD PAPER</strong>
+                <p>Selected for feel, weight and longevity.</p>
               </div>
 
               <div>
-                <strong>02</strong>
-                <span>TIMELESS DESIGN</span>
+                <span>02</span>
+                <strong>QUIET COLOUR</strong>
+                <p>A palette inspired by paper, earth and ink.</p>
               </div>
 
               <div>
-                <strong>03</strong>
-                <span>MADE TO BE USED</span>
+                <span>03</span>
+                <strong>USEFUL FORM</strong>
+                <p>Nothing decorative without a reason.</p>
               </div>
 
             </div>
@@ -491,24 +542,32 @@ export default function Home() {
 
         </section>
 
-        {/* JOURNAL */}
+        {/* =====================================================
+            JOURNAL
+        ===================================================== */}
 
         <section className="journal" id="journal">
 
-          <div className="journal-heading">
+          <div className="journal-top">
 
             <div>
-              <p className="small-heading">
-                FROM THE JOURNAL
-              </p>
+              <span className="section-number">
+                006
+              </span>
+
+              <div className="label">
+                FIELD NOTES
+              </div>
 
               <h2>
-                Notes, ideas & observations.
+                From the
+                <br />
+                <i>journal.</i>
               </h2>
             </div>
 
-            <a href="#journal" className="editorial-link">
-              READ JOURNAL
+            <a href="#journal" className="text-link">
+              ALL STORIES
               <Arrow />
             </a>
 
@@ -516,28 +575,41 @@ export default function Home() {
 
           <div className="journal-grid">
 
-            <article className="journal-feature">
+            <article className="journal-main">
 
-              <img
-                src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1600&q=90"
-                alt="Desk journal"
-              />
+              <div className="journal-photo">
+                <img
+                  src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1800&q=90"
+                  alt="Desk journal"
+                />
 
-              <span>
-                DESK / 08.08.26
-              </span>
+                <span>
+                  08 / 08 / 26
+                </span>
+              </div>
 
-              <h3>
-                The quiet pleasure of a well-used desk.
-              </h3>
+              <div className="journal-content">
 
-              <a href="#journal">
-                READ STORY →
-              </a>
+                <span>
+                  DESK CULTURE
+                </span>
+
+                <h3>
+                  On making a desk
+                  <br />
+                  worth sitting at.
+                </h3>
+
+                <a href="#journal">
+                  READ STORY
+                  <Arrow />
+                </a>
+
+              </div>
 
             </article>
 
-            <div className="journal-list">
+            <div className="journal-side">
 
               <article>
                 <span>01</span>
@@ -546,7 +618,8 @@ export default function Home() {
                   <small>WRITING</small>
 
                   <h3>
-                    Why we still write by hand.
+                    Why handwriting
+                    still matters.
                   </h3>
 
                   <a href="#journal">
@@ -559,10 +632,11 @@ export default function Home() {
                 <span>02</span>
 
                 <div>
-                  <small>DESIGN</small>
+                  <small>OBJECTS</small>
 
                   <h3>
-                    The anatomy of a useful notebook.
+                    The anatomy of
+                    a useful notebook.
                   </h3>
 
                   <a href="#journal">
@@ -578,7 +652,8 @@ export default function Home() {
                   <small>STUDIO</small>
 
                   <h3>
-                    Inside our approach to paper.
+                    Why we like
+                    imperfect things.
                   </h3>
 
                   <a href="#journal">
@@ -593,20 +668,27 @@ export default function Home() {
 
         </section>
 
-        {/* NEWSLETTER */}
+        {/* =====================================================
+            NEWSLETTER
+        ===================================================== */}
 
         <section className="newsletter">
 
+          <div className="newsletter-mark">
+            FF
+          </div>
+
           <div>
 
-            <p className="small-heading">
+            <div className="label">
               THE LETTER
-            </p>
+            </div>
 
             <h2>
-              Occasionally,
+              A few good
               <br />
-              something worth reading.
+              things,
+              <i> occasionally.</i>
             </h2>
 
           </div>
@@ -615,7 +697,7 @@ export default function Home() {
 
             <input
               type="email"
-              placeholder="EMAIL ADDRESS"
+              placeholder="YOUR EMAIL ADDRESS"
             />
 
             <button>
@@ -627,79 +709,69 @@ export default function Home() {
 
         </section>
 
-        {/* FOOTER */}
+        {/* =====================================================
+            FOOTER
+        ===================================================== */}
 
         <footer className="footer">
 
-          <div className="footer-main">
+          <div className="footer-brand">
 
-            <a className="footer-logo" href="/">
-              ARTHUR & CO.
-            </a>
+            <div className="footer-logo">
+              FORM
+              <span>&</span>
+              FOLD
+            </div>
 
             <p>
-              Objects for everyday life.
+              Elegant stationery for
               <br />
-              Designed in India.
+              everyday ideas.
             </p>
 
-          </div>
-
-          <div className="footer-column">
-
-            <h4>SHOP</h4>
-
-            <a href="#shop">Journals</a>
-            <a href="#shop">Notebooks</a>
-            <a href="#shop">Writing</a>
-            <a href="#shop">Desk Objects</a>
+            <small>
+              DESIGNED IN INDIA
+            </small>
 
           </div>
 
-          <div className="footer-column">
+          <div className="footer-links">
 
-            <h4>ABOUT</h4>
+            <div>
+              <h4>SHOP</h4>
+              <a href="#shop">Journals</a>
+              <a href="#shop">Notebooks</a>
+              <a href="#shop">Writing</a>
+              <a href="#shop">Desk</a>
+            </div>
 
-            <a href="#story">Our Story</a>
-            <a href="#journal">Journal</a>
-            <a href="#story">Materials</a>
-            <a href="#story">Contact</a>
+            <div>
+              <h4>ABOUT</h4>
+              <a href="#about">Our Story</a>
+              <a href="#about">Materials</a>
+              <a href="#journal">Journal</a>
+              <a href="#about">Contact</a>
+            </div>
 
-          </div>
-
-          <div className="footer-column">
-
-            <h4>FOLLOW</h4>
-
-            <a href="#">Instagram</a>
-            <a href="#">Pinterest</a>
-            <a href="#">Behance</a>
+            <div>
+              <h4>FOLLOW</h4>
+              <a href="#">Instagram</a>
+              <a href="#">Pinterest</a>
+              <a href="#">Behance</a>
+            </div>
 
           </div>
 
           <div className="footer-bottom">
-
-            <span>
-              © 2026 ARTHUR & CO.
-            </span>
-
-            <span>
-              PRIVACY
-            </span>
-
-            <span>
-              TERMS
-            </span>
-
-            <span>
-              INDIA
-            </span>
-
+            <span>© 2026 FORM & FOLD</span>
+            <span>PRIVACY</span>
+            <span>TERMS</span>
+            <span>INDIA</span>
           </div>
 
         </footer>
 
-      </div>
+      </main>
     </>
   );
 }
@@ -707,21 +779,20 @@ export default function Home() {
 function Arrow() {
   return (
     <svg
-      width="16"
-      height="16"
       viewBox="0 0 24 24"
+      width="17"
+      height="17"
       fill="none"
     >
       <path
-        d="M4 12H20"
+        d="M3 12H20"
         stroke="currentColor"
-        strokeWidth="1.3"
+        strokeWidth="1.2"
       />
-
       <path
         d="M13 5L20 12L13 19"
         stroke="currentColor"
-        strokeWidth="1.3"
+        strokeWidth="1.2"
       />
     </svg>
   );
