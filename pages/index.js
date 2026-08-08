@@ -1,315 +1,690 @@
-import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
-import Link from "next/link";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-
-const categoryHref = (slug) => `/shop?category=${slug}`;
+import { useEffect, useState } from "react";
+import "../styles/home.css";
 
 const slides = [
-    "/assets/home/SLIDE - 0.jpg",
-    "/assets/home/SLIDE - 1.jpg",
-    "/assets/home/SLIDE - 2.jpg",
-    "/assets/home/SLIDE - 3.jpg",
+  {
+    eyebrow: "THE ART OF WRITING",
+    title: "Make space for\nbeautiful thoughts.",
+    description:
+      "Thoughtfully designed stationery for notes, ideas, sketches, and everything worth remembering.",
+    image:
+      "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=2200&q=90",
+    button: "Explore collection",
+  },
+  {
+    eyebrow: "THE NEW EDITION",
+    title: "Objects made\nto be kept.",
+    description:
+      "A considered collection of notebooks, journals, paper goods and desk essentials.",
+    image:
+      "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=2200&q=90",
+    button: "Discover new arrivals",
+  },
+  {
+    eyebrow: "FOR SLOW MORNINGS",
+    title: "Write something\nworth remembering.",
+    description:
+      "Paper with character. Details with intention. Stationery designed for everyday rituals.",
+    image:
+      "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=2200&q=90",
+    button: "Shop journals",
+  },
 ];
 
-// Mobile gets its own portrait-oriented hero images instead of the
-// desktop landscape slides — same rotation logic, different source.
-const mobileSlides = [
-    "/assets/mobile_slideshow/mobile_slideshow-1.png",
-    "/assets/mobile_slideshow/mobile_slideshow-2.png",
-    "/assets/mobile_slideshow/mobile_slideshow-3.png",
-    "/assets/mobile_slideshow/mobile_slideshow-4.png",
+const products = [
+  {
+    name: "The Daily Journal",
+    category: "Journals",
+    price: "₹649",
+    image:
+      "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1000&q=90",
+  },
+  {
+    name: "Linen Notes",
+    category: "Notebooks",
+    price: "₹449",
+    image:
+      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1000&q=90",
+  },
+  {
+    name: "Paper Archive",
+    category: "Writing Sets",
+    price: "₹799",
+    image:
+      "https://images.unsplash.com/photo-1455885666463-5e8f0e3c0c18?auto=format&fit=crop&w=1000&q=90",
+  },
+];
+
+const collections = [
+  {
+    number: "01",
+    title: "Journals",
+    description: "For thoughts that deserve more space.",
+    image:
+      "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1400&q=90",
+  },
+  {
+    number: "02",
+    title: "Desk Essentials",
+    description: "A quieter, better workspace.",
+    image:
+      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1400&q=90",
+  },
+  {
+    number: "03",
+    title: "Paper Goods",
+    description: "The little things that make writing better.",
+    image:
+      "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=1400&q=90",
+  },
 ];
 
 export default function Home() {
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [categories, setCategories] = useState([]);
-    const smallCardsRef = useRef(null);
-    const productButtonsRef = useRef(null);
-    const afterHeroRef = useRef(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % slides.length);
-        }, 7000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % slides.length);
+    }, 6500);
 
-        return () => clearInterval(interval);
-    }, []);
+    return () => clearInterval(interval);
+  }, []);
 
-    // Used by the mobile-only "shop by category" scroller right under the hero.
-    const scrollCarousel = (ref, direction) => {
-        const container = ref.current;
-        if (!container) return;
+  const slide = slides[activeSlide];
 
-        const firstCard = container.querySelector("a");
-        const cardWidth = firstCard?.getBoundingClientRect().width || container.clientWidth * 0.75;
-        const gap = Number.parseFloat(getComputedStyle(container).gap) || 10;
+  return (
+    <>
+      <Head>
+        <title>ARCADIA — Stationery Co.</title>
+        <meta
+          name="description"
+          content="Elegant stationery designed for everyday rituals."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
 
-        container.scrollBy({
-            left: direction * (cardWidth + gap),
-            behavior: "smooth",
-        });
-    };
+      <main className="home">
 
-    const scrollPastHero = () => {
-        afterHeroRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    };
+        {/* ───────────────── ANNOUNCEMENT ───────────────── */}
 
-    useEffect(() => {
-        fetch("/api/categories")
-            .then((r) => r.json())
-            .then((d) => { if (d.success) setCategories(d.data); })
-            .catch(() => {});
-    }, []);
+        <div className="announcement">
+          <span>FREE SHIPPING ON ORDERS ABOVE ₹699</span>
+          <span className="announcement-separator">·</span>
+          <span>MADE FOR THE EVERYDAY RITUAL</span>
+        </div>
 
-    return (
-        <>
+        {/* ───────────────── NAVBAR ───────────────── */}
 
-            <Head>
-                <title>WordArt</title>
-            </Head>
+        <header className="navbar">
+          <a href="/" className="brand">
+            <span>ARCADIA</span>
+            <small>STATIONERY CO.</small>
+          </a>
 
-            <Navbar />
+          <nav className={`navigation ${menuOpen ? "open" : ""}`}>
+            <a href="#shop">Shop</a>
+            <a href="#collections">Collections</a>
+            <a href="#journal">Journal</a>
+            <a href="#story">Our Story</a>
+          </nav>
 
-            {/* HERO */}
-            <section className="hero">
+          <div className="nav-actions">
+            <button aria-label="Search">
+              <SearchIcon />
+            </button>
 
-                {/* Desktop slides — hidden on mobile via CSS */}
-                {slides.map((slide, index) => (
-                    <div
-                        key={`desktop-${index}`}
-                        className={`slide slide-desktop ${currentSlide === index ? "active" : ""}`}
-                        style={{ backgroundImage: `url("${slide}")` }}
-                    />
-                ))}
+            <button aria-label="Account">
+              <UserIcon />
+            </button>
 
-                {/* Mobile slides — hidden on desktop via CSS, shown only under the mobile breakpoint */}
-                {mobileSlides.map((slide, index) => (
-                    <div
-                        key={`mobile-${index}`}
-                        className={`slide slide-mobile ${currentSlide === index ? "active" : ""}`}
-                        style={{ backgroundImage: `url("${slide}")` }}
-                    />
-                ))}
+            <button className="bag-button" aria-label="Shopping bag">
+              <BagIcon />
+              <span>0</span>
+            </button>
 
-                {/* Mobile-only overlay — desktop slides already carry their own text */}
-                <div className="hero-mobile-overlay">
-                    <span className="hero-mobile-eyebrow">WORD OF ART</span>
-                    <h1>Ideas. Ink. Impact.</h1>
-                    <Link href="/shop" className="hero-mobile-cta">SHOP NOW</Link>
-                </div>
+            <button
+              className="mobile-menu"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Menu"
+            >
+              <i />
+              <i />
+            </button>
+          </div>
+        </header>
 
-                <div className="slide-dots">
-                    {slides.map((_, index) => (
-                        <div
-                            key={index}
-                            className={`dot ${currentSlide === index ? "active-dot" : ""}`}
-                        />
-                    ))}
-                </div>
+        {/* ───────────────── HERO ───────────────── */}
 
+        <section className="hero">
+
+          <div
+            key={activeSlide}
+            className="hero-background"
+            style={{
+              backgroundImage: `url("${slide.image}")`,
+            }}
+          />
+
+          <div className="hero-overlay" />
+
+          <div className="hero-content">
+            <p className="hero-eyebrow">{slide.eyebrow}</p>
+
+            <h1>{slide.title}</h1>
+
+            <p className="hero-description">
+              {slide.description}
+            </p>
+
+            <a href="#shop" className="hero-button">
+              {slide.button}
+              <ArrowIcon />
+            </a>
+          </div>
+
+          <div className="hero-bottom">
+
+            <div className="slide-counter">
+              <strong>0{activeSlide + 1}</strong>
+              <span>/</span>
+              <span>0{slides.length}</span>
+            </div>
+
+            <div className="slide-indicators">
+              {slides.map((_, index) => (
                 <button
-                    type="button"
-                    className="hero-scroll-down"
-                    aria-label="Scroll down"
-                    onClick={scrollPastHero}
-                >
-                    <svg
-                        className="hero-scroll-down-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M6 9l6 6 6-6"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                    </svg>
-                </button>
+                  key={index}
+                  className={index === activeSlide ? "active" : ""}
+                  onClick={() => setActiveSlide(index)}
+                  aria-label={`Slide ${index + 1}`}
+                />
+              ))}
+            </div>
 
-            </section>
+          </div>
+        </section>
 
-            <div id="homepage-content" ref={afterHeroRef}>
+        {/* ───────────────── INTRO ───────────────── */}
 
-            {/* OUR CRAFT — brand-story scroller, right after the hero,
-                mirrors Nappa Dori's lifestyle image strip in that position. */}
-            <section className="carousel-shell small-cards-shell" aria-label="Our craft">
-                <h2 className="section-heading">Our Craft</h2>
-                <div className="carousel-track">
-                <div className="small-cards" ref={smallCardsRef}>
-                <Link href="/about" className="small-card" aria-label="Read the founder's note">
-                    <img src="/assets/tittle card/founders note image.jpeg" alt="Founder's Note" />
-                    <span>FOUNDER&apos;S NOTE</span>
-                </Link>
-                <Link href="/about" className="small-card" aria-label="Read WordArt craft stories">
-                    <img src="/assets/tittle card/craft_stories.jpg" alt="Craft Stories" />
-                    <span>CRAFT STORIES</span>
-                </Link>
+        <section className="intro-section">
+
+          <div className="intro-label">
+            01 — OUR PHILOSOPHY
+          </div>
+
+          <div className="intro-content">
+            <h2>
+              We believe the objects around us should make
+              ordinary moments feel a little more considered.
+            </h2>
+
+            <a href="#story" className="underlined-link">
+              Discover our story
+              <ArrowIcon />
+            </a>
+          </div>
+
+        </section>
+
+        {/* ───────────────── PRODUCTS ───────────────── */}
+
+        <section className="products-section" id="shop">
+
+          <div className="section-heading">
+
+            <div>
+              <p>CURATED FOR YOU</p>
+              <h2>Quietly beautiful things.</h2>
+            </div>
+
+            <a href="#shop" className="outline-button">
+              View all products
+              <ArrowIcon />
+            </a>
+
+          </div>
+
+          <div className="product-grid">
+
+            {products.map((product) => (
+              <article className="product-card" key={product.name}>
+
+                <div className="product-image">
+
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                  />
+
+                  <button className="quick-add">
+                    ADD TO BAG
+                  </button>
+
                 </div>
+
+                <div className="product-details">
+
+                  <div>
+                    <p>{product.category}</p>
+                    <h3>{product.name}</h3>
+                  </div>
+
+                  <span>{product.price}</span>
+
                 </div>
-            </section>
 
-            {/* DUAL BANNER — two side-by-side promos, mirrors Nappa Dori's
-                SLINGS / LAPTOP BAGS pairing: text overlaid on the photo,
-                SHOP NOW pinned near the bottom of the same image. */}
-            <section className="feature-grid">
+              </article>
+            ))}
 
-                <Link href={categoryHref("journals")} className="feature-card" aria-label="Shop journals">
-                    <img src="/assets/Journals/LANDING PAGE/Jounal - 1.png" alt="Journals" />
-                    <div className="feature-overlay">
-                        <div className="feature-overlay-text">
-                            <h2>JOURNALS</h2>
-                            <p>Crafted for every passing thought.</p>
-                        </div>
-                        <span className="heroBannerBtn">SHOP NOW</span>
-                    </div>
-                </Link>
+          </div>
 
-                <Link href={categoryHref("notebooks")} className="feature-card" aria-label="Shop A5 notebooks">
-                    <img src="/assets/A5_softbound/C_1/A5 Notebooks - 1B.png" alt="A5 Notebooks" />
-                    <div className="feature-overlay">
-                        <div className="feature-overlay-text">
-                            <h2>A5 NOTEBOOKS</h2>
-                            <p>Minimal tools for organized minds.</p>
-                        </div>
-                        <span className="heroBannerBtn">SHOP NOW</span>
-                    </div>
-                </Link>
+        </section>
 
-            </section>
+        {/* ───────────────── EDITORIAL ───────────────── */}
 
-            {/* SHOP BY CATEGORY — icon slider, shown at every screen size,
-                matching Nappa Dori's category strip rather than being a
-                mobile-only element. */}
-            <section className="category-scroller-shell">
-                <h2 className="category-scroller-heading">Shop By Category</h2>
-                <div className="mobile-category-scroller">
-                    {(categories.length > 0 ? categories : [
-                        { _id: "notebooks", name: "Notebooks", slug: "notebooks", imageUrl: "/assets/A5_softbound/C_1/A5 Notebooks - 1A.png" },
-                        { _id: "journals", name: "Journals", slug: "journals", imageUrl: "/assets/Journals/c1/LUNAR JOURNAL _ A.png" },
-                    ]).map((cat) => (
-                        <Link key={cat._id} href={categoryHref(cat.slug)} className="mobile-category-circle">
-                            <div className="mobile-category-circle-img">
-                                <img src={cat.imageUrl} alt={cat.name} />
-                            </div>
-                            <span>{cat.name}</span>
-                        </Link>
-                    ))}
-                    <Link href={categoryHref("postcards")} className="mobile-category-circle">
-                        <div className="mobile-category-circle-img">
-                            <img src="/assets/card/postcard.jpg" alt="Postcards" />
-                        </div>
-                        <span>Postcards</span>
-                    </Link>
-                    <Link href={categoryHref("book-marks")} className="mobile-category-circle">
-                        <div className="mobile-category-circle-img">
-                            <img src="/assets/card/book-mark.jpg" alt="Book Marks" />
-                        </div>
-                        <span>Book Marks</span>
-                    </Link>
-                    <Link href="/shop" className="mobile-category-circle">
-                        <div className="mobile-category-circle-img">
-                            <img src="/assets/home/SLIDE - 1.jpg" alt="All products" />
-                        </div>
-                        <span>All Products</span>
-                    </Link>
+        <section className="editorial">
+
+          <div className="editorial-image">
+            <img
+              src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1800&q=90"
+              alt="Writing with a fountain pen"
+            />
+          </div>
+
+          <div className="editorial-content">
+
+            <p>THE WRITING RITUAL</p>
+
+            <h2>
+              Put pen
+              <br />
+              to paper.
+            </h2>
+
+            <div className="editorial-description">
+              There is something different about writing by hand.
+              Slower than a screen. More deliberate. More yours.
+            </div>
+
+            <a href="#journal" className="underlined-link">
+              Read the journal
+              <ArrowIcon />
+            </a>
+
+          </div>
+
+        </section>
+
+        {/* ───────────────── COLLECTIONS ───────────────── */}
+
+        <section className="collections-section" id="collections">
+
+          <div className="section-heading">
+
+            <div>
+              <p>EXPLORE</p>
+              <h2>Find your paper.</h2>
+            </div>
+
+          </div>
+
+          <div className="collections-grid">
+
+            {collections.map((collection) => (
+              <a
+                href="#shop"
+                className="collection-card"
+                key={collection.title}
+              >
+
+                <img
+                  src={collection.image}
+                  alt={collection.title}
+                />
+
+                <div className="collection-overlay" />
+
+                <div className="collection-info">
+
+                  <span>{collection.number}</span>
+
+                  <h3>{collection.title}</h3>
+
+                  <p>{collection.description}</p>
+
+                  <ArrowIcon />
+
                 </div>
-            </section>
 
-            {/* TRIPLE BANNER GRID — mirrors Nappa Dori's LUGGAGE / ACCESSORIES /
-                NEW ARRIVALS row: title sits inside the photo, but the
-                "VIEW COLLECTION" button sits BELOW the photo in its own
-                white strip — a distinct pattern from the dual banner above,
-                where the button is overlaid on the image itself. */}
-            <section className="triple-banner-grid">
+              </a>
+            ))}
 
-                <Link href={categoryHref("sketchbooks")} className="triple-banner-card" aria-label="Shop sketchbooks">
-                    <div className="triple-banner-image">
-                        <img src="/assets/tittle card/sketchbook.png" alt="Sketchbooks" />
-                        <span className="triple-banner-title">SKETCHBOOKS</span>
-                    </div>
-                    <div className="triple-banner-footer">
-                        <span className="triple-banner-btn">VIEW COLLECTION</span>
-                    </div>
-                </Link>
+          </div>
 
-                <Link href={categoryHref("desk_obj")} className="triple-banner-card" aria-label="Shop desk objects">
-                    <div className="triple-banner-image">
-                        <img src="/assets/desk_obj/5.jpeg" alt="Desk Objects" />
-                        <span className="triple-banner-title">DESK OBJECTS</span>
-                    </div>
-                    <div className="triple-banner-footer">
-                        <span className="triple-banner-btn">VIEW COLLECTION</span>
-                    </div>
-                </Link>
+        </section>
 
-                <Link href={categoryHref("planners")} className="triple-banner-card" aria-label="Shop planners">
-                    <div className="triple-banner-image">
-                        <img src="/assets/tittle card/planner.jpg" alt="Planners" />
-                        <span className="triple-banner-title">PLANNERS</span>
-                    </div>
-                    <div className="triple-banner-footer">
-                        <span className="triple-banner-btn">VIEW COLLECTION</span>
-                    </div>
-                </Link>
+        {/* ───────────────── STORY ───────────────── */}
 
-            </section>
+        <section className="story-section" id="story">
 
-            {/* OUR BEST SELLERS — product slider, mirrors Nappa Dori's
-                best-sellers carousel. */}
-            <section className="carousel-shell product-buttons-shell" aria-label="Our best sellers">
-                <h2 className="section-heading">Our Best Sellers</h2>
-                <div className="carousel-track">
-                <button
-                    type="button"
-                    className="carousel-arrow carousel-arrow-left"
-                    aria-label="Scroll best sellers left"
-                    onClick={() => scrollCarousel(productButtonsRef, -1)}
-                >
-                    <i className="fa-solid fa-chevron-left" aria-hidden="true"></i>
-                </button>
-                <div className="product-buttons" ref={productButtonsRef}>
-                <Link className="product-card" href={categoryHref("postcards")} aria-label="Shop postcards">
-                    <img src="/assets/card/postcard.jpg" alt="Postcards" />
-                    <span>Postcards</span>
-                </Link>
-                <Link className="product-card" href={categoryHref("greeting-cards")} aria-label="Shop greeting cards">
-                    <img src="/assets/card/greeting-card.jpg" alt="Greeting Cards" />
-                    <span>Greeting Cards</span>
-                </Link>
-                <Link className="product-card" href={categoryHref("book-marks")} aria-label="Shop book marks">
-                    <img src="/assets/card/book-mark.jpg" alt="Book Marks" />
-                    <span>Book Marks</span>
-                </Link>
-                <Link className="product-card" href={categoryHref("art-prints")} aria-label="Shop art prints">
-                    <img src="/assets/card/art-print.jpg" alt="Art Prints" />
-                    <span>Art Prints</span>
-                </Link>
-                <Link className="product-card" href={categoryHref("envelopes")} aria-label="Shop envelopes">
-                    <img src="/assets/card/envelope.jpg" alt="Envelopes" />
-                    <span>Envelopes</span>
-                </Link>
+          <div className="story-number">
+            02
+          </div>
+
+          <div className="story-content">
+
+            <p>MADE WITH INTENTION</p>
+
+            <h2>
+              Less noise.
+              <br />
+              More meaning.
+            </h2>
+
+            <div className="story-text">
+              Arcadia was created around a simple idea:
+              stationery should feel special without trying
+              too hard.
+
+              <br />
+              <br />
+
+              We work with tactile papers, considered colours,
+              practical formats and details that reveal
+              themselves over time.
+            </div>
+
+            <a href="#story" className="story-button">
+              About Arcadia
+              <ArrowIcon />
+            </a>
+
+          </div>
+
+          <div className="story-image">
+            <img
+              src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1400&q=90"
+              alt="Elegant stationery"
+            />
+          </div>
+
+        </section>
+
+        {/* ───────────────── JOURNAL ───────────────── */}
+
+        <section className="journal-section" id="journal">
+
+          <div className="journal-heading">
+
+            <div>
+              <p>FROM THE JOURNAL</p>
+              <h2>Notes on living slowly.</h2>
+            </div>
+
+            <a href="#journal" className="underlined-link">
+              Read all stories
+              <ArrowIcon />
+            </a>
+
+          </div>
+
+          <div className="journal-grid">
+
+            <article className="featured-story">
+
+              <img
+                src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1600&q=90"
+                alt="A calm desk"
+              />
+
+              <p>DESK / 08.08.26</p>
+
+              <h3>The case for a slower desk.</h3>
+
+              <a href="#journal" className="underlined-link">
+                Read story
+                <ArrowIcon />
+              </a>
+
+            </article>
+
+            <div className="journal-list">
+
+              <article>
+                <span>01</span>
+
+                <div>
+                  <p>WRITING</p>
+                  <h3>Why handwriting still matters.</h3>
+                  <a href="#journal">Read more →</a>
                 </div>
-                <button
-                    type="button"
-                    className="carousel-arrow carousel-arrow-right"
-                    aria-label="Scroll best sellers right"
-                    onClick={() => scrollCarousel(productButtonsRef, 1)}
-                >
-                    <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
-                </button>
+              </article>
+
+              <article>
+                <span>02</span>
+
+                <div>
+                  <p>DESIGN</p>
+                  <h3>Inside the making of our journals.</h3>
+                  <a href="#journal">Read more →</a>
                 </div>
-            </section>
+              </article>
+
+              <article>
+                <span>03</span>
+
+                <div>
+                  <p>RITUALS</p>
+                  <h3>Five minutes to reset your desk.</h3>
+                  <a href="#journal">Read more →</a>
+                </div>
+              </article>
 
             </div>
 
-            {/* FOOTER */}
+          </div>
 
-            <Footer />
-        </>
-    );
+        </section>
+
+        {/* ───────────────── NEWSLETTER ───────────────── */}
+
+        <section className="newsletter">
+
+          <div>
+            <p>THE ARCADIA LETTER</p>
+
+            <h2>
+              Good things,
+              <br />
+              occasionally.
+            </h2>
+
+            <span>
+              New collections, studio notes and little
+              things worth knowing.
+            </span>
+          </div>
+
+          <form className="newsletter-form">
+
+            <input
+              type="email"
+              placeholder="Your email address"
+            />
+
+            <button type="submit">
+              Subscribe
+              <ArrowIcon />
+            </button>
+
+          </form>
+
+        </section>
+
+        {/* ───────────────── FOOTER ───────────────── */}
+
+        <footer className="footer">
+
+          <div className="footer-brand">
+
+            <a href="/" className="brand">
+              <span>ARCADIA</span>
+              <small>STATIONERY CO.</small>
+            </a>
+
+            <p>
+              Elegant stationery for
+              <br />
+              everyday rituals.
+            </p>
+
+          </div>
+
+          <div className="footer-column">
+
+            <h4>SHOP</h4>
+
+            <a href="#shop">All stationery</a>
+            <a href="#shop">Journals</a>
+            <a href="#shop">Notebooks</a>
+            <a href="#shop">Desk essentials</a>
+
+          </div>
+
+          <div className="footer-column">
+
+            <h4>ABOUT</h4>
+
+            <a href="#story">Our story</a>
+            <a href="#journal">Journal</a>
+            <a href="#story">Contact</a>
+            <a href="#story">Stockists</a>
+
+          </div>
+
+          <div className="footer-column">
+
+            <h4>FOLLOW</h4>
+
+            <a href="#">Instagram</a>
+            <a href="#">Pinterest</a>
+            <a href="#">YouTube</a>
+
+          </div>
+
+          <div className="footer-bottom">
+
+            <span>
+              © 2026 ARCADIA STATIONERY CO.
+            </span>
+
+            <span>
+              MADE WITH INTENTION.
+            </span>
+
+            <span>
+              PRIVACY · TERMS
+            </span>
+
+          </div>
+
+        </footer>
+
+      </main>
+    </>
+  );
+}
+
+/* ───────────── ICONS ───────────── */
+
+function ArrowIcon() {
+  return (
+    <svg
+      width="17"
+      height="17"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <path
+        d="M5 12H19"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+
+      <path
+        d="M13 6L19 12L13 18"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <circle
+        cx="11"
+        cy="11"
+        r="6.5"
+        stroke="currentColor"
+      />
+
+      <path
+        d="M16 16L21 21"
+        stroke="currentColor"
+      />
+    </svg>
+  );
+}
+
+function UserIcon() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <circle
+        cx="12"
+        cy="8"
+        r="3.5"
+        stroke="currentColor"
+      />
+
+      <path
+        d="M5 21C5.8 16.8 8.1 14.5 12 14.5C15.9 14.5 18.2 16.8 19 21"
+        stroke="currentColor"
+      />
+    </svg>
+  );
+}
+
+function BagIcon() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <path
+        d="M5 8.5H19L18 21H6L5 8.5Z"
+        stroke="currentColor"
+      />
+
+      <path
+        d="M9 9V6.5C9 4.8 10.3 3.5 12 3.5C13.7 3.5 15 4.8 15 6.5V9"
+        stroke="currentColor"
+      />
+    </svg>
+  );
 }
