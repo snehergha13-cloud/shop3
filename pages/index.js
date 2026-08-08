@@ -2,49 +2,57 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [slide, setSlide] = useState(0);
 
-  const slides = [
+  const heroSlides = [
     {
       image: "/images/hero-1.jpg",
-      eyebrow: "THE WORDART COLLECTION",
-      title: "Stationery Made Beautiful",
-      subtitle: "Thoughtfully designed for everyday moments",
+      title: "The Art of Writing",
+      subtitle: "Stationery designed for everyday moments.",
+      button: "SHOP NOW",
     },
     {
       image: "/images/hero-2.jpg",
-      eyebrow: "THE CLASSIC COLLECTION",
-      title: "Made To Be Kept",
-      subtitle: "Elegant stationery for work, study & beyond",
+      title: "Made to Be Written In",
+      subtitle: "Thoughtfully crafted notebooks and journals.",
+      button: "SHOP NOW",
     },
     {
       image: "/images/hero-3.jpg",
-      eyebrow: "THE DESK EDIT",
-      title: "For Your Everyday Ideas",
-      subtitle: "Paper goods designed around the way you create",
+      title: "For Your Desk",
+      subtitle: "Elegant essentials for work, study and life.",
+      button: "EXPLORE",
     },
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    const timer = setInterval(() => {
+      setSlide((current) => (current + 1) % heroSlides.length);
+    }, 5500);
 
-    return () => clearInterval(interval);
-  }, [slides.length]);
+    return () => clearInterval(timer);
+  }, []);
 
   const categories = [
     {
       image: "/images/category-new.jpg",
-      title: "NEW ARRIVAL",
+      title: "NEW ARRIVALS",
     },
     {
-      image: "/images/category-men.jpg",
+      image: "/images/category-notebooks.jpg",
       title: "NOTEBOOKS",
     },
     {
-      image: "/images/category-women.jpg",
+      image: "/images/category-journals.jpg",
       title: "JOURNALS",
+    },
+    {
+      image: "/images/category-writing.jpg",
+      title: "WRITING",
+    },
+    {
+      image: "/images/category-desk.jpg",
+      title: "DESK ESSENTIALS",
     },
   ];
 
@@ -54,43 +62,52 @@ export default function Home() {
         <title>WordArt — Elegant Stationery</title>
         <meta
           name="description"
-          content="WordArt — elegant stationery designed for everyday moments."
+          content="Elegant stationery for thoughtful writing."
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        />
       </Head>
 
-      <main className="site">
+      <div className="page">
 
-        {/* =====================================================
+        {/* ==================================================
             NAVIGATION
-        ====================================================== */}
+        ================================================== */}
 
         <header className="navbar">
 
-          <button className="menu-button" aria-label="Open menu">
-            <span></span>
-            <span></span>
-            <span></span>
+          <button className="menu-button">
+            <span />
+            <span />
+            <span />
           </button>
 
-          <div className="brand">
-            W&nbsp;&nbsp;O&nbsp;&nbsp;R&nbsp;&nbsp;D&nbsp;&nbsp;A&nbsp;&nbsp;R&nbsp;&nbsp;T
+          <div className="logo">
+            W O R D A R T
           </div>
 
-          <div className="nav-right">
+          <nav className="desktop-nav">
+            <a href="#">NOTEBOOKS</a>
+            <a href="#">JOURNALS</a>
+            <a href="#">WRITING</a>
+            <a href="#">DESK</a>
+            <a href="#">GIFTS</a>
+          </nav>
 
-            <button className="search-button" aria-label="Search">
-              <span className="search-circle"></span>
-              <span className="search-handle"></span>
+          <div className="nav-actions">
+
+            <button className="search">
+              <span />
             </button>
 
             <button className="currency">
-              INR
-              <span className="currency-arrow">⌄</span>
+              INR <b>⌄</b>
             </button>
 
-            <button className="bag-button" aria-label="Shopping bag">
-              <span className="bag-icon"></span>
+            <button className="bag">
+              <span />
             </button>
 
           </div>
@@ -98,37 +115,43 @@ export default function Home() {
         </header>
 
 
-        {/* =====================================================
-            HERO SLIDESHOW
-        ====================================================== */}
+        {/* ==================================================
+            HERO
+        ================================================== */}
 
         <section className="hero">
 
-          {slides.map((slide, index) => (
+          {heroSlides.map((item, index) => (
             <div
               key={index}
               className={`hero-slide ${
-                index === currentSlide ? "active" : ""
+                slide === index ? "visible" : ""
               }`}
               style={{
-                backgroundImage: `url(${slide.image})`,
+                backgroundImage: `url(${item.image})`,
               }}
             >
 
-              <div className="hero-content">
+              <div className="hero-overlay" />
 
-                <div className="hero-eyebrow">
-                  {slide.eyebrow}
+              <div className="hero-copy">
+
+                <span className="hero-small">
+                  WORDART COLLECTION
+                </span>
+
+                <h1>{item.title}</h1>
+
+                <div className="hero-decoration">
+                  <span />
+                  <i>✦</i>
+                  <span />
                 </div>
 
-                <h1>{slide.title}</h1>
+                <p>{item.subtitle}</p>
 
-                <div className="hero-line"></div>
-
-                <p>{slide.subtitle}</p>
-
-                <button className="shop-button">
-                  SHOP NOW
+                <button className="hero-button">
+                  {item.button}
                 </button>
 
               </div>
@@ -137,89 +160,102 @@ export default function Home() {
           ))}
 
 
-          <div className="hero-dots">
+          <div className="hero-pagination">
 
-            {slides.map((_, index) => (
+            {heroSlides.map((_, index) => (
               <button
                 key={index}
-                className={`hero-dot ${
-                  index === currentSlide ? "active" : ""
-                }`}
-                onClick={() => setCurrentSlide(index)}
-                aria-label={`Go to slide ${index + 1}`}
+                className={slide === index ? "selected" : ""}
+                onClick={() => setSlide(index)}
               />
             ))}
 
           </div>
 
 
-          <button className="hero-down" aria-label="Scroll down">
-            <span></span>
+          <button className="scroll-button">
+            <span />
           </button>
 
         </section>
 
 
-        {/* =====================================================
-            EDITORIAL TWO IMAGE SECTION
-        ====================================================== */}
+        {/* ==================================================
+            EDITORIAL TWO-COLUMN SECTION
+        ================================================== */}
 
-        <section className="editorial">
+        <section className="editorial-section">
 
           <div className="editorial-grid">
 
-            <div className="editorial-image">
+            <article className="editorial-card">
+
               <img
                 src="/images/editorial-1.jpg"
-                alt="WordArt stationery collection"
+                alt="WordArt stationery"
               />
 
-              <div className="editorial-overlay">
-                <span>THE DESK EDIT</span>
+              <div className="editorial-text">
+                <small>THE DESK EDIT</small>
+                <h2>Made for the<br />working day.</h2>
+                <a href="#">DISCOVER</a>
               </div>
 
-            </div>
+            </article>
 
 
-            <div className="editorial-image">
+            <article className="editorial-card">
+
               <img
                 src="/images/editorial-2.jpg"
-                alt="WordArt notebooks"
+                alt="WordArt journals"
               />
 
-              <div className="editorial-overlay">
-                <span>THE NOTEBOOK EDIT</span>
+              <div className="editorial-text">
+                <small>THE NOTEBOOK EDIT</small>
+                <h2>Thoughts worth<br />keeping.</h2>
+                <a href="#">DISCOVER</a>
               </div>
 
-            </div>
+            </article>
 
           </div>
 
         </section>
 
 
-        {/* =====================================================
-            LARGE FEATURE — SLINGS STYLE
-        ====================================================== */}
+        {/* ==================================================
+            WIDE CAMPAIGN
+        ================================================== */}
 
-        <section className="feature-section">
+        <section className="campaign">
 
-          <div className="feature-image">
+          <div className="campaign-image">
 
             <img
               src="/images/slings.jpg"
-              alt="WordArt collection"
+              alt="WordArt journals collection"
             />
 
-            <div className="feature-content">
+            <div className="campaign-overlay" />
 
-              <h2>JOURNALS</h2>
+            <div className="campaign-copy">
+
+              <span>THE JOURNAL COLLECTION</span>
+
+              <h2>
+                Made for every
+                <br />
+                thought.
+              </h2>
 
               <p>
-                Made for every thought, idea and everyday moment.
+                Premium paper. Considered details.
+                <br />
+                Designed to be kept.
               </p>
 
-              <button className="feature-button">
+              <button>
                 SHOP NOW
               </button>
 
@@ -230,28 +266,32 @@ export default function Home() {
         </section>
 
 
-        {/* =====================================================
-            SECOND LARGE FEATURE
-        ====================================================== */}
+        {/* ==================================================
+            SPLIT CAMPAIGN
+        ================================================== */}
 
-        <section className="feature-section feature-second">
+        <section className="split-section">
 
-          <div className="feature-image">
+          <div className="split-image">
 
             <img
               src="/images/laptop-bags.jpg"
-              alt="WordArt stationery and writing collection"
+              alt="WordArt notebooks"
             />
 
-            <div className="feature-content">
+            <div className="split-overlay" />
 
-              <h2>NOTEBOOKS</h2>
+            <div className="split-copy">
 
-              <p>
-                Paper goods designed for work, study & beyond.
-              </p>
+              <span>THE NOTEBOOK EDIT</span>
 
-              <button className="feature-button">
+              <h2>
+                Your ideas
+                <br />
+                belong here.
+              </h2>
+
+              <button>
                 SHOP NOW
               </button>
 
@@ -259,23 +299,55 @@ export default function Home() {
 
           </div>
 
+
+          <div className="split-text">
+
+            <span>WORDART</span>
+
+            <h2>
+              Objects for
+              <br />
+              thoughtful
+              <br />
+              living.
+            </h2>
+
+            <p>
+              We believe the things you use every day
+              should be beautifully made.
+            </p>
+
+            <a href="#">
+              OUR STORY
+            </a>
+
+          </div>
+
         </section>
 
 
-        {/* =====================================================
+        {/* ==================================================
             SHOP BY CATEGORY
-        ====================================================== */}
+        ================================================== */}
 
-        <section className="categories">
+        <section className="category-section">
 
-          <h2>SHOP BY CATEGORY</h2>
+          <div className="section-heading">
+            <span>EXPLORE</span>
+            <h2>SHOP BY CATEGORY</h2>
+          </div>
 
-          <div className="category-grid">
+
+          <div className="category-row">
 
             {categories.map((category, index) => (
-              <a href="#" className="category" key={index}>
+              <a
+                href="#"
+                className="category-item"
+                key={index}
+              >
 
-                <div className="category-image">
+                <div className="category-circle">
                   <img
                     src={category.image}
                     alt={category.title}
@@ -292,58 +364,81 @@ export default function Home() {
         </section>
 
 
-        {/* =====================================================
-            LUGGAGE / FINAL FEATURE
-        ====================================================== */}
+        {/* ==================================================
+            FINAL LARGE CAMPAIGN
+        ================================================== */}
 
-        <section className="luggage">
+        <section className="final-campaign">
 
-          <div className="luggage-image">
+          <img
+            src="/images/luggage.jpg"
+            alt="WordArt collection"
+          />
 
-            <img
-              src="/images/luggage.jpg"
-              alt="WordArt collection"
-            />
+          <div className="final-overlay" />
 
-            <div className="luggage-content">
+          <div className="final-copy">
 
-              <h2>THE WORDART COLLECTION</h2>
+            <span>THE WORDART COLLECTION</span>
 
-              <button className="luggage-button">
-                SHOP NOW
-              </button>
+            <h2>
+              Beautiful things
+              <br />
+              for everyday use.
+            </h2>
 
-            </div>
+            <button>
+              EXPLORE COLLECTION
+            </button>
 
           </div>
 
         </section>
 
 
-        {/* =====================================================
+        {/* ==================================================
             FOOTER
-        ====================================================== */}
+        ================================================== */}
 
-        <footer className="footer">
+        <footer>
 
-          <div className="footer-brand">
-            W&nbsp;&nbsp;O&nbsp;&nbsp;R&nbsp;&nbsp;D&nbsp;&nbsp;A&nbsp;&nbsp;R&nbsp;&nbsp;T
+          <div className="footer-top">
+
+            <div className="footer-brand">
+              W O R D A R T
+            </div>
+
+            <div className="footer-column">
+              <h4>SHOP</h4>
+              <a href="#">Notebooks</a>
+              <a href="#">Journals</a>
+              <a href="#">Writing</a>
+              <a href="#">Desk</a>
+            </div>
+
+            <div className="footer-column">
+              <h4>ABOUT</h4>
+              <a href="#">Our Story</a>
+              <a href="#">Journal</a>
+              <a href="#">Contact</a>
+            </div>
+
+            <div className="footer-column">
+              <h4>HELP</h4>
+              <a href="#">Shipping</a>
+              <a href="#">Returns</a>
+              <a href="#">FAQs</a>
+            </div>
+
           </div>
 
-          <div className="footer-links">
-            <a href="#">ABOUT</a>
-            <a href="#">CONTACT</a>
-            <a href="#">SHIPPING</a>
-            <a href="#">PRIVACY</a>
-          </div>
-
-          <div className="footer-copy">
-            © {new Date().getFullYear()} WordArt. All rights reserved.
+          <div className="footer-bottom">
+            © {new Date().getFullYear()} WORDART
           </div>
 
         </footer>
 
-      </main>
+      </div>
     </>
   );
 }
