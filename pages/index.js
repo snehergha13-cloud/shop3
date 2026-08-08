@@ -135,6 +135,53 @@ export default function Home() {
 
             <div id="homepage-content" ref={afterHeroRef}>
 
+            {/* OUR CRAFT — brand-story scroller, right after the hero,
+                mirrors Nappa Dori's lifestyle image strip in that position. */}
+            <section className="carousel-shell small-cards-shell" aria-label="Our craft">
+                <h2 className="section-heading">Our Craft</h2>
+                <div className="carousel-track">
+                <div className="small-cards" ref={smallCardsRef}>
+                <Link href="/about" className="small-card" aria-label="Read the founder's note">
+                    <img src="/assets/tittle card/founders note image.jpeg" alt="Founder's Note" />
+                    <span>FOUNDER&apos;S NOTE</span>
+                </Link>
+                <Link href="/about" className="small-card" aria-label="Read WordArt craft stories">
+                    <img src="/assets/tittle card/craft_stories.jpg" alt="Craft Stories" />
+                    <span>CRAFT STORIES</span>
+                </Link>
+                </div>
+                </div>
+            </section>
+
+            {/* DUAL BANNER — two side-by-side promos, mirrors Nappa Dori's
+                SLINGS / LAPTOP BAGS pairing: text overlaid on the photo,
+                SHOP NOW pinned near the bottom of the same image. */}
+            <section className="feature-grid">
+
+                <Link href={categoryHref("journals")} className="feature-card" aria-label="Shop journals">
+                    <img src="/assets/Journals/LANDING PAGE/Jounal - 1.png" alt="Journals" />
+                    <div className="feature-overlay">
+                        <div className="feature-overlay-text">
+                            <h2>JOURNALS</h2>
+                            <p>Crafted for every passing thought.</p>
+                        </div>
+                        <span className="heroBannerBtn">SHOP NOW</span>
+                    </div>
+                </Link>
+
+                <Link href={categoryHref("notebooks")} className="feature-card" aria-label="Shop A5 notebooks">
+                    <img src="/assets/A5_softbound/C_1/A5 Notebooks - 1B.png" alt="A5 Notebooks" />
+                    <div className="feature-overlay">
+                        <div className="feature-overlay-text">
+                            <h2>A5 NOTEBOOKS</h2>
+                            <p>Minimal tools for organized minds.</p>
+                        </div>
+                        <span className="heroBannerBtn">SHOP NOW</span>
+                    </div>
+                </Link>
+
+            </section>
+
             {/* SHOP BY CATEGORY — icon slider, shown at every screen size,
                 matching Nappa Dori's category strip rather than being a
                 mobile-only element. */}
@@ -173,42 +220,40 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* FEATURED BANNER — single full-bleed promo, Nappa Dori's
-                "Luggage" collection-banner equivalent. */}
-            <section className="featured-banner">
-                <img src="/assets/home/SLIDE - 1.jpg" alt="Shop the full collection" />
-                <div className="featured-banner-overlay">
-                    <div className="featured-banner-text">
-                        <h2>THE FULL COLLECTION</h2>
-                        <p>Every notebook, journal and paper good in one place.</p>
+            {/* TRIPLE BANNER GRID — mirrors Nappa Dori's LUGGAGE / ACCESSORIES /
+                NEW ARRIVALS row: title sits inside the photo, but the
+                "VIEW COLLECTION" button sits BELOW the photo in its own
+                white strip — a distinct pattern from the dual banner above,
+                where the button is overlaid on the image itself. */}
+            <section className="triple-banner-grid">
+
+                <Link href={categoryHref("sketchbooks")} className="triple-banner-card" aria-label="Shop sketchbooks">
+                    <div className="triple-banner-image">
+                        <img src="/assets/tittle card/sketchbook.png" alt="Sketchbooks" />
+                        <span className="triple-banner-title">SKETCHBOOKS</span>
                     </div>
-                    <Link href="/shop" className="heroBannerBtn">SHOP NOW</Link>
-                </div>
-            </section>
-
-            {/* DUAL BANNER — two side-by-side promos, mirrors Nappa Dori's
-                FOR HIM / FOR HER pairing. */}
-            <section className="feature-grid">
-
-                <Link href={categoryHref("journals")} className="feature-card" aria-label="Shop journals">
-                    <img src="/assets/Journals/LANDING PAGE/Jounal - 1.png" alt="Journals" />
-                    <div className="feature-overlay">
-                        <div className="feature-overlay-text">
-                            <h2>JOURNALS</h2>
-                            <p>Crafted for every passing thought.</p>
-                        </div>
-                        <span className="heroBannerBtn">SHOP NOW</span>
+                    <div className="triple-banner-footer">
+                        <span className="triple-banner-btn">VIEW COLLECTION</span>
                     </div>
                 </Link>
 
-                <Link href={categoryHref("notebooks")} className="feature-card" aria-label="Shop A5 notebooks">
-                    <img src="/assets/A5_softbound/C_1/A5 Notebooks - 1B.png" alt="A5 Notebooks" />
-                    <div className="feature-overlay">
-                        <div className="feature-overlay-text">
-                            <h2>A5 NOTEBOOKS</h2>
-                            <p>Minimal tools for organized minds.</p>
-                        </div>
-                        <span className="heroBannerBtn">SHOP NOW</span>
+                <Link href={categoryHref("desk_obj")} className="triple-banner-card" aria-label="Shop desk objects">
+                    <div className="triple-banner-image">
+                        <img src="/assets/desk_obj/5.jpeg" alt="Desk Objects" />
+                        <span className="triple-banner-title">DESK OBJECTS</span>
+                    </div>
+                    <div className="triple-banner-footer">
+                        <span className="triple-banner-btn">VIEW COLLECTION</span>
+                    </div>
+                </Link>
+
+                <Link href={categoryHref("planners")} className="triple-banner-card" aria-label="Shop planners">
+                    <div className="triple-banner-image">
+                        <img src="/assets/tittle card/planner.jpg" alt="Planners" />
+                        <span className="triple-banner-title">PLANNERS</span>
+                    </div>
+                    <div className="triple-banner-footer">
+                        <span className="triple-banner-btn">VIEW COLLECTION</span>
                     </div>
                 </Link>
 
@@ -257,22 +302,6 @@ export default function Home() {
                 >
                     <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
                 </button>
-                </div>
-            </section>
-
-            {/* OUR CRAFT — brand-story pairing, mirrors Nappa Dori's
-                "Design Definition" section. */}
-            <section className="carousel-shell small-cards-shell" aria-label="Our craft">
-                <h2 className="section-heading">Our Craft</h2>
-                <div className="small-cards" ref={smallCardsRef}>
-                <Link href="/about" className="small-card" aria-label="Read the founder's note">
-                    <img src="/assets/tittle card/founders note image.jpeg" alt="Founder's Note" />
-                    <span>FOUNDER&apos;S NOTE</span>
-                </Link>
-                <Link href="/about" className="small-card" aria-label="Read WordArt craft stories">
-                    <img src="/assets/tittle card/craft_stories.jpg" alt="Craft Stories" />
-                    <span>CRAFT STORIES</span>
-                </Link>
                 </div>
             </section>
 

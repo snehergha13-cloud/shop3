@@ -372,6 +372,8 @@ PRODUCT SECTION
 /* FILTER BAR */
 
 .filter-bar{
+    position:sticky;
+    top:132px;
     height:54px;
 
     display:flex;
@@ -382,6 +384,7 @@ PRODUCT SECTION
     border-bottom:1px solid rgba(0,0,0,0.08);
 
     background:white;
+    z-index:20;
 }
 
 .filter-left{
@@ -468,7 +471,7 @@ PRODUCT SECTION
     display:inline-block;
     width:1px;
     height:14px;
-    margin:0 18px;
+    margin:0 32px;
     background:rgba(0,0,0,0.12);
 }
 
